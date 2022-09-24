@@ -39,20 +39,24 @@ const Skill = () => {
       <div className='s-react-wrapper'>
         <div className='s-react-card-wrapper'>
           <div className={showCard?'s-react-card-hidden':'s-react-card-dissapear'} onClick={()=>setShowCard(!showCard)}>
-            <div className='s-waterfall'></div>
+            <div className='s-waterfall plaid-background-waterfall'></div>
             <div className='s-skill'>React</div>
             <div className='s-skill-level'></div>
           </div>
+          <div className={showCard?'s-react-card-hidden s-react-card-hidden-letter':'s-react-card-dissapear'} onClick={()=>setShowCard(!showCard)}>
+            <div className='s-waterfall'>Continuous Learning</div>
+            
+          </div>
           <div className={showCard?'s-react-card-hidden':'s-react-card-dissapear'} onClick={()=>setShowCard(!showCard)}>
-            <div className='s-waterfall'></div>
-            <div className='s-skill'>React</div>
-            <div className='s-skill-level'></div>
+            <div className='s-waterfall plaid-background-waterfall'></div>
+            <div className='s-skill'>Node</div>
+            <div className='s-skill-level-node'></div>
           </div>
         </div>
         <div  className={showCard? 's-react-card-dissapear':'s-card-open'}>
           <div onClick={()=>setShowCard(!showCard)} className='s-react-card-hidden-container'>
             <div className='s-react-card-hidden'>
-              <div className='s-waterfall'></div>
+              <div className='s-waterfall plaid-background-waterfall'></div>
               <div className='s-skill'>React</div>
               <div className='s-skill-level'></div>
             </div>
