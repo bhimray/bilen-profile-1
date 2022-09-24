@@ -1,6 +1,6 @@
 import React from 'react'
 import './introduction.css'
-import UsersGearSolid from '../svgIcons/users-gear-solid.svg'
+import UsersGearSolid from '../../svgIcons/users-gear-solid.svg'
 const Introduction = () => {
   return (
     <div>
