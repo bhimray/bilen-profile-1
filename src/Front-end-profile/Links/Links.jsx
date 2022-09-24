@@ -7,6 +7,7 @@ import './Links.css'
 const Links = () => {
   return (
     <div className="l-card-wrapper">
+      <div className='l-bg '></div>
       <div className="l-github-card">
         <div className="l-name">GitHub</div>
         <img src={GitHubIcon} className="l-image"/>
