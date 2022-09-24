@@ -2,13 +2,13 @@
     /* display: flex; */
     /* justify-content: space-evenly; */
     align-items: center;
-    background-color: aqua;
+    background-color: #00000070;
     height: 30rem;
 }
-.s-react-card-wrapper{
-    display:flex;
+.s-react-card-wrapper {
+    display: flex;
     justify-content: space-evenly;
-    padding:2rem;
+    padding: 2rem;
 }
 
 .s-react-card-hidden {
@@ -16,30 +16,56 @@
     width: 15rem;
     height: 15rem;
     position: relative;
-    background-color: blue;
+    background-color: #0f0f2eb8;
     transition: 2s ease-in;
     /* justify-content: space-evenly; */
     /* padding: 1rem 2rem; */
+}
+.s-react-card-hidden-letter {
+    background-color: inherit !important;
+    font-size: 3rem !important;
+    font-weight: 800;
+    mix-blend-mode: color-dodge;
 }
 .s-react-card-dissapear{
     display: none;
     transition:2s ease-out;
 }
-.s-waterfall{
-    width:0.2rem;
-    height:0.5rem;
-    background-color: gold;
+.s-waterfall {
+    position: absolute;
+    width: 100%;
+    height: 0.3rem;
+    /* background-color: gold; */
+    top: 0rem;
+    animation: waterfall-anim infinite 1s cubic-bezier(0.4, 0, 1, 1);
+    transition: 0.01s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
-.s-skill{
-    font-size:3rem;
+.s-skill {
+    font-size: 3rem;
     font-weight: 800;
     text-shadow: 1rem;
 }
-.s-skill-level{
-    position:relative;
-    box-shadow:2px 2px 2px 2px pink;
-    height: 4rem;
+.s-skill-level {
+    position: absolute;
+    box-shadow: 0px -1px 13px 0px pink;
+    height: 12rem;
+    width: -moz-fit-content;
     width: fit-content;
+    bottom: 0rem;
+    width: 100%;
+    background: rgb(3,1,24);
+    background: linear-gradient(3deg, rgba(3,1,24,1) 0%, rgba(10,11,31,0.7906512946975666) 100%, rgba(0,212,255,1) 100%);
+}
+.s-skill-level-node {
+    position: absolute;
+    box-shadow: 0px -1px 13px 0px pink;
+    height: 3rem;
+    width: -moz-fit-content;
+    width: fit-content;
+    bottom: 0rem;
+    width: 100%;
+    background: rgb(3,1,24);
+    background: linear-gradient(3deg, rgba(3,1,24,1) 0%, rgba(10,11,31,0.7906512946975666) 100%, rgba(0,212,255,1) 100%);
 }
 .s-card-open {
     display: flex;
@@ -78,3 +104,15 @@
     padding: 1rem;
     border-radius: 1rem;
 }
+
+
+
+
+@keyframes waterfall-anim {
+    0% {
+        transform: translateY(0px);
+    }
+    100% {
+        transform: translateY(165px);
+    }
+  }

@@ -87,3 +87,9 @@
   filter:blur(212px);
 }
 
+.plaid-background-waterfall {
+  /* filter: blur(212px); */
+  background: repeating-linear-gradient( 90deg, transparent 0, transparent 38%, rgb(3 1 24 / 15%) 0, rgb(0 0 0)50% );  background-blend-mode: multiply;
+  background-size: 13px 19px;
+}
+
