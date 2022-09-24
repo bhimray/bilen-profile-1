@@ -1,5 +1,10 @@
 import React from 'react'
 import './skill.css'
+import jsIcon from '../../svgIcons/js.svg'
+import cssIcon from '../../svgIcons/css3-alt.svg'
+import htmlIcon from '../../svgIcons/html5.svg'
+
+
 const Skill = () => {
   const [showCard, setShowCard] = React.useState(true)
   const [items, setItems] = React.useState({ head:"", icon:"", title:[]})
@@ -65,18 +70,18 @@ const Skill = () => {
             <div className='s-react-relative-card'>
               <div className='s-html' onClick={()=>[sendItems('HTML', 'htmlIcon'), dispatch({type:"HTML"})]}>
                 <div className='s-head'>HTML</div>
-                <img src='' className='s-icon'></img>
-                <button className='btn'></button>
+                <img src={htmlIcon} className='s-icon'></img>
+                <button className='btn'>Click</button>
               </div>
               <div className='s-css-framer-motion' onClick={()=>[sendItems('CSS', 'cssIcon'), dispatch({type:"CSS"})]}>
                 <div className='s-head'>CSS</div>
-                <img src='' className='s-icon'></img>
-                <button className='btn'></button>
+                <img src={cssIcon} className='s-icon'></img>
+                <button className='btn'>Click</button>
               </div>
               <div className='s-vanilla-js' onClick={()=>[sendItems('vanilla JS', 'jsIcon'), dispatch({type:"JS"})]}>
-                <div className='s-head'>Vanilla JS</div>
-                <img src='' className='s-icon' ></img>
-                <button className='btn'></button>
+                <div className='s-head'>JS</div>
+                <img src={jsIcon} className='s-icon' ></img>
+                <button className='btn'>Click</button>
               </div>
             </div>
             <div className='s-react-absolute-card'>

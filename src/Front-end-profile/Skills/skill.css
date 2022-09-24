@@ -78,9 +78,11 @@
 }
 .s-react-subskills {
     display: flex;
-    background-color: blueviolet;
+    background-color: #150e5e80;
     position: relative;
     justify-content: space-around;
+    padding: 2rem;
+    border-radius: 1rem 1rem 1rem 1rem;
 }
 .s-react-relative-card {
     display: flex;
@@ -89,12 +91,15 @@
     height: 10rem;
     gap: 2rem;
 }
-.s-html, .s-css-framer-motion,.s-vanilla-js{
+
+.s-html, .s-css-framer-motion, .s-vanilla-js {
     display: grid;
     background-color: aliceblue;
     justify-content: space-evenly;
-    background-color: blue;
+    background-color: #0000ff4d;
     width: 10rem;
+    border-radius: 1rem 1rem 1rem 1rem;
+    box-shadow: 1rem 1rem 6rem 0rem;
 }
 
 .s-react-absolute-card {
@@ -104,7 +109,13 @@
     padding: 1rem;
     border-radius: 1rem;
 }
-
+.s-head{
+    font-size:1.5rem;
+    font-weight: 700;
+}
+.s-icon{
+    width:3rem;
+}
 
 
 
