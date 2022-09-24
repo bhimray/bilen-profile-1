@@ -1,0 +1,20 @@
+.lt-wrapper{
+    display: grid;
+    
+}
+.lt-react-wrapper{
+    display: flex;
+    flex-direction: row-reverse;
+}
+.lt-node-wrapper{
+    display: flex;
+    flex-direction: row;
+}
+.lt-react-track{
+    display: flex;
+    gap:1rem;
+}
+.lt-node-track{
+    display: flex;
+    gap:1rem;
+}
