@@ -1,47 +1,64 @@
 .lt-wrapper{
     display: grid;
-    background-color: red;
-    padding:5rem;
+    padding:1rem;
     
+}
+.lt-bg {
+    position: absolute;
+    top: -3rem;
+    width: 100vw;
+    height: 113vh;
+}
+.lt-programming {
+    font-size: 2rem;
+    font-weight: 800;
+    mix-blend-mode: color-dodge;
+    color: white;
 }
 .lt-react-wrapper {
     display: flex;
     flex-direction: row-reverse;
     justify-content: flex-end;
     gap: 0.5rem;
-    padding: 1rem 0rem;
+    padding: 4rem 1rem;
     position: relative;
+    background: rgb(2,0,36);
+    background: linear-gradient(121deg, rgba(2,0,36,1) 2%, rgba(10,11,31,0.7906512946975666) 100%, rgba(0,212,255,1) 100%);
 }
 .lt-node-wrapper{
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
     gap: 0.5rem;
-    padding: 2rem 0.5rem;
+    padding: 4rem 1rem;
     position: relative;
+    background: rgb(2,0,36);
+    background: linear-gradient(207deg, rgba(2,0,36,1) 2%, rgba(10,11,31,0.7906512946975666) 100%, rgba(0,212,255,1) 100%);
 }
-.lt-react-track {
+.lt-react-track,.lt-node-track {
+    display: flex;
+    gap: 1rem;
+    background-color: darkblue;
+    color: #e9e7f7;
+    font-weight: 700;
+    text-shadow: 7px 8px 4px black;
+}
+/* .lt-node-track{
     display: flex;
     gap: 1rem;
     background-color: darkblue;
     color: cornflowerblue;
-}
-.lt-node-track{
-    display: flex;
-    gap: 1rem;
-    background-color: darkblue;
-    color: cornflowerblue;
-}
+} */
 .lt-html-css-js,.lt-react-concept-jsx,.lt-hooks, .lt-props-drilling,
 .lt-composition-advance-hooks, .lt-react-query-api-call{
-    background-color: darkmagenta;
-    padding: 1rem 0rem;
+    background-color: #200820;
+    padding: 1rem 2rem;
     
 }
 .lt-basics, .lt-crud,.lt-socket,.lt-apicall-handle,
 .lt-nosql-sql,.lt-cloud,.lt-largedata-security{
-    background-color: darkmagenta;
-    padding: 1rem 1rem;
+    background-color: #200820;
+    padding: 1rem 2rem;
 }
 .lt-hover-control{
     position: relative;

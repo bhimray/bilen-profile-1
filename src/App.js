@@ -5,7 +5,7 @@ import Links from './Front-end-profile/Links/Links';
 import Skill from './Front-end-profile/Skills/Skill';
 function App() {
   return (
-    <div className="App">
+    <div className="App spectrum-background">
       <Introduction/>
       <LearningTrack/>
       <Links/>
