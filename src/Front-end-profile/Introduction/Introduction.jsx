@@ -9,9 +9,9 @@ const Introduction = () => {
   return (
     <div className='i-wrapper'>
         <div className='i-navigation'>
-            <Link to="lt-wrapper" className='i-nav'>Links</Link>
-            <Link to="p-react" className='i-nav'>Projects</Link>
-            <Link to="s-react" className='i-nav'>Skills</Link>
+            <Link to="lt-wrapper" smooth={true} duration={500} className='i-nav'>Links</Link>
+            <Link to="pr-projects" smooth={true} duration={800} className='i-nav'>Projects</Link>
+            <Link to="s-react" smooth={true} duration={800} className='i-nav'>Skills</Link>
         </div>
         <div className='i-profile-image-container'>
             <div className='i-image-container'>

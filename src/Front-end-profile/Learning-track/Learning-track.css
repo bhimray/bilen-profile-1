@@ -116,3 +116,18 @@
     zoom:2rem;
     box-shadow: 2px 2px 2px;
   }
+.to-learn{
+    color:#200820 !important;
+}
+
+  @media (max-width: 600px) {
+  .lt-wrapper {
+    display: grid;
+    padding: 3rem 0rem;
+    width: 100%;
+    overflow: hidden;
+}
+.lt-react-track, .lt-node-track {
+    display: grid;
+}
+}

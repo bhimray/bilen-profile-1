@@ -1,12 +1,13 @@
 import React from 'react'
 import './project.css'
+import codeForkIcon from '../../svgIcons/code-fork-solid.svg'
 const Project = () => {
   return (
     <div>
       <div className="pr-projects">
         <div className="r-project">
           <div className="imgae-container">
-            <img src="" alt="" className='r-image' />
+            <img src={codeForkIcon} alt="" className='r-image' />
           </div>
           <div className="project-head">Hotel App</div>
           <div className="project-details"><h4>First project</h4>, In this 
@@ -15,7 +16,7 @@ const Project = () => {
         </div>
         <div className="r-project">
           <div className="image-container">
-            <img src="" alt="" className='r-image' />
+            <img src={codeForkIcon} alt="" className='r-image' />
           </div>
           <div className="project-head">Gym App</div>
           <div className="project-details">This project is actually build for real Gym. Here, actually i have implemented all the css tricks and used some react-node packages for to 
@@ -24,7 +25,7 @@ const Project = () => {
         </div>
         <div className="r-project">
           <div className="image-container">
-            <img src="" alt="" className='r-image' />
+            <img src={codeForkIcon} alt="" className='r-image' />
           </div>
           <div className="project-head">Dry Cleaner Project</div>
           <div className="project-details">This project is a contract project for dry cleaner company which i got from direct contact. I built this project for mobile friendly only but yet it is good for large screen. This 
@@ -32,7 +33,7 @@ const Project = () => {
         </div>
         <div className="r-project">
           <div className="image-container">
-            <img src="" alt="" className='r-image' />
+            <img src={codeForkIcon} alt="" className='r-image' />
           </div>
           <div className="project-head">My Profile</div>
           <div className="project-details">Finally, My profile itself is great example of the knowledge of react. In all these mentioned project i might not have used some other concept like React Query

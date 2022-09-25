@@ -1,4 +1,5 @@
 import './App.css';
+import ContactMe from './Front-end-profile/ContactMe/ContactMe';
 import Introduction from './Front-end-profile/Introduction/Introduction'
 import LearningTrack from './Front-end-profile/Learning-track/Learning-track'
 import Links from './Front-end-profile/Links/Links';
@@ -13,7 +14,8 @@ function App() {
       <LearningTrack/>
       <Links/>
       <Skill/>  
-      <Project></Project>    
+      <Project></Project> 
+      <ContactMe/>   
     </div>
   );
 }

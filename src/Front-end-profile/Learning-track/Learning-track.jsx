@@ -39,16 +39,16 @@ const LearningTrack = () => {
                     <div data-hover="Instant connection" className='lt-socket hovertext z'>Socket</div>
                 </div>
                 <div className='lt-hover-control'>
-                    <div data-hover="Yet to learn in complete" className='lt-apicall-handle hovertext z'>API call</div>
+                    <div data-hover="Yet to learn in complete" className='lt-apicall-handle hovertext z to-learn'>API call</div>
                 </div>
                 <div className='lt-hover-control'>
-                    <div data-hover="Only basics of MongoDB and Learning" className='lt-nosql-sql hovertext z'>NO-SQL and SQL</div>
+                    <div data-hover="Only basics of MongoDB and Learning" className='lt-nosql-sql hovertext z to-learn'>NO-SQL and SQL</div>
                 </div>
                 <div className='lt-hover-control'>
-                    <div data-hover="Yet to learn" className='lt-cloud hovertext z'>Cloud</div>
+                    <div data-hover="Yet to learn" className='lt-cloud hovertext z to-learn'>Cloud</div>
                 </div>
                 <div className='lt-hover-control'>
-                    <div data-hover="Yet to learn" className='lt-largedata-security hovertext z'>Large Data and Security</div>
+                    <div data-hover="Yet to learn" className='lt-largedata-security hovertext z to-learn'>Large Data and Security</div>
                 </div>
             </div>
             <div className='lt-programming'>NODE.js</div>
