@@ -22,11 +22,11 @@ const Skill = () => {
       setItems({title:['Advance Knowledge', 'Been able to create perfect website and trouleshoot easily']})
     }else if (head== 'JSX'){
       setItems({title:['Advance', 'Built lots of website based on this']})
-    }else if (head== 'Node.js'){
+    }else if (head== 'Nodejs'){
     setItems({title:['Beginner', 'Just started to work in this area']})
-  } else if (head== 'Express.js'){
+  } else if (head== 'Expressjs'){
     setItems({title:['Begineer', 'Just started to learn some basics']})
-  }else if (head== 'Socket.io'){
+  }else if (head== 'Socketio'){
     setItems({title:['Begineer', 'Learning about the instant communication']})
   }
 }
@@ -47,6 +47,24 @@ const Skill = () => {
     }
   }
   const [state, dispatch] = React.useReducer(reducer,{showJS:true, showHTML:true, showCSS:true})
+
+  const reducer1=(state1, action)=>{
+    switch (action.type){
+      case 'Socket':
+        return {
+        showSocket:true, showNode:!state1.showNode, showExpress:!state1.showExpress
+      }
+      case 'Node':
+        return {
+        showSocket:!state1.showSocket, showNode:true, showExpress:!state1.showExpress
+      }
+      case 'Express':
+        return {
+          showSocket:!state1.showSocket, showNode:!state1.showNode, showExpress:true
+      }
+    }
+  }
+  const [state1, dispatch1] = React.useReducer(reducer1,{showSocket:true, showNode:true, showExpress:true})
   const [react, setReact] = React.useState('')
   const [clicked, setClicked] = React.useState(false)
   return (
@@ -110,23 +128,23 @@ const Skill = () => {
           </div>:
           <div className='s-node-subskills'>
             <div className='s-react-relative-card'>
-              <div className='s-html' onClick={()=>[sendItems('Node.js', 'nodeIcon'), dispatch({type:"HTML"})]}>
+              <div className={state1.showNode?'s-html':'s-react-card-dissapear'} onClick={()=>[sendItems('Nodejs', 'nodeIcon'),setClicked(!clicked), dispatch1({type:"Node"})]}>
                 <div className='s-head'>Node.js</div>
                 <img src={nodeIcon} className='s-icon'></img>
                 <button className='btn'>Click</button>
               </div>
-              <div className='s-css-framer-motion' onClick={()=>[sendItems('Express.js', 'expressIcon'), dispatch({type:"CSS"})]}>
+              <div className={state1.showExpress?'s-css-framer-motion':'s-react-card-dissapear'} onClick={()=>[sendItems('Expressjs', 'expressIcon'),setClicked(!clicked), dispatch1({type:"Express"})]}>
                 <div className='s-head'>Express.js</div>
                 <img src={expressIcon} className='s-icon'></img>
                 <button className='btn'>Click</button>
               </div>
-              <div className='s-vanilla-js' onClick={()=>[sendItems('Socket.io', 'socketIcon'), dispatch({type:"JS"})]}>
+              <div className={state1.showSocket?'s-vanilla-js':'s-react-card-dissapear'} onClick={()=>[sendItems('Socketio', 'socketIcon'),setClicked(!clicked), dispatch1({type:"Socket"})]}>
                 <div className='s-head'>Socket.io</div>
                 <img src={socketIcon} className='s-icon' ></img>
                 <button className='btn'>Click</button>
               </div>
             </div>
-            <div className='s-react-absolute-card'>
+            <div className={clicked?'s-react-absolute-card':'s-react-card-dissapear'}>
               {/* <div className='s-react-absolute-left'>
                   <img src="" className='s-react-absolute-icons'></img>
                   <div className='s-react-absolute-head'>{items.head}</div>

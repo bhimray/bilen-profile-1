@@ -74,7 +74,7 @@
     padding: 0rem 3rem;
 }
 .s-react-card-hidden-container{
-    background-color: burlywood;
+    /* background-color: burlywood; */
 }
 .s-react-subskills {
     display: flex;
@@ -137,6 +137,9 @@
     font-weight: 600;
 }
 
+.s-node-subskills {
+    position: relative;
+}
 
 
 @media (max-width: 600px) {
@@ -164,7 +167,7 @@
 
 .s-card-open {
     display: grid;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     padding: 2rem 3rem;
     gap: 2rem
@@ -183,6 +186,7 @@
     padding: 1rem;
     border-radius: 1rem; */
     z-index: 99;
-    bottom: -16rem;
+    bottom: -1rem;
+    position: relative;
 }
 }
