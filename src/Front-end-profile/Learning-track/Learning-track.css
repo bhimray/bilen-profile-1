@@ -130,4 +130,6 @@
 .lt-react-track, .lt-node-track {
     display: grid;
 }
+.hovertext:hover:before,.hovertext-l:hover:before {
+    opacity: 0;
 }
