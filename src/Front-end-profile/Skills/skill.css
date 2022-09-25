@@ -179,9 +179,10 @@
 .s-react-absolute-card {
     /* position: absolute;
     background-color: chocolate;
-    bottom: -11rem;
+    
     padding: 1rem;
     border-radius: 1rem; */
     z-index: 99;
+    bottom: -16rem;
 }
 }

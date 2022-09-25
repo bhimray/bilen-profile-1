@@ -34,19 +34,19 @@ const Skill = () => {
     switch (action.type){
       case 'JS':
         return {
-        showJS:!state.showJS, showHTML:state.showHTML, showCSS:state.showCSS
+        showJS:true, showHTML:!state.showHTML, showCSS:!state.showCSS
       }
       case 'HTML':
         return {
-        showJS:state.showJS, showHTML:!state.showHTML, showCSS:state.showCSS
+        showJS:!state.showJS, showHTML:true, showCSS:!state.showCSS
       }
       case 'CSS':
         return {
-          showJS:state.showJS, showHTML:state.showHTML, showCSS:!state.showCSS
+          showJS:!state.showJS, showHTML:!state.showHTML, showCSS:true
       }
     }
   }
-  const [state, dispatch] = React.useReducer(reducer,{showJS:false, showHTML:false, showCSS:false})
+  const [state, dispatch] = React.useReducer(reducer,{showJS:true, showHTML:true, showCSS:true})
   const [react, setReact] = React.useState('')
   const [clicked, setClicked] = React.useState(false)
   return (
