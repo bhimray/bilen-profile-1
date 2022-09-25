@@ -2,6 +2,7 @@ import './App.css';
 import Introduction from './Front-end-profile/Introduction/Introduction'
 import LearningTrack from './Front-end-profile/Learning-track/Learning-track'
 import Links from './Front-end-profile/Links/Links';
+import Project from './Front-end-profile/Projects/Project';
 import Skill from './Front-end-profile/Skills/Skill';
 // import FrameAndBorder from './Front-end-profile/Frames and aux/FrameAndBorder'
 
@@ -11,7 +12,8 @@ function App() {
       <Introduction/>
       <LearningTrack/>
       <Links/>
-      <Skill/>      
+      <Skill/>  
+      <Project></Project>    
     </div>
   );
 }

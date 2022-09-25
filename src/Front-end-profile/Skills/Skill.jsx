@@ -7,6 +7,7 @@ import htmlIcon from '../../svgIcons/html5.svg'
 
 const Skill = () => {
   const [showCard, setShowCard] = React.useState(true)
+  const [showSkill, setShowSkill] = React.useState({class:"s-skill-level", skill:"React" })
   const [items, setItems] = React.useState({ head:"", icon:"", title:[]})
 
   const sendItems=(head, icon)=>{
@@ -43,7 +44,7 @@ const Skill = () => {
     <div>
       <div className='s-react-wrapper' id="s-react">
         <div className='s-react-card-wrapper'>
-          <div className={showCard?'s-react-card-hidden':'s-react-card-dissapear'} onClick={()=>setShowCard(!showCard)}>
+          <div className={showCard?'s-react-card-hidden':'s-react-card-dissapear'} onClick={()=>[setShowCard(!showCard), setShowSkill({skill:"React", class:"s-skill-level"})]}>
             <div className='s-waterfall plaid-background-waterfall'></div>
             <div className='s-skill'>React</div>
             <div className='s-skill-level'></div>
@@ -52,7 +53,7 @@ const Skill = () => {
             <div className='s-waterfall'>Continuous Learning</div>
             
           </div>
-          <div className={showCard?'s-react-card-hidden':'s-react-card-dissapear'} onClick={()=>setShowCard(!showCard)}>
+          <div className={showCard?'s-react-card-hidden':'s-react-card-dissapear'} onClick={()=>[setShowCard(!showCard), setShowSkill({skill:"Node", class:"s-skill-level-node"})]}>
             <div className='s-waterfall plaid-background-waterfall'></div>
             <div className='s-skill'>Node</div>
             <div className='s-skill-level-node'></div>
@@ -62,8 +63,8 @@ const Skill = () => {
           <div onClick={()=>setShowCard(!showCard)} className='s-react-card-hidden-container'>
             <div className='s-react-card-hidden'>
               <div className='s-waterfall plaid-background-waterfall'></div>
-              <div className='s-skill'>React</div>
-              <div className='s-skill-level'></div>
+              <div className='s-skill'>{showSkill.skill}</div>
+              <div className={showSkill.class}></div>
             </div>
           </div>
           <div className='s-react-subskills'>
@@ -85,11 +86,12 @@ const Skill = () => {
               </div>
             </div>
             <div className='s-react-absolute-card'>
-              <div className='s-react-absolute-left'>
+              {/* <div className='s-react-absolute-left'>
                   <img src="" className='s-react-absolute-icons'></img>
                   <div className='s-react-absolute-head'>{items.head}</div>
-              </div>
+              </div> */}
               <div className='s-react-absolute-right'>
+                <div className='s-react-absolute-head'>{items.head}</div>
                 {
                   items.title.map((list)=><div className='s-react-list'>{list}</div>)
                 }

@@ -27,3 +27,8 @@
 .l-image{
     width:3rem;
 }
+.l-visit{
+    width:fit-content !important;
+    padding:0.5rem !important;
+    color:white !important;
+}

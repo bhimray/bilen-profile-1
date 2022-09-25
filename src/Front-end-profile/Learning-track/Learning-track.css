@@ -1,6 +1,6 @@
 .lt-wrapper {
     display: grid;
-    /* padding: 1rem; */
+    padding: 3rem 0rem;
     width: 100%;
     overflow: hidden;
 }
@@ -69,22 +69,44 @@
     visibility: hidden;
     opacity: 0;
     width: max-content;
-    background-color: black;
+    max-width: 15rem;
+    background-color: #0000002b;
     color: #fff;
     text-align: center;
     border-radius: 5px;
     padding: 3px 0;
-    transition: opacity 0.5s cubic-bezier(0.55, 0.06, 0.68, 0.19);
+    transition: opacity 0.2s cubic-bezier(0.55, 0.06, 0.68, 0.19);
     position: absolute;
     z-index: 1;
     left: 2rem;
-    top: -3rem;
-    box-shadow: -4px 3px 1px 3px sandybrown;
+    top: -4rem;
+    box-shadow: -1px 0px 10px 0px #60e5f470;
+    padding: 0.2rem;
+}
+.hovertext-l:before {
+    content: attr(data-hover);
+    visibility: hidden;
+    opacity: 0;
+    width: max-content;
+    max-width: 15rem;
+    background-color: #0000002b;
+    color: #fff;
+    text-align: center;
+    border-radius: 5px;
+    padding: 3px 0;
+    transition: opacity 0.2s cubic-bezier(0.55, 0.06, 0.68, 0.19);
+    position: absolute;
+    /* z-index: 1; */
+    left: -8rem;
+    top: -5rem;
+    box-shadow: -1px 0px 10px 0px #60e5f470;
+    padding: 0.2rem;
 }
   
-  .hovertext:hover:before {
+  .hovertext:hover:before,.hovertext-l:hover:before {
     opacity: 1;
     visibility: visible;
+    z-index: 99;
    
   }
   .z{

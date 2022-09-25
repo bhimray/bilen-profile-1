@@ -105,7 +105,7 @@
 .s-react-absolute-card {
     position: absolute;
     background-color: chocolate;
-    bottom: -8rem;
+    bottom: -11rem;
     padding: 1rem;
     border-radius: 1rem;
 }
@@ -127,3 +127,12 @@
         transform: translateY(165px);
     }
   }
+
+  .s-react-absolute-right {
+    background-color: #150e5e8a;
+    padding: 2rem;
+    border-radius: 1rem;
+    color: cornsilk;
+    font-size: large;
+    font-weight: 600;
+}

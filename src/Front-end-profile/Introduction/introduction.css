@@ -10,6 +10,13 @@
     
 }
 
+span.i-about-details {
+    font-size: large;
+    font-weight: 600;
+    color: burlywood;
+    mix-blend-mode: color-dodge;
+}
+
 .i-nav{
     border-bottom:2px solid blue;
     font-size: 2rem;

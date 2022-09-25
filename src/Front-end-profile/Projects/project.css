@@ -1,0 +1,53 @@
+.pr-projects {
+    display: flex;
+    flex-direction: row;
+    background-color: rgb(22 23 25 / 32%);
+    gap: 0.2rem;
+    padding: 1rem 2rem;
+}
+.r-project{
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+    background: linear-gradient(#011F5B, #002244);
+
+}
+.r-project:hover {
+    box-shadow: 1px 1px 12px 12px #002244;
+    /* box-shadow: 1px 1px 12px 12px blac; */
+}
+.image-container{
+
+}
+img.r-image{
+    width:15rem;
+    height: 15rem;
+    background-color: blueviolet;
+}
+.project-head{
+    font-size: 2.2rem;
+    font-weight: 800;
+
+}
+.project-details{
+    text-align: right;
+}
+.r-project:hover{
+    /* animation: tile-tilt 1s cubic-bezier(0.4, 0, 1, 1);
+    transition: 0.01s cubic-bezier(0.25, 0.46, 0.45, 0.94); */
+    box-shadow:1px 1px 1px 1px;
+    transform:rotateY(18deg);
+    
+}
+@keyframes tile-tilt {
+    0% {
+        transform: rotateY(0deg);
+    }
+    50%{
+        transform: rotateY(10deg);
+    }
+    100% {
+        transform: rotateY(20deg);
+    }
+  }

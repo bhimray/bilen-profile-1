@@ -13,8 +13,8 @@ const Links = () => {
         <div className='l-image-wrapper'>
           <img src={GitHubIcon} className="l-image"/>
         </div>
-        <a href="">
-          <button className="l-visit">Visit</button>
+        <a href="https://github.com/bilenray">
+          <button className="l-visit btn">Project Store</button>
         </a>
       </div>
       <div className="l-github-card">
@@ -22,8 +22,8 @@ const Links = () => {
         <div className='l-image-wrapper'>
           <img src={LinkedInIcon} className="l-image"/>
         </div>
-        <a href="">
-          <button className="l-visit">Visit</button>
+        <a href="https://www.linkedin.com/in/raybimlendra/">
+          <button className="l-visit btn">Profile</button>
         </a>
       </div>
       <div className="l-github-card">
@@ -31,8 +31,8 @@ const Links = () => {
         <div className='l-image-wrapper'>
           <img src={NetlifyIcon} className="l-image"/>
         </div>
-        <a href="">
-          <button className="l-visit">Visit</button>
+        <a href="https://app.netlify.com/teams/bilenray/overview">
+          <button className="l-visit btn">Deployed Site</button>
         </a>
       </div>
     </div>
