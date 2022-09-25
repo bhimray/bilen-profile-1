@@ -13,15 +13,21 @@ const Skill = () => {
   const sendItems=(head, icon)=>{
     setItems({head:head, icon:icon})
     if (head== 'vanilla JS'){
-      setItems({title:['I know the basics', 'I have done the synchronous and asynchronous functions']})
+      setItems({title:['Intermediate Knowledge', 'Yet, i have not seen any problem in designing the complex work with present knowledge']})
     } else if (head== 'HTML'){
-      setItems({title:['I know the basics', 'I have done the synchronous and asynchronous functions']})
+      setItems({title:['Advance knowledge', 'Done lots of work with react, jsx, as well as html']})
     }else if (head== 'CSS'){
-      setItems({title:['I know the basics', 'I have done the synchronous and asynchronous functions']})
+      setItems({title:['Advance Knowledge', 'Been able to create perfect website and trouleshoot easily']})
     }else if (head== 'JSX'){
       setItems({title:['I know the basics', 'I have done the synchronous and asynchronous functions']})
-    }
+    }else if (head== 'Node.js'){
+    setItems({title:['I know the basics', 'I have done the synchronous and asynchronous functions']})
+  } else if (head== 'Express.js'){
+    setItems({title:['I know the basics', 'I have done the synchronous and asynchronous functions']})
+  }else if (head== 'Socket.io'){
+    setItems({title:['I know the basics', 'I have done the synchronous and asynchronous functions']})
   }
+}
   const reducer=(state, action)=>{
     switch (action.type){
       case 'JS':
@@ -39,12 +45,12 @@ const Skill = () => {
     }
   }
   const [state, dispatch] = React.useReducer(reducer,{showJS:false, showHTML:false, showCSS:false})
-
+  const [react, setReact] = React.useState('')
   return (
     <div>
       <div className='s-react-wrapper' id="s-react">
         <div className='s-react-card-wrapper'>
-          <div className={showCard?'s-react-card-hidden':'s-react-card-dissapear'} onClick={()=>[setShowCard(!showCard), setShowSkill({skill:"React", class:"s-skill-level"})]}>
+          <div className={showCard?'s-react-card-hidden':'s-react-card-dissapear'} onClick={()=>[setShowCard(!showCard), setReact("react"), setShowSkill({skill:"React", class:"s-skill-level"})]}>
             <div className='s-waterfall plaid-background-waterfall'></div>
             <div className='s-skill'>React</div>
             <div className='s-skill-level'></div>
@@ -53,7 +59,7 @@ const Skill = () => {
             <div className='s-waterfall'>Continuous Learning</div>
             
           </div>
-          <div className={showCard?'s-react-card-hidden':'s-react-card-dissapear'} onClick={()=>[setShowCard(!showCard), setShowSkill({skill:"Node", class:"s-skill-level-node"})]}>
+          <div className={showCard?'s-react-card-hidden':'s-react-card-dissapear'} onClick={()=>[setShowCard(!showCard),setReact("node"), setShowSkill({skill:"Node", class:"s-skill-level-node"})]}>
             <div className='s-waterfall plaid-background-waterfall'></div>
             <div className='s-skill'>Node</div>
             <div className='s-skill-level-node'></div>
@@ -67,6 +73,7 @@ const Skill = () => {
               <div className={showSkill.class}></div>
             </div>
           </div>
+          {react == 'react'?
           <div className='s-react-subskills'>
             <div className='s-react-relative-card'>
               <div className='s-html' onClick={()=>[sendItems('HTML', 'htmlIcon'), dispatch({type:"HTML"})]}>
@@ -97,7 +104,38 @@ const Skill = () => {
                 }
               </div>
             </div>
-          </div>
+          </div>:
+          <div className='s-node-subskills'>
+            <div className='s-react-relative-card'>
+              <div className='s-html' onClick={()=>[sendItems('HTML', 'htmlIcon'), dispatch({type:"HTML"})]}>
+                <div className='s-head'>Node.js</div>
+                <img src={htmlIcon} className='s-icon'></img>
+                <button className='btn'>Click</button>
+              </div>
+              <div className='s-css-framer-motion' onClick={()=>[sendItems('CSS', 'cssIcon'), dispatch({type:"CSS"})]}>
+                <div className='s-head'>Express.js</div>
+                <img src={cssIcon} className='s-icon'></img>
+                <button className='btn'>Click</button>
+              </div>
+              <div className='s-vanilla-js' onClick={()=>[sendItems('vanilla JS', 'jsIcon'), dispatch({type:"JS"})]}>
+                <div className='s-head'>Socket.io</div>
+                <img src={jsIcon} className='s-icon' ></img>
+                <button className='btn'>Click</button>
+              </div>
+            </div>
+            <div className='s-react-absolute-card'>
+              {/* <div className='s-react-absolute-left'>
+                  <img src="" className='s-react-absolute-icons'></img>
+                  <div className='s-react-absolute-head'>{items.head}</div>
+              </div> */}
+              <div className='s-react-absolute-right'>
+                <div className='s-react-absolute-head'>{items.head}</div>
+                {
+                  items.title.map((list)=><div className='s-react-list'>{list}</div>)
+                }
+              </div>
+            </div>
+          </div>}
         </div>
       </div>
     </div>

@@ -133,3 +133,21 @@
 .hovertext:hover:before,.hovertext-l:hover:before {
     opacity: 0;
 }
+a {
+    text-decoration: none;
+    color: black;
+    width: fit-content;
+    padding: 0rem;
+}
+.c-me-wrapper {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 20rem);
+    grid-template-columns: repeat(auto, );
+    /* justify-content: flex-start; */
+    /* align-items: center; */
+    gap: 1rem;
+    /* width: 100%; */
+    padding: 2rem;
+    /* text-align: start; */
+}
+  }

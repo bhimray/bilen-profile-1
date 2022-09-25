@@ -2,10 +2,11 @@
     display: grid;
     grid-template-columns: repeat(auto-fill, 20rem);
     grid-template-columns: repeat(auto, );
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     gap:1rem;
     padding:5rem;
+    text-align: start;
 
 }
 .c-medium{

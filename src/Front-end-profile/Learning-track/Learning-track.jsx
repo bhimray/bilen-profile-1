@@ -1,5 +1,6 @@
 import React from 'react'
 import './Learning-track.css'
+
 const LearningTrack = () => {
   return (
     <div className='lt-wrapper' id="lt-wrapper">
