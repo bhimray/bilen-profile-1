@@ -2,7 +2,7 @@ import React from 'react'
 import './Learning-track.css'
 const LearningTrack = () => {
   return (
-    <div className='lt-wrapper'>
+    <div className='lt-wrapper' id="lt-wrapper">
         <div className='plaid-background-lt lt-bg'></div>
         <div className='lt-react-wrapper'>
             <div className='lt-react-track'>

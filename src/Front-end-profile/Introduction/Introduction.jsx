@@ -1,17 +1,22 @@
 import React from 'react'
 import './introduction.css'
+import profile from '../../images/profile.webp'
 import UsersGearSolid from '../../svgIcons/users-gear-solid.svg'
+import {Link} from 'react-scroll'
+import FrameAndBorder from '../Frames and aux/FrameAndBorder'
+
 const Introduction = () => {
   return (
-    <div>
+    <div className='i-wrapper'>
         <div className='i-navigation'>
-            <div className='i-nav'>Links</div>
-            <div className='i-nav'>Projects</div>
-            <div className='i-nav'>Skills</div>
+            <Link to="lt-wrapper" className='i-nav'>Links</Link>
+            <Link to="p-react" className='i-nav'>Projects</Link>
+            <Link to="s-react" className='i-nav'>Skills</Link>
         </div>
         <div className='i-profile-image-container'>
             <div className='i-image-container'>
-                <img src={UsersGearSolid} style={{width:'15rem'}} className='i-profile-imge'/>
+                <img src={profile} className='i-profile-imge'/>
+                <FrameAndBorder className="positioncls"/>
             </div>
             <div className='i-about'>
                 <div className='i-about-name'>Bimlendra Ray</div>

@@ -41,7 +41,7 @@ const Skill = () => {
 
   return (
     <div>
-      <div className='s-react-wrapper'>
+      <div className='s-react-wrapper' id="s-react">
         <div className='s-react-card-wrapper'>
           <div className={showCard?'s-react-card-hidden':'s-react-card-dissapear'} onClick={()=>setShowCard(!showCard)}>
             <div className='s-waterfall plaid-background-waterfall'></div>

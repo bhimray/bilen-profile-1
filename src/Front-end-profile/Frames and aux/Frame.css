@@ -1,0 +1,101 @@
+.frame-container{
+    width: 5rem;
+    height:5rem;
+    background-color: white;
+    position: absolute;
+    overflow: hidden;
+}
+
+.f-border-line-t{
+    background-color:black;
+    position: relative;
+    width:100%;
+    height: 1%;
+}
+.f-moving-line{
+    position: relative;
+    background: linear-gradient(3deg, rgb(199 198 213) 0%, rgb(21 26 133 / 79%) 100%, rgb(212 231 236) 100%);
+    width: 100%;
+    height: 100%;
+    animation: translatex infinite 2s cubic-bezier(0.4, 0, 1, 1);
+    transition: 0.1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+@keyframes translatex {
+    0% {
+        transform: translateX(100px);
+    }
+    
+    100% {
+        transform: translateX(-100px);
+    }
+  }
+
+  .f-border-line-b {
+    background-color: black;
+    position: absolute;
+    width: 100%;
+    height: 1%;
+    bottom: 0rem;
+    /* display: flex; */
+    /* flex-direction: row-reverse; */
+}
+.f-border-line-b>.f-moving-line{
+    animation: translatebx infinite 2s cubic-bezier(0.4, 0, 1, 1);
+}
+@keyframes translatebx {
+    0% {
+        transform: translateX(-100px);
+    }
+    
+    100% {
+        transform: translateX(100px);
+    }
+  }
+
+.f-border-line-l {
+    background-color: black;
+    position: absolute;
+    width: 100%;
+    height: 1%;
+    bottom: 0rem;
+    /* display: flex; */
+    /* flex-direction: row-reverse; */
+    transform: rotateZ(90);
+}
+.f-border-line-l {
+    background-color: black;
+    position: absolute;
+    width: 100%;
+    height: 1%;
+    bottom: 50%;
+    right: 50%;
+    /* display: flex; */
+    /* flex-direction: row-reverse; */
+    /* transform: rotateZ(); */
+    transform: rotateZ(90deg);
+}
+.f-border-line-r {
+    background-color: black;
+    position: absolute;
+    width: 100%;
+    height: 1%;
+    bottom: 50%;
+    left: 50%;
+    /* display: flex; */
+    /* flex-direction: row-reverse; */
+    /* transform: rotateZ(); */
+    transform: rotateZ(90deg);
+}
+
+.f-border-line-r>.f-moving-line{
+    animation: translaterx infinite 2s cubic-bezier(0.4, 0, 1, 1);
+}
+@keyframes translaterx {
+    0% {
+        transform: translateX(-100px);
+    }
+    
+    100% {
+        transform: translateX(100px);
+    }
+  }

@@ -52,14 +52,14 @@
       linear-gradient(red, transparent),
       linear-gradient(to top left, lime, transparent),
       linear-gradient(to top right, blue, transparent);
-  background-blend-mode: screen;
+  background-blend-mode: color-dodge;
 }
 .plaid-background-lt {
   /* filter: blur(22px); */
-  background: repeating-linear-gradient( 216deg, transparent 0, transparent 38%, #000203 0, black 54% );
-  background-blend-mode: multiply;
+  background: repeating-linear-gradient( 216deg, transparent 0, transparent 38%, #0002030a 0, #000000d4 54% );  background-blend-mode: multiply;
   background-size: 484px 336px;
   filter: blur(77px);
+  z-index: -1;
 }
 
 .plaid-background {
