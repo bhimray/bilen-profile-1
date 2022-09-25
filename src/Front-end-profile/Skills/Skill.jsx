@@ -3,7 +3,9 @@ import './skill.css'
 import jsIcon from '../../svgIcons/js.svg'
 import cssIcon from '../../svgIcons/css3-alt.svg'
 import htmlIcon from '../../svgIcons/html5.svg'
-
+import socketIcon from '../../svgIcons/bolt-solid.svg'
+import expressIcon from '../../svgIcons/express-js.svg'
+import nodeIcon from '../../svgIcons/node-letter.svg'
 
 const Skill = () => {
   const [showCard, setShowCard] = React.useState(true)
@@ -19,13 +21,13 @@ const Skill = () => {
     }else if (head== 'CSS'){
       setItems({title:['Advance Knowledge', 'Been able to create perfect website and trouleshoot easily']})
     }else if (head== 'JSX'){
-      setItems({title:['I know the basics', 'I have done the synchronous and asynchronous functions']})
+      setItems({title:['Advance', 'Built lots of website based on this']})
     }else if (head== 'Node.js'){
-    setItems({title:['I know the basics', 'I have done the synchronous and asynchronous functions']})
+    setItems({title:['Beginner', 'Just started to work in this area']})
   } else if (head== 'Express.js'){
-    setItems({title:['I know the basics', 'I have done the synchronous and asynchronous functions']})
+    setItems({title:['Begineer', 'Just started to learn some basics']})
   }else if (head== 'Socket.io'){
-    setItems({title:['I know the basics', 'I have done the synchronous and asynchronous functions']})
+    setItems({title:['Begineer', 'Learning about the instant communication']})
   }
 }
   const reducer=(state, action)=>{
@@ -46,6 +48,7 @@ const Skill = () => {
   }
   const [state, dispatch] = React.useReducer(reducer,{showJS:false, showHTML:false, showCSS:false})
   const [react, setReact] = React.useState('')
+  const [clicked, setClicked] = React.useState(false)
   return (
     <div>
       <div className='s-react-wrapper' id="s-react">
@@ -76,23 +79,23 @@ const Skill = () => {
           {react == 'react'?
           <div className='s-react-subskills'>
             <div className='s-react-relative-card'>
-              <div className='s-html' onClick={()=>[sendItems('HTML', 'htmlIcon'), dispatch({type:"HTML"})]}>
+              <div className={state.showHTML?'s-html':'s-react-card-dissapear'} onClick={()=>[sendItems('HTML', 'htmlIcon'), dispatch({type:"HTML"}), setClicked(!clicked)]}>
                 <div className='s-head'>HTML</div>
                 <img src={htmlIcon} className='s-icon'></img>
                 <button className='btn'>Click</button>
               </div>
-              <div className='s-css-framer-motion' onClick={()=>[sendItems('CSS', 'cssIcon'), dispatch({type:"CSS"})]}>
+              <div className={state.showCSS?'s-css-framer-motion':'s-react-card-dissapear'} onClick={()=>[sendItems('CSS', 'cssIcon'), dispatch({type:"CSS"}), setClicked(!clicked)]}>
                 <div className='s-head'>CSS</div>
                 <img src={cssIcon} className='s-icon'></img>
                 <button className='btn'>Click</button>
               </div>
-              <div className='s-vanilla-js' onClick={()=>[sendItems('vanilla JS', 'jsIcon'), dispatch({type:"JS"})]}>
+              <div className={state.showJS?'s-vanilla-js':'s-react-card-dissapear'} onClick={()=>[sendItems('vanilla JS', 'jsIcon'), dispatch({type:"JS"}), setClicked(!clicked)]}>
                 <div className='s-head'>JS</div>
                 <img src={jsIcon} className='s-icon' ></img>
                 <button className='btn'>Click</button>
               </div>
             </div>
-            <div className='s-react-absolute-card'>
+            <div className={clicked?'s-react-absolute-card':'s-react-card-dissapear'}>
               {/* <div className='s-react-absolute-left'>
                   <img src="" className='s-react-absolute-icons'></img>
                   <div className='s-react-absolute-head'>{items.head}</div>
@@ -107,19 +110,19 @@ const Skill = () => {
           </div>:
           <div className='s-node-subskills'>
             <div className='s-react-relative-card'>
-              <div className='s-html' onClick={()=>[sendItems('HTML', 'htmlIcon'), dispatch({type:"HTML"})]}>
+              <div className='s-html' onClick={()=>[sendItems('Node.js', 'nodeIcon'), dispatch({type:"HTML"})]}>
                 <div className='s-head'>Node.js</div>
-                <img src={htmlIcon} className='s-icon'></img>
+                <img src={nodeIcon} className='s-icon'></img>
                 <button className='btn'>Click</button>
               </div>
-              <div className='s-css-framer-motion' onClick={()=>[sendItems('CSS', 'cssIcon'), dispatch({type:"CSS"})]}>
+              <div className='s-css-framer-motion' onClick={()=>[sendItems('Express.js', 'expressIcon'), dispatch({type:"CSS"})]}>
                 <div className='s-head'>Express.js</div>
-                <img src={cssIcon} className='s-icon'></img>
+                <img src={expressIcon} className='s-icon'></img>
                 <button className='btn'>Click</button>
               </div>
-              <div className='s-vanilla-js' onClick={()=>[sendItems('vanilla JS', 'jsIcon'), dispatch({type:"JS"})]}>
+              <div className='s-vanilla-js' onClick={()=>[sendItems('Socket.io', 'socketIcon'), dispatch({type:"JS"})]}>
                 <div className='s-head'>Socket.io</div>
-                <img src={jsIcon} className='s-icon' ></img>
+                <img src={socketIcon} className='s-icon' ></img>
                 <button className='btn'>Click</button>
               </div>
             </div>
