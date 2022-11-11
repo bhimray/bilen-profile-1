@@ -39,6 +39,27 @@ const Project = () => {
           <div className="project-details">Finally, My profile itself is great example of the knowledge of react. In all these mentioned project i might not have used some other concept like React Query
           .However, i am well verse in that too. State management and error handling is also well known to me. I have done some other small project which you can see on my GitHub profile.</div>
         </div>
+        <div className="r-project">
+          <div className="image-container">
+            <img src={codeForkIcon} alt="" className='r-image' />
+          </div>
+          <div className="project-head">Employee Tracker</div>
+          <div className="project-details">This is FULL STACK WEB APP, it is created using REACT, Apollo client, Node.js,GraphQl and Mongoose. This app keep the daily records of the employee working on hourly basis and paid accordingly. This app allows the admin to record break time, leave time, launch time, working time and also calculate the earned money on the basis of working time on that same day. This app also allows the CRUD operation. Moreover, provide the employee to see their working details on their profile. For that secure login and signup system is created.</div>
+        </div>
+        <div className="r-project">
+          <div className="image-container">
+            <img src={codeForkIcon} alt="" className='r-image' />
+          </div>
+          <div className="project-head">CMS for Dry cleaner</div>
+          <div className="project-details">This project created a SIMPLE CMS system for the dry cleaner project. This one allows the owner of the website create container for offers or adding some additional features without having to code or needing to contact developers for simple work.</div>
+        </div>
+        <div className="r-project">
+          <div className="image-container">
+            <img src={codeForkIcon} alt="" className='r-image' />
+          </div>
+          <div className="project-head">MyOG App</div>
+          <div className="project-details">ONGOING PROJECT. This project is just like uber which will fetch location data from google map api and user details to provide service from nearby service provider.</div>
+        </div>
       </div>
     </div>
   )
