@@ -22,11 +22,13 @@
     justify-content: flex-end;
     gap: 0.5rem;
     padding: 4rem 1rem;
+   
     position: relative;
     background: rgb(2,0,36);
     background: linear-gradient(121deg, rgba(2,0,36,1) 2%, rgba(10,11,31,0.7906512946975666) 100%, rgba(0,212,255,1) 100%);
 }
 .lt-node-wrapper{
+   
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
@@ -54,12 +56,18 @@
 .lt-composition-advance-hooks, .lt-react-query-api-call{
     background-color: #200820;
     padding: 1rem 2rem;
+    border-radius: 0.5rem;
+    border: 0.1rem solid yellow;
+    cursor:pointer;
     
 }
 .lt-basics, .lt-crud,.lt-socket,.lt-apicall-handle,
 .lt-nosql-sql,.lt-cloud,.lt-largedata-security{
     background-color: #200820;
     padding: 1rem 2rem;
+    border-radius: 0.5rem;
+    border: 0.1rem solid yellow;
+    cursor:pointer;
 }
 .lt-hover-control{
     position: relative;
@@ -114,10 +122,10 @@
   }
   .z:hover{
     zoom:2rem;
-    box-shadow: 2px 2px 2px;
+    /* box-shadow: 2px 2px 2px; */
   }
 .to-learn{
-    color:#200820 !important;
+    /* color:#200820 !important; */
 }
 
   @media (max-width: 600px) {

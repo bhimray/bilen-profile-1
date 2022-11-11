@@ -3,10 +3,10 @@ import './Frame.css'
 
 const FrameAndBorder = ({className=""}) => {
   return (
-    <div className={`frame-container ${className}`}>
-        <div className="f-border-line-t">
+    <div >
+        {/* <div className="f-border-line-t">
             <div className="f-moving-line"></div>
-        </div>
+        </div>className={`frame-container ${className}`}
         <div className="f-border-line-b">
             <div className="f-moving-line"></div>
         </div>
@@ -15,7 +15,7 @@ const FrameAndBorder = ({className=""}) => {
         </div>
         <div className="f-border-line-r">
             <div className="f-moving-line"></div>
-        </div>
+        </div> */}
     </div>
   )
 }

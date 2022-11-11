@@ -1,7 +1,16 @@
 .App {
   text-align: center;
 }
-
+:root {
+--primary-light: #8abdff;
+--primary: #6d5dfc;
+--primary-dark: #5b0eeb;
+--white: #ffffff;
+--greyLight-1: #e4ebf5;
+--greyLight-2: #c8d0e7;
+--greyLight-3: #bec8e4;
+--greyDark: #9baacf;
+}
 .App-logo {
   height: 40vmin;
   pointer-events: none;
@@ -46,8 +55,11 @@
     transform: rotate(360deg);
   }
 }
-
 .spectrum-background {
+  background: #001C44;
+}
+/* .spectrum-background {
+  background: linear-gradient(#FEA837, #DE741C, #B85B56, #84495F,#593E67);
   background:
       linear-gradient(red, transparent),
       linear-gradient(to top left, lime, transparent),
@@ -55,14 +67,14 @@
   background-blend-mode: color-dodge;
 }
 .plaid-background-lt {
-  /* filter: blur(22px); */
+  filter: blur(22px); 
   background: repeating-linear-gradient( 216deg, transparent 0, transparent 38%, #0002030a 0, #000000d4 54% );  background-blend-mode: multiply;
   background-size: 484px 336px;
   filter: blur(77px);
   z-index: -1;
 }
 
-.plaid-background {
+/* .plaid-background {
   filter:blur(212px);
   background:
       repeating-linear-gradient(
@@ -71,7 +83,7 @@
           transparent 25%,
           dodgerblue 0,
           dodgerblue 50%
-     );
+     ); */
      /* repeating-linear-gradient(
           45deg,
           transparent 0,
@@ -84,7 +96,7 @@
           transparent 25%,
           gold 0,
           gold 50%
-      ), white; */
+      ), white;
   background-blend-mode: multiply;
   background-size: 100px 100px;
 }
@@ -98,8 +110,8 @@
 }
 
 .plaid-background-waterfall {
-  /* filter: blur(212px); */
+   filter: blur(212px); 
   background: repeating-linear-gradient( 90deg, transparent 0, transparent 38%, rgb(3 1 24 / 15%) 0, rgb(0 0 0)50% );  background-blend-mode: multiply;
   background-size: 13px 19px;
-}
+} */
 

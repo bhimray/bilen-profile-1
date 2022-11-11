@@ -5,15 +5,18 @@
     align-items: center;
     padding: 5rem;
 }
-.l-github-card{
+.l-github-card {
     display: grid;
-    gap:1rem;
-    padding:2rem 3rem;
-    background-color: #02021670;
+    gap: 1rem;
+    padding: 2rem 3rem;
+    background: linear-gradient(to top, rgb(3 1 24 / 8%), rgb(3 1 24 / 25%));
     justify-content: center;
     align-items: center;
-    border-radius:1rem;
-
+    border-radius: 1rem;
+    border: 2px solid #200820;
+    border-radius: 2rem;
+    box-shadow: 1px 8px 20px 0px rgb(3 1 24), inset -2px -7px 9px 0px rgb(3 1 24);
+    color: gray;
 }
 .l-image-wrapper{
     display: flex;

@@ -14,6 +14,9 @@
     align-items: center;
     padding: 1rem;
     background: linear-gradient(#011F5B, #002244);
+    border: 2px solid #0000ff;
+    border-radius: 2rem;
+    box-shadow: inset 1px 8px 20px 0px rgb(2 0 36), inset -2px -7px 9px 0px #0000ff;
 
 }
 .r-project:hover {
@@ -47,7 +50,7 @@ img.r-image {
     /* animation: tile-tilt 1s cubic-bezier(0.4, 0, 1, 1);
     transition: 0.01s cubic-bezier(0.25, 0.46, 0.45, 0.94); */
     box-shadow:1px 1px 1px 1px;
-    transform:rotateY(18deg);
+    /* transform:rotateY(18deg); */
     
 }
 @keyframes tile-tilt {

@@ -16,7 +16,8 @@ const Introduction = () => {
         <div className='i-profile-image-container'>
             <div className='i-image-container'>
                 <img src={profile} className='i-profile-imge'/>
-                <FrameAndBorder className="positioncls"/>
+                <div className="circle__back-1 play"></div>
+                <div className="circle__back-2 play"></div>
             </div>
             <div className='i-about'>
                 <div className='i-about-name'>Bimlendra Ray</div>

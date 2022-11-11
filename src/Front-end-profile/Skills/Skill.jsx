@@ -6,6 +6,7 @@ import htmlIcon from '../../svgIcons/html5.svg'
 import socketIcon from '../../svgIcons/bolt-solid.svg'
 import expressIcon from '../../svgIcons/express-js.svg'
 import nodeIcon from '../../svgIcons/node-letter.svg'
+import wave from '../../svgIcons/wave.svg'
 
 const Skill = () => {
   const [showCard, setShowCard] = React.useState(true)
@@ -72,18 +73,22 @@ const Skill = () => {
       <div className='s-react-wrapper' id="s-react">
         <div className='s-react-card-wrapper'>
           <div className={showCard?'s-react-card-hidden':'s-react-card-dissapear'} onClick={()=>[setShowCard(!showCard), setReact("react"), setShowSkill({skill:"React", class:"s-skill-level"})]}>
-            <div className='s-waterfall plaid-background-waterfall'></div>
+            {/* <div className='s-waterfall plaid-background-waterfall'></div> */}
             <div className='s-skill'>React</div>
-            <div className='s-skill-level'></div>
+            <div className='s-skill-level'>
+              <img src={wave} alt="" className="wave-svg" />
+            </div>
           </div>
-          <div className={showCard?'s-react-card-hidden s-react-card-hidden-letter':'s-react-card-dissapear'} onClick={()=>setShowCard(!showCard)}>
+          {/* <div className={showCard?'s-react-card-hidden s-react-card-hidden-letter':'s-react-card-dissapear'} onClick={()=>setShowCard(!showCard)}>
             <div className='s-waterfall'>Continuous Learning</div>
             
-          </div>
+          </div> */}
           <div className={showCard?'s-react-card-hidden':'s-react-card-dissapear'} onClick={()=>[setShowCard(!showCard),setReact("node"), setShowSkill({skill:"Node", class:"s-skill-level-node"})]}>
-            <div className='s-waterfall plaid-background-waterfall'></div>
+            {/* <div className='s-waterfall plaid-background-waterfall'></div> */}
             <div className='s-skill'>Node</div>
-            <div className='s-skill-level-node'></div>
+            <div className='s-skill-level-node'>
+              <img src={wave} alt="" className="wave-svg" />
+            </div>
           </div>
         </div>
         <div  className={showCard? 's-react-card-dissapear':'s-card-open'}>
