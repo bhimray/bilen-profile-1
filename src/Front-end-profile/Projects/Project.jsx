@@ -60,6 +60,13 @@ const Project = () => {
           <div className="project-head">MyOG App</div>
           <div className="project-details">ONGOING PROJECT. This project is just like uber which will fetch location data from google map api and user details to provide service from nearby service provider.</div>
         </div>
+        <div className="r-project">
+          <div className="image-container">
+            <img src={codeForkIcon} alt="" className='r-image' />
+          </div>
+          <div className="project-head">Lucient Picture</div>
+          <div className="project-details">This is a dynamic landing page created using Next.js and Typescript. This landing page have hash link and optimized image.</div>
+        </div>
       </div>
     </div>
   )
