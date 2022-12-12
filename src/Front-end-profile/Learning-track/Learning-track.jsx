@@ -8,16 +8,22 @@ const LearningTrack = () => {
         <div className='lt-react-wrapper'>
             <div className='lt-react-track'>
                 <div className='lt-hover-control'>
-                    <div data-hover="From basic to advance" className='lt-html-css-js hovertext z'>HTML</div>
+                    <div data-hover="HMTL and JSX" className='lt-html-css-js hovertext z'>HTML</div>
                 </div>
                 <div className='lt-hover-control'>
-                    <div data-hover="Fundamental concept as well as jsx" className='lt-react-concept-jsx hovertext z'>CSS</div>
+                    <div data-hover="CSS and Styled Component for styling" className='lt-react-concept-jsx hovertext z'>CSS</div>
                 </div>
                 <div className='lt-hover-control'>
-                    <div data-hover="All the useful react hooks" className='lt-hooks hovertext z'>JS</div>
+                    <div data-hover="Javascript" className='lt-hooks hovertext z'>JS</div>
                 </div>
                 <div className='lt-hover-control'>
-                    <div data-hover="Ways to pass value in child" className='lt-props-drilling hovertext z'>REACT.js</div>
+                    <div data-hover="Intermediate to Advance" className='lt-props-drilling hovertext z'>REACT.js</div>
+                </div>
+                <div className='lt-hover-control'>
+                    <div data-hover="Begineer Level" className='lt-props-drilling hovertext z'>TYPESCRIPT</div>
+                </div>
+                <div className='lt-hover-control'>
+                    <div data-hover="SSG and basics" className='lt-props-drilling hovertext z'>NEXT.js</div>
                 </div>
                 {/* <div className='lt-hover-control'>
                     <div data-hover="Optimized way and advance hooks for better performance" className='lt-composition-advance-hooks hovertext z'></div>
@@ -40,13 +46,13 @@ const LearningTrack = () => {
                     <div data-hover="Perform the crud operation" className='lt-crud hovertext z'>Express.js</div>
                 </div>
                 <div className='lt-hover-control'>
-                    <div data-hover="Instant connection" className='lt-socket hovertext z'>Socket.io</div>
+                    <div data-hover="Instant connection for chat app and notification" className='lt-socket hovertext z'>Socket.io</div>
                 </div>
                 <div className='lt-hover-control'>
-                    <div data-hover="Yet to learn in complete" className='lt-apicall-handle hovertext z to-learn'>GraphQl</div>
+                    <div data-hover="Complete GraphQl Api" className='lt-apicall-handle hovertext z to-learn'>GraphQl</div>
                 </div>
                 <div className='lt-hover-control'>
-                    <div data-hover="Only basics of MongoDB and Learning" className='lt-nosql-sql hovertext z to-learn'>NO-SQL (Mongoose)</div>
+                    <div data-hover="Database using mongoose" className='lt-nosql-sql hovertext z to-learn'>NO-SQL (Mongoose)</div>
                 </div>
                 {/* <div className='lt-hover-control'>
                     <div data-hover="Yet to learn" className='lt-cloud hovertext z to-learn'></div>
