@@ -33,6 +33,30 @@ const capabilities = [
 
 const projects = [
   {
+    id: 'autonomous-systems',
+    title: 'Autonomous Systems Project Portfolio',
+    overview:
+      'Project work around autonomous vehicles, navigation, control integration, and system-level autonomy pipelines.',
+    platform: 'Autonomous systems engineering',
+    problem:
+      'Autonomous systems need reliable coordination between perception, planning, and control to operate safely in uncertain environments.',
+    approach:
+      'Developed autonomy-oriented project work spanning navigation, closed-loop control, robotics simulation, and integration across the system stack.',
+    architecture: 'Perception -> Estimation -> Planning -> Control -> Validation',
+    technologies: ['Python', 'ROS', 'Gazebo', 'Quanser QCar', 'Optimization', 'Control design'],
+    features: [
+      'System-level autonomy thinking',
+      'Integrated planning and control workflows',
+      'Simulation-first validation',
+      'Robotics deployment mindset',
+    ],
+    results: [
+      'Established a project base in autonomous systems engineering.',
+      'Built experience connecting controls, robotics, and validation workflows.',
+    ],
+    links: ['GitHub (placeholder)', 'System diagram', 'Project video placeholder'],
+  },
+  {
     id: 'av',
     title: 'Autonomous Vehicle Navigation and Control System',
     overview:
@@ -57,6 +81,30 @@ const projects = [
       'Integration of perception and control pipelines',
     ],
     links: ['GitHub (placeholder)', 'Technical report', 'Simulation demo video'],
+  },
+  {
+    id: 'deepc-v2v',
+    title: 'V2V Communication for Autonomous Vehicles Using DeePC',
+    overview:
+      'Ongoing work on vehicle-to-vehicle communication and data-enabled predictive control for autonomous vehicle coordination.',
+    platform: 'Current ongoing work',
+    problem:
+      'Connected autonomous vehicles must exchange information reliably and use it in closed-loop control to improve coordination and decision-making.',
+    approach:
+      'Exploring DeePC-based formulations for autonomous vehicle coordination under V2V communication constraints, with emphasis on closed-loop behavior and robustness.',
+    architecture: 'Communication -> Shared data -> DeePC optimization -> Control action -> Vehicle response',
+    technologies: ['Python', 'DeePC', 'Optimization', 'Autonomous vehicles', 'V2V communication'],
+    features: [
+      'Data-enabled predictive control workflow',
+      'Connected-vehicle coordination',
+      'Closed-loop decision integration',
+      'Robust autonomous behavior focus',
+    ],
+    results: [
+      'Current ongoing work in autonomous vehicle coordination and control.',
+      'Expands the portfolio from standalone navigation to connected autonomy.',
+    ],
+    links: ['Research notes placeholder', 'Simulation placeholder', 'Technical write-up placeholder'],
   },
   {
     id: 'sim',
@@ -90,24 +138,54 @@ const projects = [
     results: ['Applications include drone swarms, robot fleets, and cooperative autonomous vehicles.'],
     links: ['GitHub (placeholder)', 'Coordination diagram', 'Research note placeholder'],
   },
+  {
+    id: 'composite',
+    title: 'Composite Material Review Study',
+    overview:
+      'Undergraduate project work involving a review paper on composite materials.',
+    platform: 'Undergraduate project work',
+    problem:
+      'Engineering material selection requires understanding the tradeoffs and performance characteristics of composite material systems.',
+    approach:
+      'Conducted a structured review of composite-material behavior, performance, and engineering relevance as part of undergraduate work.',
+    technologies: ['Mechanical engineering fundamentals', 'Technical review', 'Material analysis'],
+    features: ['Literature review', 'Engineering evaluation', 'Technical synthesis'],
+    results: [
+      'Built a stronger analytical foundation for later systems and controls work.',
+      'Added formal technical writing and review experience to the portfolio.',
+    ],
+    links: ['Review paper placeholder', 'Summary diagram placeholder'],
+  },
 ];
 
-const experiences = [
+const researchExperience = {
+  role: 'V2V Communication for Autonomous Vehicles Using DeePC',
+  org: 'Current Ongoing Work',
+  period: 'Current',
+  overview:
+    'Current work focused on connected autonomous vehicles, data-enabled predictive control, and communication-aware closed-loop coordination.',
+  bullets: [
+    'Focus areas: V2V communication, DeePC, autonomous vehicle coordination, robust closed-loop behavior',
+    'Extends the control portfolio from model-based autonomy toward communication-enabled autonomy',
+    'Built on coursework in robust control, optimal control, optimization, robot control, and vehicle dynamics',
+  ],
+};
+
+const industryExperiences = [
   {
-    type: 'Research',
-    role: 'Autonomous Systems Research',
-    org: 'University of Texas at Dallas',
-    period: 'Current',
+    role: 'Professional Experience',
+    org: 'Silicon Soft Company',
+    period: 'Earlier experience',
     overview:
-      'Graduate research focused on autonomous vehicles, robot control, navigation and motion planning, and multi-agent systems.',
+      'Technical and engineering work prior to graduate study. The exact title and dates were not recoverable from the locally extracted resume text.',
     bullets: [
-      'Coursework: Robust Control, Optimal Control, Optimization, Robot Control, Vehicle Dynamics',
-      'Research tools: Quanser QCar, ROS, Gazebo, MoveIt, Docker, Python, TensorFlow',
+      'Included applied technical problem-solving in a professional company environment.',
+      'Positioned here as prior engineering experience referenced in the resume.',
+      'Can be tightened further once the exact role title and dates are confirmed.',
     ],
   },
   {
-    type: 'Industry',
-    role: 'Maintenance Engineer Trainee',
+    role: 'Maintenance Engineer (Trainee)',
     org: 'Gorkha Brewery Pvt. Ltd. (Carlsberg Group)',
     period: 'Jul 2021 - Dec 2021',
     overview:
@@ -116,7 +194,8 @@ const experiences = [
       'Conducted root-cause analysis on production issues.',
       'Developed Kaizen-based process improvement strategies.',
       'Implemented design modification that increased annual output by approximately 0.12 million bottles.',
-      'Skills applied: Industrial automation, data analysis, process optimization, manufacturing engineering',
+      'Performed extended data acquisition and trend analysis to identify system-level energy losses and recommend efficiency improvements.',
+      'Awarded Kaizen Star of the Month in November 2021.',
     ],
   },
 ];
@@ -163,6 +242,7 @@ function App() {
         <nav className="topnav">
           <a href="#capabilities">Capabilities</a>
           <a href="#projects">Projects</a>
+          <a href="#research">Research</a>
           <a href="#experience">Experience</a>
           <a href="#stack">Stack</a>
           <a href="#contact">Contact</a>
@@ -337,18 +417,44 @@ function App() {
           <ProjectObservatory />
         </section>
 
-        <section className="section experience-section" id="experience">
+        <section className="section experience-section" id="research">
           <div className="section-heading">
-            <p className="section-kicker">Research & Experience</p>
-            <h2>Graduate research depth with real industrial problem-solving experience.</h2>
+            <p className="section-kicker">Research</p>
+            <h2>Current work on connected autonomous vehicles and DeePC-driven control.</h2>
           </div>
 
           <div className="timeline">
-            {experiences.map((item) => (
-              <article className="timeline-item" key={item.role}>
+            <article className="timeline-item">
+              <div className="timeline-top">
+                <div>
+                  <p>Research</p>
+                  <h3>{researchExperience.role}</h3>
+                  <strong className="timeline-org">{researchExperience.org}</strong>
+                </div>
+                <span>{researchExperience.period}</span>
+              </div>
+              <p className="timeline-summary">{researchExperience.overview}</p>
+              <ul>
+                {researchExperience.bullets.map((bullet) => (
+                  <li key={bullet}>{bullet}</li>
+                ))}
+              </ul>
+            </article>
+          </div>
+        </section>
+
+        <section className="section experience-section" id="experience">
+          <div className="section-heading">
+            <p className="section-kicker">Experience</p>
+            <h2>Professional engineering experience across company and manufacturing environments.</h2>
+          </div>
+
+          <div className="timeline">
+            {industryExperiences.map((item) => (
+              <article className="timeline-item" key={`${item.org}-${item.period}`}>
                 <div className="timeline-top">
                   <div>
-                    <p>{item.type}</p>
+                    <p>Industry</p>
                     <h3>{item.role}</h3>
                     <strong className="timeline-org">{item.org}</strong>
                   </div>
