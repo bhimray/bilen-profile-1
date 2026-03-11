@@ -321,7 +321,7 @@ function App() {
               </div>
             </div>
 
-            <div className="viewer-strip">
+            {/* <div className="viewer-strip">
               <div className="viewer-card">
                 <span className="meta-label">Total Viewers</span>
                 <strong>{viewerCounter.loading ? '...' : viewerCounter.total}</strong>
@@ -334,11 +334,11 @@ function App() {
                 <span className="meta-label">Yearly</span>
                 <strong>{viewerCounter.loading ? '...' : viewerCounter.yearly}</strong>
               </div>
-            </div>
+            </div> */}
 
-            <p className="viewer-note">Counts are stored in this browser and persist unless local browser data is cleared.</p>
+            {/* <p className="viewer-note">Counts are stored in this browser and persist unless local browser data is cleared.</p>
 
-            {viewerCounter.error ? <p className="viewer-note">{viewerCounter.error}</p> : null}
+            {viewerCounter.error ? <p className="viewer-note">{viewerCounter.error}</p> : null} */}
           </div>
 
           <div className="hero-visual">
