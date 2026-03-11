@@ -258,6 +258,7 @@ a {
 .focus-card,
 .project-detail-card,
 .timeline-item,
+.concentration-card,
 .education-card,
 .skills-card,
 .contact-panel,
@@ -352,6 +353,7 @@ a {
 }
 
 .focus-card,
+.concentration-card,
 .education-card,
 .skills-card,
 .contact-panel {
@@ -744,6 +746,115 @@ a {
   margin-top: 1rem;
 }
 
+.concentration-card {
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at top right, rgba(255, 209, 102, 0.16), transparent 24%),
+    radial-gradient(circle at bottom left, rgba(100, 215, 196, 0.14), transparent 26%),
+    var(--panel);
+}
+
+.concentration-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 28px 28px;
+  mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.75), transparent 95%);
+  pointer-events: none;
+}
+
+.concentration-header,
+.concentration-summary,
+.concentration-grid {
+  position: relative;
+  z-index: 1;
+}
+
+.concentration-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: flex-start;
+}
+
+.concentration-badge {
+  min-width: 16rem;
+  padding: 1rem 1.1rem;
+  border-radius: 1.1rem;
+  border: 1px solid rgba(255, 209, 102, 0.22);
+  background: rgba(255, 209, 102, 0.08);
+}
+
+.concentration-badge span,
+.concentration-cluster > span {
+  color: var(--accent);
+  font-size: 0.78rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.concentration-badge strong {
+  display: block;
+  margin-top: 0.55rem;
+  color: #fff2c7;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.concentration-summary {
+  max-width: 56rem;
+  margin: 1.15rem 0 0;
+  color: var(--muted);
+  line-height: 1.75;
+}
+
+.concentration-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.concentration-cluster {
+  padding: 1.1rem;
+  border-radius: 1.25rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.course-stack {
+  display: grid;
+  gap: 0.75rem;
+  margin-top: 0.9rem;
+}
+
+.course-tile {
+  padding: 1rem;
+  border-radius: 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background:
+    linear-gradient(135deg, rgba(100, 215, 196, 0.08), rgba(255, 255, 255, 0.02)),
+    rgba(255, 255, 255, 0.03);
+}
+
+.course-tile strong {
+  display: block;
+  font-size: 1rem;
+  line-height: 1.45;
+  color: #eef6ff;
+}
+
+.course-tile p {
+  margin: 0.45rem 0 0;
+  color: var(--muted);
+  font-size: 0.88rem;
+  line-height: 1.5;
+}
+
 .education-entry + .education-entry {
   margin-top: 1.4rem;
 }
@@ -821,6 +932,7 @@ a {
   .project-expanded-grid,
   .asset-row,
   .observatory-grid,
+  .concentration-grid,
   .education-skills,
   .education-philosophy,
   .contact-grid,
@@ -849,6 +961,15 @@ a {
 
   .viewer-strip {
     grid-template-columns: 1fr;
+  }
+
+  .concentration-header {
+    flex-direction: column;
+  }
+
+  .concentration-badge {
+    min-width: 0;
+    width: 100%;
   }
 
   .project-gallery {

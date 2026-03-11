@@ -311,6 +311,40 @@ const researchInterests = [
   'Robust Autonomous Systems',
 ];
 
+const utdConcentration = {
+  title: 'Dynamic Systems and Control Concentration',
+  institution: 'The University of Texas at Dallas',
+  summary:
+    'Graduate coursework centered on modeling, optimization, feedback systems, robotics, and vehicle dynamics for autonomous and control-intensive engineering work.',
+  clusters: [
+    {
+      label: 'Modeling and Analysis',
+      courses: [
+        'Engineering Modeling and Simulation',
+        'Linear System',
+        'Vehicle Dynamic System and Control',
+      ],
+    },
+    {
+      label: 'Optimization and Control',
+      courses: [
+        'Engineering Optimization',
+        'Model Predictive Control',
+        'Optimal Control And Dynamic Programming',
+        'Robust Control',
+      ],
+    },
+    {
+      label: 'Robotics and Intelligent Systems',
+      courses: [
+        'Multi-agent Robotics System and Control',
+        'Robotics Manipulation and Navigation',
+        'Soft Robotics',
+      ],
+    },
+  ],
+};
+
 const philosophyPoints = [
   'Engineering credibility comes from closed-loop thinking: sensing, estimation, planning, control, and validation must work as one system.',
   'Simulation should reduce deployment risk, not just produce attractive demos.',
@@ -651,6 +685,37 @@ function App() {
                 <span className="chip" key={item}>
                   {item}
                 </span>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="section single-panel-section">
+          <div className="concentration-card">
+            <div className="concentration-header">
+              <div>
+                <p className="section-kicker">Graduate Concentration</p>
+                <h2>{utdConcentration.title}</h2>
+              </div>
+              <div className="concentration-badge">
+                <span>Program</span>
+                <strong>{utdConcentration.institution}</strong>
+              </div>
+            </div>
+            <p className="concentration-summary">{utdConcentration.summary}</p>
+            <div className="concentration-grid">
+              {utdConcentration.clusters.map((cluster) => (
+                <article className="concentration-cluster" key={cluster.label}>
+                  <span>{cluster.label}</span>
+                  <div className="course-stack">
+                    {cluster.courses.map((course) => (
+                      <div className="course-tile" key={course}>
+                        <strong>{course}</strong>
+                        <p>The University of Texas at Dallas</p>
+                      </div>
+                    ))}
+                  </div>
+                </article>
               ))}
             </div>
           </div>
