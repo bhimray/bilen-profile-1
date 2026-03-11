@@ -47,7 +47,7 @@ const projects = [
     title: 'End-to-End Autonomous Vehicle Control & Planning System (QUANSER QCAR)',
     overview:
       'Head of the QCAR Autonomous Racing Team, designing and deploying a real-time model-based control and planning stack on physical autonomous vehicle hardware.',
-    platform: 'UT Dallas | Dec 2025 - Present',
+    platform: 'UT Dallas | Dec 2025 - Feb 2026',
     problem:
       'Autonomous racing vehicles require real-time planning and control that preserves stability, safety, and deterministic behavior on hardware.',
     approach:
@@ -78,7 +78,7 @@ const projects = [
     title: 'Real-Time Neural Approximation of Constrained MPC via Imitation Learning',
     overview:
       'Designed a constrained MPC for an unstable dynamic system and trained a neural network policy to approximate the feedback law.',
-    platform: 'UT Dallas | Feb 2025 - Present',
+    platform: 'UT Dallas | Feb 2026 - Current',
     problem:
       'Constrained MPC is powerful but can be computationally demanding for real-time control of unstable systems.',
     approach:
