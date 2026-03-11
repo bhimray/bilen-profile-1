@@ -1,14 +1,12 @@
 :root {
   --bg: #07111f;
-  --bg-soft: rgba(10, 20, 37, 0.72);
-  --panel: rgba(14, 26, 46, 0.78);
-  --panel-strong: #0f213c;
   --text: #eff5ff;
   --muted: #9cb2cb;
   --line: rgba(190, 220, 255, 0.14);
   --accent: #64d7c4;
   --accent-strong: #ffd166;
   --shadow: 0 24px 70px rgba(1, 7, 18, 0.45);
+  --panel: linear-gradient(180deg, rgba(17, 33, 58, 0.92), rgba(8, 18, 32, 0.8));
 }
 
 * {
@@ -95,14 +93,14 @@ a {
 }
 
 .section {
-  width: min(1120px, calc(100% - 2rem));
+  width: min(1160px, calc(100% - 2rem));
   margin: 0 auto;
   padding: 4.5rem 0;
 }
 
 .hero {
   display: grid;
-  grid-template-columns: 1.2fr 0.8fr;
+  grid-template-columns: 1.15fr 0.85fr;
   gap: 2rem;
   align-items: center;
   min-height: calc(100vh - 76px);
@@ -110,12 +108,11 @@ a {
 
 .kicker,
 .section-kicker,
-.focus-card p,
-.work-card span,
-.timeline-top p,
-.hero-card p,
-.stat-card span,
-.meta-label {
+.meta-label,
+.project-tag,
+.observatory-card-copy span,
+.contact-grid span,
+.timeline-top p {
   color: var(--accent);
   font-size: 0.84rem;
   letter-spacing: 0.12em;
@@ -126,27 +123,40 @@ a {
 .section-heading h2,
 .contact-panel h2,
 .education-card h2,
-.skills-card h2 {
+.skills-card h2,
+.philosophy-card h2 {
   margin: 0;
   line-height: 0.98;
   letter-spacing: -0.04em;
 }
 
 .hero h1 {
-  font-size: clamp(3rem, 8vw, 6.4rem);
-  max-width: 11ch;
+  font-size: clamp(3rem, 7vw, 6rem);
+  max-width: 12ch;
 }
 
 .hero h1 span {
   color: #b7c9de;
 }
 
-.hero-text {
-  max-width: 62ch;
+.hero-subtitle {
+  margin: 1rem 0 0;
+  color: var(--accent-strong);
+  font-weight: 700;
+  letter-spacing: 0.03em;
+}
+
+.hero-text,
+.section-heading p,
+.focus-card span,
+.timeline-summary,
+.contact-panel p,
+.education-entry p,
+.detail-block p,
+.observatory-copy,
+.observatory-card-copy p {
   color: var(--muted);
-  font-size: 1.05rem;
   line-height: 1.75;
-  margin: 1.5rem 0 0;
 }
 
 .hero-actions {
@@ -163,7 +173,8 @@ a {
   transition: transform 160ms ease, border-color 160ms ease, background 160ms ease;
 }
 
-.button:hover {
+.button:hover,
+.project-toggle:hover {
   transform: translateY(-2px);
 }
 
@@ -181,32 +192,31 @@ a {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 1rem;
-  padding-top: 1rem;
 }
 
 .hero-meta strong {
   display: block;
-  margin-top: 0.4rem;
-  font-size: 1.05rem;
+  margin-top: 0.45rem;
+  font-size: 1rem;
+  line-height: 1.5;
 }
 
 .hero-visual {
   position: relative;
-  min-height: 32rem;
+  min-height: 34rem;
 }
 
 .portrait-frame,
 .hero-card,
-.about-panel,
-.stat-card,
 .focus-card,
+.project-detail-card,
 .timeline-item,
-.work-card,
 .education-card,
 .skills-card,
-.contact-panel {
+.contact-panel,
+.observatory-card {
   border: 1px solid var(--line);
-  background: linear-gradient(180deg, rgba(17, 33, 58, 0.9), rgba(8, 18, 32, 0.76));
+  background: var(--panel);
   box-shadow: var(--shadow);
 }
 
@@ -214,7 +224,7 @@ a {
   position: absolute;
   top: 0;
   right: 1.5rem;
-  width: min(100%, 23rem);
+  width: min(100%, 24rem);
   padding: 0.9rem;
   border-radius: 2rem;
   transform: rotate(3deg);
@@ -223,7 +233,7 @@ a {
 .portrait-frame img {
   display: block;
   width: 100%;
-  aspect-ratio: 0.85;
+  aspect-ratio: 0.84;
   object-fit: cover;
   border-radius: 1.4rem;
 }
@@ -232,7 +242,7 @@ a {
   position: absolute;
   left: 0;
   bottom: 2rem;
-  width: min(18rem, 90%);
+  width: min(19rem, 92%);
   padding: 1.2rem;
   border-radius: 1.4rem;
 }
@@ -240,94 +250,240 @@ a {
 .hero-card strong {
   display: block;
   font-size: 1.08rem;
-  line-height: 1.55;
+  line-height: 1.6;
 }
 
 .section-heading {
-  max-width: 42rem;
+  max-width: 52rem;
   margin-bottom: 2rem;
 }
 
 .section-heading h2,
 .contact-panel h2,
 .education-card h2,
-.skills-card h2 {
-  font-size: clamp(2rem, 5vw, 3.5rem);
+.skills-card h2,
+.philosophy-card h2 {
+  font-size: clamp(2rem, 5vw, 3.4rem);
 }
 
-.about-grid,
-.education-skills {
-  display: grid;
-  grid-template-columns: 1fr 1.1fr;
-  gap: 1.25rem;
-}
-
-.about-panel,
-.education-card,
-.skills-card,
-.contact-panel {
-  padding: 1.6rem;
-  border-radius: 1.6rem;
-}
-
-.about-panel p,
-.timeline-summary,
-.work-card p,
-.contact-panel p,
-.education-entry p {
-  color: var(--muted);
-  line-height: 1.7;
-  font-size: 1rem;
-}
-
-.stats-panel {
+.focus-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 1rem;
 }
 
-.stat-card {
-  border-radius: 1.4rem;
-  padding: 1.2rem;
-}
-
-.stat-card strong {
-  display: block;
-  margin: 0.55rem 0;
-  font-size: 1.2rem;
-}
-
-.stat-card p {
-  margin: 0;
-  color: var(--muted);
-  line-height: 1.55;
-}
-
-.focus-grid,
-.work-grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 1rem;
-  margin-top: 1.25rem;
+.capabilities-grid {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
 }
 
 .focus-card,
-.work-card {
-  min-height: 15rem;
+.education-card,
+.skills-card,
+.contact-panel {
   padding: 1.5rem;
   border-radius: 1.6rem;
 }
 
-.focus-card h3,
-.work-card h3,
-.timeline-item h3 {
-  margin: 0.5rem 0 0.8rem;
-  font-size: 1.4rem;
+.focus-card h3 {
+  margin: 0 0 0.85rem;
+  font-size: 1.35rem;
 }
 
-.focus-card span {
+.project-cards {
+  display: grid;
+  gap: 1rem;
+}
+
+.project-detail-card {
+  border-radius: 1.7rem;
+  overflow: hidden;
+}
+
+.project-detail-card.expanded {
+  border-color: rgba(100, 215, 196, 0.28);
+}
+
+.project-toggle {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: flex-start;
+  padding: 1.5rem;
+  border: 0;
+  color: inherit;
+  background: transparent;
+  cursor: pointer;
+  text-align: left;
+  transition: transform 160ms ease;
+}
+
+.project-toggle h3 {
+  margin: 0.45rem 0 0.7rem;
+  font-size: 1.5rem;
+}
+
+.project-toggle p {
+  margin: 0;
   color: var(--muted);
-  line-height: 1.7;
+  line-height: 1.65;
+}
+
+.project-toggle strong {
+  color: var(--accent-strong);
+  white-space: nowrap;
+}
+
+.project-expanded {
+  padding: 0 1.5rem 1.5rem;
+}
+
+.project-expanded-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.detail-block {
+  padding: 1.1rem;
+  border-radius: 1.2rem;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.detail-block span {
+  color: var(--accent);
+  font-size: 0.8rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.detail-block ul {
+  margin: 0.85rem 0 0;
+  padding-left: 1.1rem;
+  color: var(--muted);
+}
+
+.detail-block li + li,
+.timeline-item li + li {
+  margin-top: 0.55rem;
+}
+
+.asset-row {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.asset-placeholder {
+  min-height: 10rem;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  color: #d7e3f3;
+  border-radius: 1.2rem;
+  border: 1px dashed rgba(255, 255, 255, 0.18);
+  background:
+    linear-gradient(135deg, rgba(100, 215, 196, 0.08), rgba(255, 209, 102, 0.06)),
+    rgba(255, 255, 255, 0.02);
+}
+
+.project-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+  margin-top: 1rem;
+}
+
+.project-links a,
+.contact-grid a {
+  padding: 0.8rem 1rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.observatory-inline {
+  margin-top: 2rem;
+}
+
+.observatory-heading {
+  max-width: 54rem;
+  margin-bottom: 1.25rem;
+}
+
+.observatory-heading h3 {
+  margin: 0;
+  font-size: 2rem;
+  letter-spacing: -0.03em;
+}
+
+.observatory-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.observatory-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 1.8rem;
+  background:
+    radial-gradient(circle at top right, rgba(100, 215, 196, 0.16), transparent 28%),
+    linear-gradient(180deg, rgba(17, 33, 58, 0.94), rgba(8, 18, 32, 0.82));
+}
+
+.observatory-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 24px 24px;
+  mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.7), transparent 92%);
+  pointer-events: none;
+}
+
+.observatory-card-copy,
+.plot-shell {
+  position: relative;
+  z-index: 1;
+}
+
+.observatory-card-copy {
+  padding: 1.5rem 1.5rem 0;
+}
+
+.observatory-card-copy h3 {
+  margin: 0.55rem 0 0.65rem;
+  font-size: 1.45rem;
+}
+
+.plot-shell {
+  min-height: 340px;
+  padding: 0.5rem 0.8rem 1rem;
+}
+
+.plot-shell svg,
+.plot-shell figure {
+  width: 100%;
+  max-width: 100%;
+}
+
+.plot-shell .domain,
+.plot-shell .tick line {
+  stroke: rgba(255, 255, 255, 0.15);
+}
+
+.plot-shell .tick text,
+.plot-shell text {
+  fill: #dce7f4;
+}
+
+.plot-shell .grid line {
+  stroke: rgba(255, 255, 255, 0.08);
 }
 
 .timeline {
@@ -352,14 +508,27 @@ a {
   font-weight: 700;
 }
 
+.timeline-org {
+  display: block;
+  margin-top: 0.3rem;
+  font-size: 1rem;
+}
+
 .timeline-item ul {
   margin: 1rem 0 0;
   padding-left: 1.2rem;
   color: var(--muted);
 }
 
-.timeline-item li + li {
-  margin-top: 0.65rem;
+.education-skills,
+.education-philosophy {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 1rem;
+}
+
+.interest-row {
+  margin-top: 1rem;
 }
 
 .education-entry + .education-entry {
@@ -369,7 +538,7 @@ a {
 .education-entry strong,
 .skill-group strong {
   display: block;
-  font-size: 1.1rem;
+  font-size: 1.08rem;
 }
 
 .education-entry span {
@@ -401,122 +570,49 @@ a {
   font-size: 0.95rem;
 }
 
-.contact-panel {
+.philosophy-points {
   display: grid;
-  gap: 1rem;
-}
-
-.contact-links {
-  display: flex;
-  flex-wrap: wrap;
   gap: 0.8rem;
 }
 
-.contact-links a {
-  padding: 0.8rem 1rem;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-}
-
-.observatory-heading {
-  max-width: 56rem;
-}
-
-.observatory-copy {
-  color: var(--muted);
-  max-width: 52rem;
-  line-height: 1.8;
-  font-size: 1.02rem;
-}
-
-.observatory-grid {
+.contact-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 1rem;
 }
 
-.observatory-card {
-  position: relative;
-  overflow: hidden;
-  border-radius: 1.8rem;
-  border: 1px solid var(--line);
-  background:
-    radial-gradient(circle at top right, rgba(100, 215, 196, 0.16), transparent 28%),
-    linear-gradient(180deg, rgba(17, 33, 58, 0.94), rgba(8, 18, 32, 0.82));
-  box-shadow: var(--shadow);
+.contact-grid div {
+  padding: 1rem;
+  border-radius: 1.2rem;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-.observatory-card::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background:
-    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-  background-size: 24px 24px;
-  mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.7), transparent 92%);
-  pointer-events: none;
+.contact-grid span {
+  display: block;
+  margin-bottom: 0.55rem;
 }
 
-.observatory-card-copy {
-  position: relative;
-  z-index: 1;
-  padding: 1.5rem 1.5rem 0;
+.contact-grid strong {
+  color: #dce7f4;
 }
 
-.observatory-card-copy span {
-  color: var(--accent);
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  font-size: 0.82rem;
-}
-
-.observatory-card-copy h3 {
-  margin: 0.55rem 0 0.65rem;
-  font-size: 1.55rem;
-}
-
-.observatory-card-copy p {
-  margin: 0;
-  color: var(--muted);
-  line-height: 1.7;
-}
-
-.plot-shell {
-  position: relative;
-  z-index: 1;
-  min-height: 360px;
-  padding: 0.5rem 0.8rem 1rem;
-}
-
-.plot-shell svg,
-.plot-shell figure {
-  width: 100%;
-  max-width: 100%;
-}
-
-.plot-shell .domain,
-.plot-shell .tick line {
-  stroke: rgba(255, 255, 255, 0.15);
-}
-
-.plot-shell .tick text,
-.plot-shell text {
-  fill: #dce7f4;
-}
-
-.plot-shell .grid line {
-  stroke: rgba(255, 255, 255, 0.08);
+@media (max-width: 1100px) {
+  .capabilities-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
 
 @media (max-width: 960px) {
   .hero,
-  .about-grid,
-  .education-skills,
+  .project-expanded-grid,
+  .asset-row,
   .observatory-grid,
+  .education-skills,
+  .education-philosophy,
+  .contact-grid,
   .focus-grid,
-  .work-grid {
+  .capabilities-grid {
     grid-template-columns: 1fr;
   }
 
@@ -531,10 +627,6 @@ a {
 
   .portrait-frame {
     right: 0;
-  }
-
-  .stats-panel {
-    grid-template-columns: 1fr;
   }
 
   .hero-meta {
@@ -555,17 +647,17 @@ a {
   }
 
   .section {
-    width: min(1120px, calc(100% - 1.25rem));
+    width: min(1160px, calc(100% - 1.25rem));
     padding: 3.4rem 0;
   }
 
   .hero-actions,
-  .contact-links {
+  .project-links {
     flex-direction: column;
   }
 
   .button,
-  .contact-links a {
+  .project-links a {
     text-align: center;
   }
 
@@ -575,5 +667,9 @@ a {
 
   .portrait-frame {
     width: 100%;
+  }
+
+  .project-toggle {
+    flex-direction: column;
   }
 }

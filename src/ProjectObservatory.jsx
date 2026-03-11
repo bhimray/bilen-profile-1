@@ -2,29 +2,29 @@ import { useEffect, useRef } from 'react';
 import * as Plot from '@observablehq/plot';
 
 const systemsMatrix = [
-  { stage: 'Modeling', lens: 'Controls', score: 92 },
-  { stage: 'Modeling', lens: 'Simulation', score: 96 },
-  { stage: 'Modeling', lens: 'Learning', score: 68 },
-  { stage: 'Navigation', lens: 'Controls', score: 86 },
-  { stage: 'Navigation', lens: 'Simulation', score: 81 },
-  { stage: 'Navigation', lens: 'Learning', score: 63 },
-  { stage: 'Vehicle Dynamics', lens: 'Controls', score: 94 },
-  { stage: 'Vehicle Dynamics', lens: 'Simulation', score: 88 },
-  { stage: 'Vehicle Dynamics', lens: 'Learning', score: 58 },
-  { stage: 'Robot Control', lens: 'Controls', score: 97 },
-  { stage: 'Robot Control', lens: 'Simulation', score: 84 },
-  { stage: 'Robot Control', lens: 'Learning', score: 61 },
-  { stage: 'Validation', lens: 'Controls', score: 75 },
-  { stage: 'Validation', lens: 'Simulation', score: 93 },
-  { stage: 'Validation', lens: 'Learning', score: 66 },
+  { stage: 'Perception', lens: 'Robustness', score: 74 },
+  { stage: 'Perception', lens: 'Real-Time', score: 79 },
+  { stage: 'Perception', lens: 'Integration', score: 82 },
+  { stage: 'Localization', lens: 'Robustness', score: 77 },
+  { stage: 'Localization', lens: 'Real-Time', score: 84 },
+  { stage: 'Localization', lens: 'Integration', score: 86 },
+  { stage: 'Planning', lens: 'Robustness', score: 83 },
+  { stage: 'Planning', lens: 'Real-Time', score: 80 },
+  { stage: 'Planning', lens: 'Integration', score: 88 },
+  { stage: 'Control', lens: 'Robustness', score: 96 },
+  { stage: 'Control', lens: 'Real-Time', score: 92 },
+  { stage: 'Control', lens: 'Integration', score: 90 },
+  { stage: 'Validation', lens: 'Robustness', score: 87 },
+  { stage: 'Validation', lens: 'Real-Time', score: 78 },
+  { stage: 'Validation', lens: 'Integration', score: 91 },
 ];
 
 const projectArc = [
-  { phase: 'System model', readiness: 28, emphasis: 'Dynamics first' },
-  { phase: 'Controller tuning', readiness: 46, emphasis: 'Robust control' },
-  { phase: 'Navigation loop', readiness: 62, emphasis: 'Robot control' },
-  { phase: 'Simulation stack', readiness: 79, emphasis: 'ROS + Gazebo' },
-  { phase: 'AV research', readiness: 91, emphasis: 'QCar trajectory' },
+  { phase: 'Modeling', readiness: 24, emphasis: 'Vehicle model' },
+  { phase: 'MPC design', readiness: 48, emphasis: 'Frenet MPC' },
+  { phase: 'Perception', readiness: 63, emphasis: 'Obstacle + signals' },
+  { phase: 'Pipeline', readiness: 78, emphasis: 'Threaded autonomy stack' },
+  { phase: 'Deployment', readiness: 91, emphasis: 'QCar closed loop' },
 ];
 
 function mountPlot(container, plot) {
@@ -47,44 +47,33 @@ function ProjectObservatory() {
 
       const matrixPlot = Plot.plot({
         width: matrixWidth,
-        height: 340,
-        marginTop: 30,
-        marginRight: 20,
-        marginBottom: 40,
-        marginLeft: 110,
+        height: 320,
+        marginTop: 24,
+        marginRight: 18,
+        marginBottom: 38,
+        marginLeft: 102,
         style: {
           background: 'transparent',
           color: '#eff5ff',
           fontFamily: 'Space Grotesk, sans-serif',
           fontSize: '12px',
         },
-        x: {
-          label: null,
-          tickSize: 0,
-          domain: ['Controls', 'Simulation', 'Learning'],
-        },
-        y: {
-          label: null,
-          tickSize: 0,
-        },
-        color: {
-          scheme: 'BuGn',
-          domain: [50, 100],
-          legend: false,
-        },
+        x: { label: null, tickSize: 0, domain: ['Robustness', 'Real-Time', 'Integration'] },
+        y: { label: null, tickSize: 0 },
+        color: { scheme: 'BuGn', domain: [65, 100], legend: false },
         marks: [
           Plot.cell(systemsMatrix, {
             x: 'lens',
             y: 'stage',
             fill: 'score',
             inset: 6,
-            rx: 18,
+            rx: 16,
           }),
           Plot.text(systemsMatrix, {
             x: 'lens',
             y: 'stage',
             text: (d) => `${d.score}`,
-            fill: '#031216',
+            fill: '#041217',
             fontWeight: 700,
           }),
         ],
@@ -92,26 +81,19 @@ function ProjectObservatory() {
 
       const arcPlot = Plot.plot({
         width: arcWidth,
-        height: 340,
-        marginTop: 30,
-        marginRight: 30,
-        marginBottom: 55,
-        marginLeft: 44,
+        height: 320,
+        marginTop: 24,
+        marginRight: 24,
+        marginBottom: 52,
+        marginLeft: 42,
         style: {
           background: 'transparent',
           color: '#eff5ff',
           fontFamily: 'Space Grotesk, sans-serif',
           fontSize: '12px',
         },
-        x: {
-          label: null,
-          tickRotate: -18,
-        },
-        y: {
-          label: 'Research maturity',
-          grid: true,
-          domain: [0, 100],
-        },
+        x: { label: null, tickRotate: -18 },
+        y: { label: 'Project maturity', grid: true, domain: [0, 100] },
         marks: [
           Plot.areaY(projectArc, {
             x: 'phase',
@@ -151,10 +133,7 @@ function ProjectObservatory() {
 
     render();
 
-    const resizeObserver = new ResizeObserver(() => {
-      render();
-    });
-
+    const resizeObserver = new ResizeObserver(() => render());
     resizeObserver.observe(matrixRef.current);
     resizeObserver.observe(arcRef.current);
 
@@ -166,43 +145,36 @@ function ProjectObservatory() {
   }, []);
 
   return (
-    <section className="section observatory-section" id="observatory">
-      <div className="section-heading observatory-heading">
-        <p className="section-kicker">Project Observatory</p>
-        <h2>Observable graphics for the autonomous-vehicles story.</h2>
+    <div className="observatory-inline">
+      <div className="observatory-heading">
+        <p className="section-kicker">Systems Visuals</p>
+        <h3>Observable engineering graphics for the flagship autonomy project.</h3>
         <p className="observatory-copy">
-          This section turns the project into a system map: where the work is
-          concentrated, how the stack is balanced, and how the research arc is
-          moving from theory into testable engineering.
+          These graphics summarize how the autonomous vehicle system is balanced across the stack and how the project
+          progresses from modeling into closed-loop deployment.
         </p>
       </div>
 
       <div className="observatory-grid">
         <article className="observatory-card">
           <div className="observatory-card-copy">
-            <span>Autonomy stack</span>
-            <h3>Capability heatmap</h3>
-            <p>
-              A matrix view of where the project is strongest today across
-              controls, simulation, and learning-led work.
-            </p>
+            <span>Stack balance</span>
+            <h3>Autonomy systems heatmap</h3>
+            <p>Perception, localization, planning, control, and validation shown through a control-engineering lens.</p>
           </div>
           <div className="plot-shell" ref={matrixRef} />
         </article>
 
         <article className="observatory-card">
           <div className="observatory-card-copy">
-            <span>Research motion</span>
-            <h3>Project progression arc</h3>
-            <p>
-              A visual narrative from system modeling through controller tuning
-              and simulation into the current autonomous-vehicle research stage.
-            </p>
+            <span>Development path</span>
+            <h3>Closed-loop project arc</h3>
+            <p>Modeling, MPC design, perception integration, pipeline engineering, and QCar deployment.</p>
           </div>
           <div className="plot-shell" ref={arcRef} />
         </article>
       </div>
-    </section>
+    </div>
   );
 }
 

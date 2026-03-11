@@ -1,8 +1,8 @@
 import { render, screen } from '@testing-library/react';
 import App from './App';
 
-test('renders updated portfolio hero content', () => {
+test('renders controls and robotics portfolio hero content', () => {
   render(<App />);
-  expect(screen.getByText(/mechanical engineering graduate researcher/i)).toBeInTheDocument();
-  expect(screen.getByRole('link', { name: /email me/i })).toBeInTheDocument();
+  expect(screen.getByText(/controls and robotics engineer/i)).toBeInTheDocument();
+  expect(screen.getByRole('link', { name: /contact/i })).toBeInTheDocument();
 });
