@@ -1,30 +1,48 @@
 import { useEffect, useRef } from 'react';
 import * as Plot from '@observablehq/plot';
 
-const systemsMatrix = [
-  { stage: 'Perception', lens: 'Robustness', score: 74 },
-  { stage: 'Perception', lens: 'Real-Time', score: 79 },
-  { stage: 'Perception', lens: 'Integration', score: 82 },
-  { stage: 'Localization', lens: 'Robustness', score: 77 },
-  { stage: 'Localization', lens: 'Real-Time', score: 84 },
-  { stage: 'Localization', lens: 'Integration', score: 86 },
-  { stage: 'Planning', lens: 'Robustness', score: 83 },
-  { stage: 'Planning', lens: 'Real-Time', score: 80 },
-  { stage: 'Planning', lens: 'Integration', score: 88 },
-  { stage: 'Control', lens: 'Robustness', score: 96 },
-  { stage: 'Control', lens: 'Real-Time', score: 92 },
-  { stage: 'Control', lens: 'Integration', score: 90 },
-  { stage: 'Validation', lens: 'Robustness', score: 87 },
-  { stage: 'Validation', lens: 'Real-Time', score: 78 },
-  { stage: 'Validation', lens: 'Integration', score: 91 },
+const responseBand = Array.from({ length: 25 }, (_, step) => {
+  const time = step * 0.5;
+  const reference = Math.sin(time / 2.6) * 0.55;
+  const actual = reference * 0.92 + Math.cos(time * 1.4) * 0.08;
+  const predicted = reference * 0.98 + Math.sin(time * 0.9) * 0.04;
+
+  return {
+    time,
+    lower: reference - 0.18,
+    upper: reference + 0.18,
+    reference,
+    actual,
+    predicted,
+  };
+});
+
+const responseSeries = responseBand.flatMap((point) => [
+  { time: point.time, value: point.reference, series: 'Reference path' },
+  { time: point.time, value: point.predicted, series: 'Predicted response' },
+  { time: point.time, value: point.actual, series: 'Measured response' },
+]);
+
+const autonomyMap = [
+  { stage: 'Perception', lane: 'Traffic lights', intensity: 0.84, status: 'active' },
+  { stage: 'Perception', lane: 'Obstacle field', intensity: 0.92, status: 'active' },
+  { stage: 'Localization', lane: 'State estimate', intensity: 0.78, status: 'active' },
+  { stage: 'Localization', lane: 'Lane frame', intensity: 0.73, status: 'active' },
+  { stage: 'Planning', lane: 'Waypoint graph', intensity: 0.81, status: 'active' },
+  { stage: 'Planning', lane: 'Dynamic replanning', intensity: 0.88, status: 'active' },
+  { stage: 'Control', lane: 'Frenet MPC', intensity: 0.98, status: 'focus' },
+  { stage: 'Control', lane: 'Actuation loop', intensity: 0.91, status: 'focus' },
+  { stage: 'Coordination', lane: 'V2V DeePC', intensity: 0.86, status: 'emerging' },
+  { stage: 'Validation', lane: 'QCar + QLabs', intensity: 0.9, status: 'active' },
 ];
 
-const projectArc = [
-  { phase: 'Modeling', readiness: 24, emphasis: 'Vehicle model' },
-  { phase: 'MPC design', readiness: 48, emphasis: 'Frenet MPC' },
-  { phase: 'Perception', readiness: 63, emphasis: 'Obstacle + signals' },
-  { phase: 'Pipeline', readiness: 78, emphasis: 'Threaded autonomy stack' },
-  { phase: 'Deployment', readiness: 91, emphasis: 'QCar closed loop' },
+const missionTrace = [
+  { stage: 'Perception', lane: 'Obstacle field' },
+  { stage: 'Localization', lane: 'State estimate' },
+  { stage: 'Planning', lane: 'Dynamic replanning' },
+  { stage: 'Control', lane: 'Frenet MPC' },
+  { stage: 'Coordination', lane: 'V2V DeePC' },
+  { stage: 'Validation', lane: 'QCar + QLabs' },
 ];
 
 function mountPlot(container, plot) {
@@ -33,114 +51,143 @@ function mountPlot(container, plot) {
 }
 
 function ProjectObservatory() {
-  const matrixRef = useRef(null);
-  const arcRef = useRef(null);
+  const responseRef = useRef(null);
+  const systemsRef = useRef(null);
 
   useEffect(() => {
-    if (!matrixRef.current || !arcRef.current) {
+    if (!responseRef.current || !systemsRef.current) {
       return undefined;
     }
 
     const render = () => {
-      const matrixWidth = Math.max(matrixRef.current.clientWidth, 280);
-      const arcWidth = Math.max(arcRef.current.clientWidth, 280);
+      const responseWidth = Math.max(responseRef.current.clientWidth, 280);
+      const systemsWidth = Math.max(systemsRef.current.clientWidth, 280);
 
-      const matrixPlot = Plot.plot({
-        width: matrixWidth,
-        height: 320,
-        marginTop: 24,
-        marginRight: 18,
-        marginBottom: 38,
-        marginLeft: 102,
+      const responsePlot = Plot.plot({
+        width: responseWidth,
+        height: 340,
+        marginTop: 22,
+        marginRight: 28,
+        marginBottom: 48,
+        marginLeft: 54,
         style: {
           background: 'transparent',
           color: '#eff5ff',
           fontFamily: 'Space Grotesk, sans-serif',
           fontSize: '12px',
         },
-        x: { label: null, tickSize: 0, domain: ['Robustness', 'Real-Time', 'Integration'] },
-        y: { label: null, tickSize: 0 },
-        color: { scheme: 'BuGn', domain: [65, 100], legend: false },
+        x: {
+          label: 'Time horizon (s)',
+          tickSize: 0,
+        },
+        y: {
+          label: 'Lateral deviation',
+          grid: true,
+        },
+        color: {
+          domain: ['Reference path', 'Predicted response', 'Measured response'],
+          range: ['#ffd166', '#64d7c4', '#ff7a90'],
+          legend: false,
+        },
         marks: [
-          Plot.cell(systemsMatrix, {
-            x: 'lens',
-            y: 'stage',
-            fill: 'score',
-            inset: 6,
-            rx: 16,
+          Plot.areaY(responseBand, {
+            x: 'time',
+            y1: 'lower',
+            y2: 'upper',
+            fill: 'rgba(100, 215, 196, 0.13)',
+            curve: 'catmull-rom',
           }),
-          Plot.text(systemsMatrix, {
-            x: 'lens',
-            y: 'stage',
-            text: (d) => `${d.score}`,
-            fill: '#041217',
-            fontWeight: 700,
+          Plot.ruleY([0], { stroke: 'rgba(255,255,255,0.18)' }),
+          Plot.line(responseSeries, {
+            x: 'time',
+            y: 'value',
+            stroke: 'series',
+            strokeWidth: 2.7,
+            curve: 'catmull-rom',
           }),
+          Plot.dot(
+            responseSeries.filter((d) => d.series === 'Measured response' && d.time % 1 === 0),
+            {
+              x: 'time',
+              y: 'value',
+              r: 4,
+              fill: '#ff7a90',
+              stroke: '#07111f',
+              strokeWidth: 1.5,
+            }
+          ),
         ],
       });
 
-      const arcPlot = Plot.plot({
-        width: arcWidth,
-        height: 320,
-        marginTop: 24,
-        marginRight: 24,
-        marginBottom: 52,
-        marginLeft: 42,
+      const systemsPlot = Plot.plot({
+        width: systemsWidth,
+        height: 340,
+        marginTop: 22,
+        marginRight: 16,
+        marginBottom: 48,
+        marginLeft: 116,
         style: {
           background: 'transparent',
           color: '#eff5ff',
           fontFamily: 'Space Grotesk, sans-serif',
           fontSize: '12px',
         },
-        x: { label: null, tickRotate: -18 },
-        y: { label: 'Project maturity', grid: true, domain: [0, 100] },
+        x: {
+          label: null,
+          tickSize: 0,
+          domain: ['Perception', 'Localization', 'Planning', 'Control', 'Coordination', 'Validation'],
+        },
+        y: {
+          label: null,
+          tickSize: 0,
+        },
+        color: {
+          domain: ['active', 'focus', 'emerging'],
+          range: ['#64d7c4', '#ffd166', '#ff7a90'],
+          legend: false,
+        },
         marks: [
-          Plot.areaY(projectArc, {
-            x: 'phase',
-            y: 'readiness',
+          Plot.line(missionTrace, {
+            x: 'stage',
+            y: 'lane',
             curve: 'catmull-rom',
-            fill: 'rgba(100, 215, 196, 0.18)',
+            stroke: 'rgba(255, 255, 255, 0.35)',
+            strokeWidth: 2,
           }),
-          Plot.line(projectArc, {
-            x: 'phase',
-            y: 'readiness',
-            curve: 'catmull-rom',
-            stroke: '#64d7c4',
-            strokeWidth: 3,
-          }),
-          Plot.dot(projectArc, {
-            x: 'phase',
-            y: 'readiness',
-            r: 7,
-            fill: '#ffd166',
+          Plot.dot(autonomyMap, {
+            x: 'stage',
+            y: 'lane',
+            r: (d) => 10 + d.intensity * 18,
+            fill: 'status',
+            fillOpacity: 0.88,
             stroke: '#07111f',
             strokeWidth: 2,
           }),
-          Plot.text(projectArc, {
-            x: 'phase',
-            y: 'readiness',
-            dy: -14,
-            text: 'emphasis',
-            fontSize: 11,
-            fill: '#dce7f4',
+          Plot.dot(missionTrace, {
+            x: 'stage',
+            y: 'lane',
+            r: 4,
+            fill: '#eff5ff',
+            stroke: '#07111f',
+            strokeWidth: 1,
           }),
         ],
       });
 
-      mountPlot(matrixRef.current, matrixPlot);
-      mountPlot(arcRef.current, arcPlot);
+      mountPlot(responseRef.current, responsePlot);
+      mountPlot(systemsRef.current, systemsPlot);
     };
 
     render();
 
     const resizeObserver = new ResizeObserver(() => render());
-    resizeObserver.observe(matrixRef.current);
-    resizeObserver.observe(arcRef.current);
+    resizeObserver.observe(responseRef.current);
+    resizeObserver.observe(systemsRef.current);
 
     return () => {
       resizeObserver.disconnect();
-      if (matrixRef.current) matrixRef.current.innerHTML = '';
-      if (arcRef.current) arcRef.current.innerHTML = '';
+      if (responseRef.current) responseRef.current.innerHTML = '';
+      if (systemsRef.current) systemsRef.current.innerHTML = '';
     };
   }, []);
 
@@ -148,30 +195,35 @@ function ProjectObservatory() {
     <div className="observatory-inline">
       <div className="observatory-heading">
         <p className="section-kicker">Systems Visuals</p>
-        <h3>Observable engineering graphics for the flagship autonomy project.</h3>
+        <h3>More engineering, less infographic.</h3>
         <p className="observatory-copy">
-          These graphics summarize how the autonomous vehicle system is balanced across the stack and how the project
-          progresses from modeling into closed-loop deployment.
+          These visuals are now framed around closed-loop control behavior and the actual autonomy stack, so the
+          section reads like robotics engineering work instead of a generic portfolio chart.
         </p>
       </div>
 
       <div className="observatory-grid">
         <article className="observatory-card">
           <div className="observatory-card-copy">
-            <span>Stack balance</span>
-            <h3>Autonomy systems heatmap</h3>
-            <p>Perception, localization, planning, control, and validation shown through a control-engineering lens.</p>
+            <span>Control behavior</span>
+            <h3>Closed-loop response envelope</h3>
+            <p>
+              A controller-centric view of reference tracking, predicted behavior, and measured response across a
+              horizon.
+            </p>
           </div>
-          <div className="plot-shell" ref={matrixRef} />
+          <div className="plot-shell" ref={responseRef} />
         </article>
 
         <article className="observatory-card">
           <div className="observatory-card-copy">
-            <span>Development path</span>
-            <h3>Closed-loop project arc</h3>
-            <p>Modeling, MPC design, perception integration, pipeline engineering, and QCar deployment.</p>
+            <span>Autonomy stack</span>
+            <h3>Mission pipeline map</h3>
+            <p>
+              A traced path through perception, localization, planning, control, coordination, and validation layers.
+            </p>
           </div>
-          <div className="plot-shell" ref={arcRef} />
+          <div className="plot-shell" ref={systemsRef} />
         </article>
       </div>
     </div>
