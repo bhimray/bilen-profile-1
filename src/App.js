@@ -143,10 +143,6 @@ function App() {
                 <span className="meta-label">Current GPA</span>
                 <strong>3.4</strong>
               </div>
-              <div>
-                <span className="meta-label">Phone</span>
-                <strong>+1 682 374 4919</strong>
-              </div>
             </div>
           </div>
 
