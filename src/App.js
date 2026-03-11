@@ -54,7 +54,7 @@ const projects = [
       'Built an end-to-end autonomous control and planning stack on physical hardware.',
       'Improved control behavior for smoothness, stability, and safety in real time.',
     ],
-    links: ['GitHub (placeholder)', 'Technical report', 'System demo video'],
+    links: ['https://github.com/bhimray/Quanser_1st_stage_submission.git', 'Technical report', 'System demo video'],
   },
   {
     id: 'imitation-mpc',
@@ -102,7 +102,7 @@ const projects = [
       'Built a control formulation for racing performance under disturbances and uncertainty.',
       'Combined performance optimization with trajectory safety constraints.',
     ],
-    links: ['GitHub (placeholder)', 'Controller diagram placeholder', 'Simulation result placeholder'],
+    links: ['https://github.com/bhimray/racing_car.git', 'Controller diagram placeholder', 'Simulation result placeholder'],
   },
   {
     id: 'al-ilqr',
@@ -126,7 +126,7 @@ const projects = [
       'Demonstrated reliable obstacle avoidance in simulation.',
       'Analyzed causes of deviation from the reference trajectory to guide controller refinement.',
     ],
-    links: ['GitHub (placeholder)', 'Trajectory plot placeholder', 'Simulation demo placeholder'],
+    links: ['https://github.com/bhimray/Optimal_control_Project.git', 'Trajectory plot placeholder', 'Simulation demo placeholder'],
   },
   {
     id: 'plc-counting',
