@@ -4,6 +4,8 @@ import profileImage from './images/profile_2.jpg';
 import qcarPickupDropoff from './Proj-qcar/pickup_dropoff.png';
 import qcarReport from './Proj-qcar/Report_QCar.pdf';
 import agriSortReport from './Proj-agri-sort/Robotics_Project.pdf';
+import agriSortBlueCube from './Proj-agri-sort/blue_cube_on_table.png';
+import agriSortOrientingCube from './Proj-agri-sort/orienting_the_cube.png';
 import alIlqrReport from './Proj-al-ilqr/Optimization_final_report.pdf';
 import alIlqrTrajectoryReport from './Proj-al-ilqr/Trajectory_following_using_AL_iLQR_method_and_obstacle_avoidance_using_constraint (1).pdf';
 import lapTimeAcceleration from './Proj-lap-time-mpc/acceleration.jpg';
@@ -232,7 +234,10 @@ const projects = [
     ],
     assets: {
       reports: [{ label: 'Agri Sort Project Report', href: agriSortReport }],
-      images: [],
+      images: [
+        { src: agriSortBlueCube, alt: 'Blue cube detected on the Agri Sort work surface', caption: 'Object detection on sorting surface' },
+        { src: agriSortOrientingCube, alt: 'Robotic manipulator orienting a cube for sorting', caption: 'Manipulator orienting object for sorting' },
+      ],
     },
     links: [
       { label: 'GitHub Repository', href: '#contact' },
