@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import './App.css';
 import profileImage from './images/profile.webp';
-import ProjectObservatory from './ProjectObservatory';
 
 const capabilities = [
   {
@@ -413,8 +412,6 @@ function App() {
               );
             })}
           </div>
-
-          <ProjectObservatory />
         </section>
 
         <section className="section experience-section" id="research">
