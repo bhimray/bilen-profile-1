@@ -269,7 +269,7 @@ a {
 
 .portrait-frame {
   position: absolute;
-  top: -1.25rem;
+  top: -0.35rem;
   right: 1.5rem;
   width: min(100%, 24rem);
   padding: 0.9rem;
