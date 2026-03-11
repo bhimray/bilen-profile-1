@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import './App.css';
 import profileImage from './images/profile_2.jpg';
+import utdMonogramLogo from './images/utd_monogram_logo.png';
 import qcarPickupDropoff from './Proj-qcar/pickup_dropoff.png';
 import qcarReport from './Proj-qcar/Report_QCar.pdf';
 import agriSortReport from './Proj-agri-sort/Robotics_Project.pdf';
@@ -362,6 +363,7 @@ function App() {
 
       <header className="topbar">
         <a className="brand" href="#hero">
+          <img className="brand-logo" src={utdMonogramLogo} alt="UT Dallas logo" />
           Bimlendra Ray
         </a>
         <nav className="topnav">
