@@ -32,128 +32,148 @@ const capabilities = [
 
 const projects = [
   {
-    id: 'autonomous-systems',
-    title: 'Autonomous Systems Project Portfolio',
+    id: 'qcar',
+    title: 'End-to-End Autonomous Vehicle Control & Planning System (QUANSER QCAR)',
     overview:
-      'Project work around autonomous vehicles, navigation, control integration, and system-level autonomy pipelines.',
-    platform: 'Autonomous systems engineering',
+      'Head of the QCAR Autonomous Racing Team, designing and deploying a real-time model-based control and planning stack on physical autonomous vehicle hardware.',
+    platform: 'UT Dallas | Dec 2025 - Present',
     problem:
-      'Autonomous systems need reliable coordination between perception, planning, and control to operate safely in uncertain environments.',
+      'Autonomous racing vehicles require real-time planning and control that preserves stability, safety, and deterministic behavior on hardware.',
     approach:
-      'Developed autonomy-oriented project work spanning navigation, closed-loop control, robotics simulation, and integration across the system stack.',
-    architecture: 'Perception -> Estimation -> Planning -> Control -> Validation',
-    technologies: ['Python', 'ROS', 'Gazebo', 'Quanser QCar', 'Optimization', 'Control design'],
+      'Designed and deployed a model-based control architecture for autonomous vehicle lateral and longitudinal dynamics, optimizing controller behavior for smoothness, stability, and safety while prioritizing deterministic performance over end-to-end learning.',
+    architecture: 'Perception -> Planning -> MPC -> Vehicle dynamics -> Hardware deployment',
+    technologies: ['Python', 'OpenCV', 'TensorFlow', 'ACADOS', 'QUANSER QCAR'],
     features: [
-      'System-level autonomy thinking',
-      'Integrated planning and control workflows',
-      'Simulation-first validation',
-      'Robotics deployment mindset',
+      'Real-time model-based control architecture',
+      'Lateral and longitudinal vehicle control',
+      'Physical hardware deployment',
+      'Safety- and stability-oriented controller tuning',
     ],
     results: [
-      'Established a project base in autonomous systems engineering.',
-      'Built experience connecting controls, robotics, and validation workflows.',
+      'Built an end-to-end autonomous control and planning stack on physical hardware.',
+      'Improved control behavior for smoothness, stability, and safety in real time.',
     ],
-    links: ['GitHub (placeholder)', 'System diagram', 'Project video placeholder'],
+    links: ['GitHub (placeholder)', 'Technical report', 'System demo video'],
   },
   {
-    id: 'av',
-    title: 'Autonomous Vehicle Navigation and Control System',
+    id: 'imitation-mpc',
+    title: 'Real-Time Neural Approximation of Constrained MPC via Imitation Learning',
     overview:
-      'Development of a closed-loop autonomous vehicle control system using model predictive control and perception integration.',
-    platform: 'Quanser QCar autonomous vehicle platform',
+      'Designed a constrained MPC for an unstable dynamic system and trained a neural network policy to approximate the feedback law.',
+    platform: 'UT Dallas | Feb 2025 - Present',
     problem:
-      'Autonomous vehicles must navigate complex road networks while maintaining stability, avoiding obstacles, and obeying traffic rules.',
+      'Constrained MPC is powerful but can be computationally demanding for real-time control of unstable systems.',
     approach:
-      'Designed a nonlinear model predictive controller in the Frenet coordinate frame to perform trajectory tracking and vehicle stabilization. Integrated perception modules for obstacle detection and traffic signal interpretation.',
-    architecture: 'Perception -> Localization -> Planning -> Control -> Vehicle',
-    technologies: ['Python', 'CasADi', 'ACADOS', 'Quanser QCar', 'QLabs Simulation', 'ROS'],
+      'Implemented a constrained MPC for a Linear Inverted Pendulum Model, trained a deep neural network policy using behavior cloning, then deployed and evaluated the learned controller in closed-loop simulation.',
+    architecture: 'MPC expert -> Behavior cloning -> Learned policy -> Closed-loop simulation',
+    technologies: ['Python', 'PyTorch', 'MPC', 'Optimal Control', 'Robotics Simulation'],
     features: [
-      'Real-time trajectory tracking',
-      'Traffic light detection',
-      'Obstacle detection',
-      'Path planning with dynamic replanning',
-      'Multi-threaded perception and control pipeline',
+      'Constrained MPC design',
+      'Imitation learning via behavior cloning',
+      'Closed-loop learned controller evaluation',
+      'Robustness and distribution shift analysis',
     ],
     results: [
-      'Stable trajectory tracking across complex road networks',
-      'Real-time control loop execution',
-      'Integration of perception and control pipelines',
+      'Demonstrated neural approximation of MPC feedback for an unstable dynamic system.',
+      'Evaluated stability, tracking error, and disturbance rejection in closed loop.',
     ],
-    links: ['GitHub (placeholder)', 'Technical report', 'Simulation demo video'],
+    links: ['GitHub (placeholder)', 'Technical note', 'Simulation video placeholder'],
   },
   {
-    id: 'deepc-v2v',
-    title: 'V2V Communication for Autonomous Vehicles Using DeePC',
+    id: 'lap-time-mpc',
+    title: 'Model Predictive Control for Disturbance-Aware Lap Time Optimization in Autonomous Racing Vehicles',
     overview:
-      'Ongoing work on vehicle-to-vehicle communication and data-enabled predictive control for autonomous vehicle coordination.',
-    platform: 'Current ongoing work',
+      'Developed an MPC formulation for lap-time optimization under disturbances and model uncertainty using two-step sequential programming.',
+    platform: 'UT Dallas | Sep 2025 - Dec 2025',
     problem:
-      'Connected autonomous vehicles must exchange information reliably and use it in closed-loop control to improve coordination and decision-making.',
+      'Autonomous racing controllers must optimize lap time while keeping the true vehicle trajectory within a safe region despite disturbances and model mismatch.',
     approach:
-      'Exploring DeePC-based formulations for autonomous vehicle coordination under V2V communication constraints, with emphasis on closed-loop behavior and robustness.',
-    architecture: 'Communication -> Shared data -> DeePC optimization -> Control action -> Vehicle response',
-    technologies: ['Python', 'DeePC', 'Optimization', 'Autonomous vehicles', 'V2V communication'],
+      'Formulated the disturbance-aware lap-time optimization problem and developed an MPC that constrains the actual trajectory within a safety region around the nominal racing line.',
+    architecture: 'Nominal racing line -> Disturbance model -> Sequential optimization -> Safety-constrained MPC',
+    technologies: ['MATLAB', 'Simulink', 'ACADOS'],
     features: [
-      'Data-enabled predictive control workflow',
-      'Connected-vehicle coordination',
-      'Closed-loop decision integration',
-      'Robust autonomous behavior focus',
+      'Lap-time optimization under uncertainty',
+      'Safety-region constrained control',
+      'Sequential programming workflow',
+      'Autonomous racing formulation',
     ],
     results: [
-      'Current ongoing work in autonomous vehicle coordination and control.',
-      'Expands the portfolio from standalone navigation to connected autonomy.',
+      'Built a control formulation for racing performance under disturbances and uncertainty.',
+      'Combined performance optimization with trajectory safety constraints.',
     ],
-    links: ['Research notes placeholder', 'Simulation placeholder', 'Technical write-up placeholder'],
+    links: ['GitHub (placeholder)', 'Controller diagram placeholder', 'Simulation result placeholder'],
   },
   {
-    id: 'sim',
-    title: 'Robotics Simulation and Control Framework',
+    id: 'al-ilqr',
+    title: 'Optimal Trajectory Following Using AL-iLQR with Chance-Constrained Dynamic Obstacle Avoidance',
     overview:
-      'Development of a simulation framework for testing robotics control algorithms before hardware deployment.',
+      'Developed an augmented AL-iLQR algorithm for trajectory tracking with dynamic obstacle avoidance under chance constraints.',
+    platform: 'UT Dallas | Feb 2025 - May 2025',
     problem:
-      'Robotic systems require extensive testing in simulation to ensure safe real-world deployment.',
+      'Trajectory-following controllers must remain computationally feasible while handling dynamic obstacles and uncertainty in real time.',
     approach:
-      'Built simulation environments using ROS and Gazebo to test robot motion planning, control algorithms, and navigation strategies.',
-    technologies: ['ROS', 'Gazebo', 'MoveIt', 'Docker', 'Python'],
+      'Modeled a linear quadrotor system, discretized the dynamics with RK4, and used an LTV approximation to enable real-time constrained tracking with dynamic obstacle avoidance.',
+    architecture: 'Reference trajectory -> AL-iLQR optimizer -> Chance constraints -> Quadrotor tracking',
+    technologies: ['iLQR', 'Python'],
     features: [
-      'Robot motion planning',
-      'Sensor simulation',
-      'Path planning experiments',
-      'Control algorithm validation',
+      'Augmented AL-iLQR controller',
+      'Chance-constrained obstacle avoidance',
+      'RK4 discretization',
+      'LTV approximation for real-time feasibility',
     ],
-    results: ['Enabled rapid testing of robotic behaviors and system-level autonomy pipelines.'],
-    links: ['GitHub (placeholder)', 'Simulation diagram', 'Demo video placeholder'],
-  },
-  {
-    id: 'multi-agent',
-    title: 'Multi-Agent Robotics and Distributed Control',
-    overview: 'Research into coordination strategies for multi-agent robotic systems.',
-    problem:
-      'Multiple robots must coordinate actions efficiently in shared environments.',
-    approach:
-      'Studied graph-based coordination and distributed optimization strategies for multi-agent systems.',
-    technologies: ['Graph theory', 'Distributed optimization', 'Formation control', 'Consensus algorithms'],
-    features: ['Distributed coordination', 'Formation logic', 'Shared-environment planning'],
-    results: ['Applications include drone swarms, robot fleets, and cooperative autonomous vehicles.'],
-    links: ['GitHub (placeholder)', 'Coordination diagram', 'Research note placeholder'],
-  },
-  {
-    id: 'composite',
-    title: 'Composite Material Review Study',
-    overview:
-      'Undergraduate project work involving a review paper on composite materials.',
-    platform: 'Undergraduate project work',
-    problem:
-      'Engineering material selection requires understanding the tradeoffs and performance characteristics of composite material systems.',
-    approach:
-      'Conducted a structured review of composite-material behavior, performance, and engineering relevance as part of undergraduate work.',
-    technologies: ['Mechanical engineering fundamentals', 'Technical review', 'Material analysis'],
-    features: ['Literature review', 'Engineering evaluation', 'Technical synthesis'],
     results: [
-      'Built a stronger analytical foundation for later systems and controls work.',
-      'Added formal technical writing and review experience to the portfolio.',
+      'Demonstrated reliable obstacle avoidance in simulation.',
+      'Analyzed causes of deviation from the reference trajectory to guide controller refinement.',
     ],
-    links: ['Review paper placeholder', 'Summary diagram placeholder'],
+    links: ['GitHub (placeholder)', 'Trajectory plot placeholder', 'Simulation demo placeholder'],
+  },
+  {
+    id: 'plc-counting',
+    title: 'Detecting and Counting the Number of Objects on a Production Line Using PLC',
+    overview:
+      'Developed a PLC-controlled counting and container replacement system on real Allen-Bradley hardware.',
+    platform: 'Wilkes University | Feb 2024 - May 2024',
+    problem:
+      'Production systems need reliable automated counting, replacement, and alarming logic to reduce manual monitoring and improve throughput.',
+    approach:
+      'Built and deployed a PLC program to detect object counts in a container, trigger automatic replacement with an empty container, and raise alarms for completion or faults.',
+    architecture: 'Sensing -> PLC logic -> Container replacement -> Alarm handling',
+    technologies: ['PLC', 'Allen-Bradley'],
+    features: [
+      'Real hardware PLC deployment',
+      'Automated object counting',
+      'Container replacement logic',
+      'Fault and completion alarming',
+    ],
+    results: [
+      'Implemented the automation logic on real hardware.',
+      'Reduced reliance on manual counting and process monitoring.',
+    ],
+    links: ['GitHub (placeholder)', 'PLC ladder diagram placeholder', 'Hardware demo placeholder'],
+  },
+  {
+    id: 'agri-sort',
+    title: 'Agri Sort: Sorting Fruits and Vegetables Using Image Classification on a Moving Belt',
+    overview:
+      'Developed a robotic sorting system for fruits and vegetables using ROS and Gazebo with image-based classification.',
+    platform: 'UT Dallas | Feb 2025 - May 2025',
+    problem:
+      'Agricultural sorting systems need automated perception and motion workflows to classify moving objects accurately and reduce manual intervention.',
+    approach:
+      'Designed and simulated a conveyor-belt-based robotic sorting system, combining ROS, Gazebo, and image classification with AWS Recognition.',
+    architecture: 'Image capture -> Classification -> Sorting logic -> Conveyor actuation',
+    technologies: ['Python', 'ROS', 'Gazebo', 'AWS Recognition'],
+    features: [
+      'Robotic sorting workflow',
+      'Conveyor belt simulation',
+      'Image classification on moving objects',
+      'Reduced manual intervention',
+    ],
+    results: [
+      'Improved sorting accuracy through image-based classification.',
+      'Built a full perception-to-sorting pipeline in simulation.',
+    ],
+    links: ['GitHub (placeholder)', 'System diagram placeholder', 'Simulation demo placeholder'],
   },
 ];
 
@@ -172,27 +192,29 @@ const researchExperience = {
 
 const industryExperiences = [
   {
-    role: 'Professional Experience',
-    org: 'Silicon Soft Company',
-    period: 'Earlier experience',
+    role: 'Software Developer',
+    org: 'Silicon Soft and IT Consultant Pvt. Ltd.',
+    location: 'Kathmandu, Nepal',
+    period: 'Jan 2022 - Dec 2023',
     overview:
-      'Technical and engineering work prior to graduate study. The exact title and dates were not recoverable from the locally extracted resume text.',
+      'Worked across mobile and web application development, helping expand the company workflow into newer cross-platform and modern frontend stacks.',
     bullets: [
-      'Included applied technical problem-solving in a professional company environment.',
-      'Positioned here as prior engineering experience referenced in the resume.',
-      'Can be tightened further once the exact role title and dates are confirmed.',
+      'Gained confidence in learning and delivering assigned work on time.',
+      'Improvised the journey for mobile application development for the first time in the company using Kotlin, Jetpack Compose, and the .NET framework.',
+      'Worked on a cross-platform mobile application with other team members using SQL, Kotlin, KMM, and KTOR.',
+      'Developed a government web application using React and JavaScript.',
+      'Handled two projects under my responsibility and led team members.',
     ],
   },
   {
     role: 'Maintenance Engineer (Trainee)',
     org: 'Gorkha Brewery Pvt. Ltd. (Carlsberg Group)',
+    location: 'Chitwan, Nepal',
     period: 'Jul 2021 - Dec 2021',
     overview:
       'Worked on industrial production systems focusing on efficiency improvements and reliability engineering.',
     bullets: [
-      'Conducted root-cause analysis on production issues.',
-      'Developed Kaizen-based process improvement strategies.',
-      'Implemented design modification that increased annual output by approximately 0.12 million bottles.',
+      'Implemented Kaizen to find out the root problem in the production line and presented a detailed solution.',
       'Performed extended data acquisition and trend analysis to identify system-level energy losses and recommend efficiency improvements.',
       'Awarded Kaizen Star of the Month in November 2021.',
     ],
@@ -276,6 +298,9 @@ function App() {
               </a>
               <a className="button button-secondary" href="#projects">
                 View Projects
+              </a>
+              <a className="button button-download" href="/Bimlendra_Ray_Resume.pdf" download>
+                Download Resume
               </a>
             </div>
 
@@ -450,11 +475,12 @@ function App() {
             {industryExperiences.map((item) => (
               <article className="timeline-item" key={`${item.org}-${item.period}`}>
                 <div className="timeline-top">
-                  <div>
-                    <p>Industry</p>
-                    <h3>{item.role}</h3>
-                    <strong className="timeline-org">{item.org}</strong>
-                  </div>
+                <div>
+                  <p>Industry</p>
+                  <h3>{item.role}</h3>
+                  <strong className="timeline-org">{item.org}</strong>
+                  {item.location ? <span className="timeline-location">{item.location}</span> : null}
+                </div>
                   <span>{item.period}</span>
                 </div>
                 <p className="timeline-summary">{item.overview}</p>

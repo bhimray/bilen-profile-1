@@ -163,6 +163,7 @@ a {
   display: flex;
   gap: 1rem;
   margin: 2rem 0;
+  flex-wrap: wrap;
 }
 
 .button {
@@ -186,6 +187,24 @@ a {
 .button-secondary {
   background: rgba(255, 255, 255, 0.02);
   border-color: rgba(255, 255, 255, 0.12);
+}
+
+.button-download {
+  position: relative;
+  background: rgba(255, 209, 102, 0.08);
+  border-color: rgba(255, 209, 102, 0.45);
+  color: #ffe7a3;
+  overflow: hidden;
+  animation: resumePulse 2.4s ease-in-out infinite;
+}
+
+.button-download::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(120deg, transparent 0%, rgba(255, 255, 255, 0.3) 45%, transparent 100%);
+  transform: translateX(-140%);
+  animation: resumeShine 2.8s ease-in-out infinite;
 }
 
 .hero-meta {
@@ -514,6 +533,12 @@ a {
   font-size: 1rem;
 }
 
+.timeline-location {
+  display: inline-block;
+  margin-top: 0.35rem;
+  color: var(--accent);
+}
+
 .timeline-item ul {
   margin: 1rem 0 0;
   padding-left: 1.2rem;
@@ -671,5 +696,27 @@ a {
 
   .project-toggle {
     flex-direction: column;
+  }
+}
+
+@keyframes resumePulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(255, 209, 102, 0.18);
+    transform: translateY(0);
+  }
+  50% {
+    box-shadow: 0 0 0 10px rgba(255, 209, 102, 0);
+    transform: translateY(-1px);
+  }
+}
+
+@keyframes resumeShine {
+  0% {
+    transform: translateX(-140%);
+  }
+  55%,
+  100% {
+    transform: translateX(140%);
   }
 }
