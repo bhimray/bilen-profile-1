@@ -21,8 +21,10 @@ function getVisitorId() {
     return existing;
   }
 
+  const cryptoApi =
+    typeof window !== 'undefined' && window.crypto ? window.crypto : null;
   const created =
-    globalThis.crypto?.randomUUID?.() ||
+    cryptoApi?.randomUUID?.() ||
     `visitor-${Math.random().toString(36).slice(2)}-${Date.now()}`;
 
   localStorage.setItem(VISITOR_ID_KEY, created);
