@@ -296,7 +296,7 @@ function App() {
 
             <div className="hero-actions">
               <a className="button button-primary" href="mailto:bimlendra.ray@utdallas.edu">
-                Contact
+                Email
               </a>
               <a className="button button-secondary" href="#projects">
                 View Projects
