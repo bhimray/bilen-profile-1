@@ -132,7 +132,7 @@ a {
 }
 
 .hero h1 {
-  font-size: clamp(3rem, 7vw, 6rem);
+  font-size: clamp(6rem, 6vw, 5rem);
   max-width: 12ch;
 }
 
@@ -249,8 +249,8 @@ a {
 
 .hero-visual {
   position: relative;
-  align-self: start;
-  min-height: 31rem;
+  align-self: center;
+  min-height: 38rem;
 }
 
 .portrait-frame,
