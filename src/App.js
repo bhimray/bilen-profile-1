@@ -1,7 +1,17 @@
 import { useState } from 'react';
 import './App.css';
 import profileImage from './images/profile.webp';
-import { useViewerCounter } from './hooks/useViewerCounter';
+import qcarPickupDropoff from './Proj-qcar/pickup_dropoff.png';
+import qcarReport from './Proj-qcar/Report_QCar.pdf';
+import agriSortReport from './Proj-agri-sort/Robotics_Project.pdf';
+import alIlqrReport from './Proj-al-ilqr/Optimization_final_report.pdf';
+import alIlqrTrajectoryReport from './Proj-al-ilqr/Trajectory_following_using_AL_iLQR_method_and_obstacle_avoidance_using_constraint (1).pdf';
+import lapTimeAcceleration from './Proj-lap-time-mpc/acceleration.jpg';
+import lapTimeAcceleration20 from './Proj-lap-time-mpc/acc_a20.jpg';
+import lapTimeInputs from './Proj-lap-time-mpc/inputs.jpg';
+import lapTimeTrack from './Proj-lap-time-mpc/tracks_20.jpg';
+import lapTimeVelocity from './Proj-lap-time-mpc/velocity_profile.jpg';
+import lapTimeReport from './Proj-lap-time-mpc/Racing_Vehicle_Lap_time_optimization.pdf';
 
 const capabilities = [
   {
@@ -54,7 +64,14 @@ const projects = [
       'Built an end-to-end autonomous control and planning stack on physical hardware.',
       'Improved control behavior for smoothness, stability, and safety in real time.',
     ],
-    links: ['https://github.com/bhimray/Quanser_1st_stage_submission.git', 'Technical report', 'System demo video'],
+    assets: {
+      reports: [{ label: 'QCar Technical Report', href: qcarReport }],
+      images: [{ src: qcarPickupDropoff, alt: 'QCar pickup and dropoff system view', caption: 'Pickup and dropoff task snapshot' }],
+    },
+    links: [
+      { label: 'GitHub Repository', href: 'https://github.com/bhimray/Quanser_1st_stage_submission.git' },
+      { label: 'System Demo Video', href: '#contact' },
+    ],
   },
   {
     id: 'imitation-mpc',
@@ -78,7 +95,15 @@ const projects = [
       'Demonstrated neural approximation of MPC feedback for an unstable dynamic system.',
       'Evaluated stability, tracking error, and disturbance rejection in closed loop.',
     ],
-    links: ['GitHub (placeholder)', 'Technical note', 'Simulation video placeholder'],
+    assets: {
+      reports: [],
+      images: [],
+    },
+    links: [
+      { label: 'GitHub Repository', href: '#contact' },
+      { label: 'Technical Note', href: '#contact' },
+      { label: 'Simulation Video', href: '#contact' },
+    ],
   },
   {
     id: 'lap-time-mpc',
@@ -102,7 +127,20 @@ const projects = [
       'Built a control formulation for racing performance under disturbances and uncertainty.',
       'Combined performance optimization with trajectory safety constraints.',
     ],
-    links: ['https://github.com/bhimray/racing_car.git', 'Controller diagram placeholder', 'Simulation result placeholder'],
+    assets: {
+      reports: [{ label: 'Lap Time Optimization Report', href: lapTimeReport }],
+      images: [
+        { src: lapTimeTrack, alt: 'Autonomous racing track plot', caption: 'Track geometry and racing line' },
+        { src: lapTimeVelocity, alt: 'Velocity profile plot', caption: 'Velocity profile' },
+        { src: lapTimeAcceleration, alt: 'Acceleration profile plot', caption: 'Acceleration response' },
+        { src: lapTimeAcceleration20, alt: 'Acceleration response under disturbance', caption: 'Disturbance-aware acceleration response' },
+        { src: lapTimeInputs, alt: 'Control input plot', caption: 'Control input profile' },
+      ],
+    },
+    links: [
+      { label: 'GitHub Repository', href: 'https://github.com/bhimray/racing_car.git' },
+      { label: 'Simulation Results', href: '#contact' },
+    ],
   },
   {
     id: 'al-ilqr',
@@ -126,7 +164,17 @@ const projects = [
       'Demonstrated reliable obstacle avoidance in simulation.',
       'Analyzed causes of deviation from the reference trajectory to guide controller refinement.',
     ],
-    links: ['https://github.com/bhimray/Optimal_control_Project.git', 'Trajectory plot placeholder', 'Simulation demo placeholder'],
+    assets: {
+      reports: [
+        { label: 'Optimization Final Report', href: alIlqrReport },
+        { label: 'Trajectory Tracking Report', href: alIlqrTrajectoryReport },
+      ],
+      images: [],
+    },
+    links: [
+      { label: 'GitHub Repository', href: 'https://github.com/bhimray/Optimal_control_Project.git' },
+      { label: 'Simulation Demo', href: '#contact' },
+    ],
   },
   {
     id: 'plc-counting',
@@ -150,7 +198,15 @@ const projects = [
       'Implemented the automation logic on real hardware.',
       'Reduced reliance on manual counting and process monitoring.',
     ],
-    links: ['GitHub (placeholder)', 'PLC ladder diagram placeholder', 'Hardware demo placeholder'],
+    assets: {
+      reports: [],
+      images: [],
+    },
+    links: [
+      { label: 'GitHub Repository', href: '#contact' },
+      { label: 'PLC Ladder Diagram', href: '#contact' },
+      { label: 'Hardware Demo', href: '#contact' },
+    ],
   },
   {
     id: 'agri-sort',
@@ -174,7 +230,14 @@ const projects = [
       'Improved sorting accuracy through image-based classification.',
       'Built a full perception-to-sorting pipeline in simulation.',
     ],
-    links: ['GitHub (placeholder)', 'System diagram placeholder', 'Simulation demo placeholder'],
+    assets: {
+      reports: [{ label: 'Agri Sort Project Report', href: agriSortReport }],
+      images: [],
+    },
+    links: [
+      { label: 'GitHub Repository', href: '#contact' },
+      { label: 'Simulation Demo', href: '#contact' },
+    ],
   },
 ];
 
@@ -251,7 +314,6 @@ const philosophyPoints = [
 
 function App() {
   const [expandedProject, setExpandedProject] = useState(projects[0].id);
-  const viewerCounter = useViewerCounter();
 
   return (
     <div className="app-shell">
@@ -321,24 +383,6 @@ function App() {
               </div>
             </div>
 
-            {/* <div className="viewer-strip">
-              <div className="viewer-card">
-                <span className="meta-label">Total Viewers</span>
-                <strong>{viewerCounter.loading ? '...' : viewerCounter.total}</strong>
-              </div>
-              <div className="viewer-card">
-                <span className="meta-label">Monthly</span>
-                <strong>{viewerCounter.loading ? '...' : viewerCounter.monthly}</strong>
-              </div>
-              <div className="viewer-card">
-                <span className="meta-label">Yearly</span>
-                <strong>{viewerCounter.loading ? '...' : viewerCounter.yearly}</strong>
-              </div>
-            </div> */}
-
-            {/* <p className="viewer-note">Counts are stored in this browser and persist unless local browser data is cleared.</p>
-
-            {viewerCounter.error ? <p className="viewer-note">{viewerCounter.error}</p> : null} */}
           </div>
 
           <div className="hero-visual">
@@ -440,15 +484,49 @@ function App() {
                       </div>
 
                       <div className="asset-row">
-                        <div className="asset-placeholder">Project video placeholder</div>
-                        <div className="asset-placeholder">System diagram placeholder</div>
-                        <div className="asset-placeholder">GitHub / report links placeholder</div>
+                        <div className="asset-panel">
+                          <div className="asset-panel-header">
+                            <span>Reports</span>
+                            <strong>{project.assets.reports.length}</strong>
+                          </div>
+                          {project.assets.reports.length ? (
+                            <div className="asset-list">
+                              {project.assets.reports.map((report) => (
+                                <a className="asset-link" href={report.href} download key={`${project.id}-${report.label}`}>
+                                  <span>{report.label}</span>
+                                  <strong>Download PDF</strong>
+                                </a>
+                              ))}
+                            </div>
+                          ) : (
+                            <div className="asset-empty">No report uploaded yet</div>
+                          )}
+                        </div>
+
+                        <div className="asset-panel asset-panel-wide">
+                          <div className="asset-panel-header">
+                            <span>Images</span>
+                            <strong>{project.assets.images.length}</strong>
+                          </div>
+                          {project.assets.images.length ? (
+                            <div className="project-gallery">
+                              {project.assets.images.map((image) => (
+                                <figure className="gallery-card" key={`${project.id}-${image.caption}`}>
+                                  <img src={image.src} alt={image.alt} />
+                                  <figcaption>{image.caption}</figcaption>
+                                </figure>
+                              ))}
+                            </div>
+                          ) : (
+                            <div className="asset-empty">No project images uploaded yet</div>
+                          )}
+                        </div>
                       </div>
 
                       <div className="project-links">
                         {project.links.map((link) => (
-                          <a href="#contact" key={link}>
-                            {link}
+                          <a href={link.href} key={`${project.id}-${link.label}`} target={link.href.startsWith('http') ? '_blank' : undefined} rel={link.href.startsWith('http') ? 'noreferrer' : undefined}>
+                            {link.label}
                           </a>
                         ))}
                       </div>
