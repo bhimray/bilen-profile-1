@@ -314,6 +314,7 @@ const philosophyPoints = [
 
 function App() {
   const [expandedProject, setExpandedProject] = useState(projects[0].id);
+  const [activeImage, setActiveImage] = useState(null);
 
   return (
     <div className="app-shell">
@@ -388,6 +389,20 @@ function App() {
           <div className="hero-visual">
             <div className="portrait-frame">
               <img src={profileImage} alt="Bimlendra Ray" />
+              <button
+                className="image-expand-button portrait-expand-button"
+                type="button"
+                aria-label="Expand profile photo"
+                onClick={() =>
+                  setActiveImage({
+                    src: profileImage,
+                    alt: 'Bimlendra Ray',
+                    caption: 'Profile portrait',
+                  })
+                }
+              >
+                Expand
+              </button>
             </div>
             <div className="hero-card">
               <p>Engineering focus</p>
@@ -513,6 +528,14 @@ function App() {
                               {project.assets.images.map((image) => (
                                 <figure className="gallery-card" key={`${project.id}-${image.caption}`}>
                                   <img src={image.src} alt={image.alt} />
+                                  <button
+                                    className="image-expand-button"
+                                    type="button"
+                                    aria-label={`Expand ${image.caption}`}
+                                    onClick={() => setActiveImage(image)}
+                                  >
+                                    Expand
+                                  </button>
                                   <figcaption>{image.caption}</figcaption>
                                 </figure>
                               ))}
@@ -690,6 +713,29 @@ function App() {
           </div>
         </section>
       </main>
+
+      {activeImage ? (
+        <div
+          className="image-lightbox"
+          role="dialog"
+          aria-modal="true"
+          aria-label={activeImage.caption || activeImage.alt}
+          onClick={() => setActiveImage(null)}
+        >
+          <div className="image-lightbox-panel" onClick={(event) => event.stopPropagation()}>
+            <button
+              className="image-lightbox-close"
+              type="button"
+              aria-label="Close image preview"
+              onClick={() => setActiveImage(null)}
+            >
+              Close
+            </button>
+            <img src={activeImage.src} alt={activeImage.alt} />
+            {activeImage.caption ? <p>{activeImage.caption}</p> : null}
+          </div>
+        </div>
+      ) : null}
     </div>
   );
 }
