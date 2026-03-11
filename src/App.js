@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import './App.css';
 import profileImage from './images/profile.webp';
+import { useViewerCounter } from './hooks/useViewerCounter';
 
 const capabilities = [
   {
@@ -250,6 +251,7 @@ const philosophyPoints = [
 
 function App() {
   const [expandedProject, setExpandedProject] = useState(projects[0].id);
+  const viewerCounter = useViewerCounter();
 
   return (
     <div className="app-shell">
@@ -318,6 +320,25 @@ function App() {
                 <strong>May 2026</strong>
               </div>
             </div>
+
+            <div className="viewer-strip">
+              <div className="viewer-card">
+                <span className="meta-label">Total Viewers</span>
+                <strong>{viewerCounter.loading ? '...' : viewerCounter.total}</strong>
+              </div>
+              <div className="viewer-card">
+                <span className="meta-label">Monthly</span>
+                <strong>{viewerCounter.loading ? '...' : viewerCounter.monthly}</strong>
+              </div>
+              <div className="viewer-card">
+                <span className="meta-label">Yearly</span>
+                <strong>{viewerCounter.loading ? '...' : viewerCounter.yearly}</strong>
+              </div>
+            </div>
+
+            <p className="viewer-note">Counts are stored in this browser and persist unless local browser data is cleared.</p>
+
+            {viewerCounter.error ? <p className="viewer-note">{viewerCounter.error}</p> : null}
           </div>
 
           <div className="hero-visual">
@@ -568,6 +589,10 @@ function App() {
               <div>
                 <span>Email</span>
                 <a href="mailto:bimlendra.ray@utdallas.edu">bimlendra.ray@utdallas.edu</a>
+              </div>
+              <div>
+                <span>Alternate Email</span>
+                <a href="mailto:raybimlendra@gmail.com">raybimlendra@gmail.com</a>
               </div>
               <div>
                 <span>Phone</span>
