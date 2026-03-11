@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import './App.css';
-import profileImage from './images/profile.webp';
+import profileImage from './images/profile_2.jpg';
 import qcarPickupDropoff from './Proj-qcar/pickup_dropoff.png';
 import qcarReport from './Proj-qcar/Report_QCar.pdf';
 import agriSortReport from './Proj-agri-sort/Robotics_Project.pdf';
