@@ -102,8 +102,9 @@ a {
   display: grid;
   grid-template-columns: 1.15fr 0.85fr;
   gap: 2rem;
-  align-items: center;
+  align-items: start;
   min-height: calc(100vh - 76px);
+  padding-top: 1.25rem;
 }
 
 .kicker,
@@ -248,7 +249,8 @@ a {
 
 .hero-visual {
   position: relative;
-  min-height: 34rem;
+  align-self: start;
+  min-height: 31rem;
 }
 
 .portrait-frame,
@@ -267,7 +269,7 @@ a {
 
 .portrait-frame {
   position: absolute;
-  top: 0;
+  top: -0.35rem;
   right: 1.5rem;
   width: min(100%, 24rem);
   padding: 0.9rem;
@@ -281,6 +283,34 @@ a {
   aspect-ratio: 0.84;
   object-fit: cover;
   border-radius: 1.4rem;
+}
+
+.image-expand-button {
+  position: absolute;
+  top: 0.85rem;
+  right: 0.85rem;
+  z-index: 2;
+  padding: 0.55rem 0.8rem;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 999px;
+  background: rgba(5, 11, 20, 0.72);
+  color: #eff5ff;
+  font: inherit;
+  font-size: 0.84rem;
+  cursor: pointer;
+  transition: transform 160ms ease, background 160ms ease, border-color 160ms ease;
+}
+
+.image-expand-button:hover,
+.image-lightbox-close:hover {
+  transform: translateY(-1px);
+  background: rgba(13, 24, 40, 0.92);
+  border-color: rgba(100, 215, 196, 0.35);
+}
+
+.portrait-expand-button {
+  top: 1.2rem;
+  right: 1.2rem;
 }
 
 .hero-card {
@@ -416,22 +446,154 @@ a {
 
 .asset-row {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: 0.9fr 1.1fr;
   gap: 1rem;
   margin-top: 1rem;
 }
 
-.asset-placeholder {
-  min-height: 10rem;
+.asset-panel {
+  min-height: 12rem;
+  padding: 1rem;
+  border-radius: 1.2rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.asset-panel-wide {
+  min-width: 0;
+}
+
+.asset-panel-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: center;
+  margin-bottom: 0.9rem;
+}
+
+.asset-panel-header span {
+  color: var(--accent);
+  font-size: 0.8rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.asset-panel-header strong {
+  color: var(--accent-strong);
+}
+
+.asset-list {
   display: grid;
-  place-items: center;
-  text-align: center;
+  gap: 0.8rem;
+}
+
+.asset-link,
+.asset-empty {
+  min-height: 4.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem;
+  border-radius: 1rem;
   color: #d7e3f3;
   border-radius: 1.2rem;
-  border: 1px dashed rgba(255, 255, 255, 0.18);
+  border: 1px dashed rgba(255, 255, 255, 0.16);
   background:
     linear-gradient(135deg, rgba(100, 215, 196, 0.08), rgba(255, 209, 102, 0.06)),
     rgba(255, 255, 255, 0.02);
+}
+
+.asset-link strong {
+  color: var(--accent-strong);
+  white-space: nowrap;
+}
+
+.asset-empty {
+  justify-content: center;
+  text-align: center;
+  color: var(--muted);
+}
+
+.project-gallery {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.85rem;
+}
+
+.gallery-card {
+  position: relative;
+  margin: 0;
+  overflow: hidden;
+  border-radius: 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.gallery-card img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1.45;
+  object-fit: cover;
+}
+
+.gallery-card figcaption {
+  padding: 0.8rem 0.9rem 0.95rem;
+  color: var(--muted);
+  font-size: 0.92rem;
+  line-height: 1.5;
+}
+
+.image-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 30;
+  display: grid;
+  place-items: center;
+  padding: 1.25rem;
+  background: rgba(2, 6, 12, 0.82);
+  backdrop-filter: blur(10px);
+}
+
+.image-lightbox-panel {
+  position: relative;
+  width: min(100%, 980px);
+  max-height: calc(100vh - 2.5rem);
+  overflow: auto;
+  padding: 1rem;
+  border-radius: 1.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: linear-gradient(180deg, rgba(17, 33, 58, 0.98), rgba(8, 18, 32, 0.94));
+  box-shadow: var(--shadow);
+}
+
+.image-lightbox-panel img {
+  display: block;
+  width: 100%;
+  max-height: calc(100vh - 8rem);
+  object-fit: contain;
+  border-radius: 1rem;
+}
+
+.image-lightbox-panel p {
+  margin: 0.9rem 0 0;
+  color: var(--muted);
+  line-height: 1.65;
+}
+
+.image-lightbox-close {
+  position: sticky;
+  top: 0;
+  margin-left: auto;
+  margin-bottom: 0.75rem;
+  display: block;
+  padding: 0.55rem 0.8rem;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 999px;
+  background: rgba(5, 11, 20, 0.72);
+  color: #eff5ff;
+  font: inherit;
+  cursor: pointer;
 }
 
 .project-links {
@@ -673,11 +835,12 @@ a {
   }
 
   .hero-visual {
-    min-height: 28rem;
+    min-height: 26rem;
   }
 
   .portrait-frame {
     right: 0;
+    top: 0;
   }
 
   .hero-meta {
@@ -685,6 +848,10 @@ a {
   }
 
   .viewer-strip {
+    grid-template-columns: 1fr;
+  }
+
+  .project-gallery {
     grid-template-columns: 1fr;
   }
 }
@@ -717,7 +884,7 @@ a {
   }
 
   .hero-visual {
-    min-height: 24rem;
+    min-height: 22rem;
   }
 
   .portrait-frame {
