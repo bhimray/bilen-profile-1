@@ -1,5 +1,6 @@
 import './App.css';
 import profileImage from './images/profile.webp';
+import ProjectObservatory from './ProjectObservatory';
 
 const focusAreas = [
   {
@@ -101,6 +102,7 @@ function App() {
           <a href="#about">About</a>
           <a href="#experience">Experience</a>
           <a href="#work">Work</a>
+          <a href="#observatory">Observatory</a>
           <a href="#contact">Contact</a>
         </nav>
       </header>
@@ -246,6 +248,8 @@ function App() {
             ))}
           </div>
         </section>
+
+        <ProjectObservatory />
 
         <section className="section education-skills">
           <div className="education-card">

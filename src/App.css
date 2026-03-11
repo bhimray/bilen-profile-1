@@ -419,10 +419,102 @@ a {
   border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
+.observatory-heading {
+  max-width: 56rem;
+}
+
+.observatory-copy {
+  color: var(--muted);
+  max-width: 52rem;
+  line-height: 1.8;
+  font-size: 1.02rem;
+}
+
+.observatory-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.observatory-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 1.8rem;
+  border: 1px solid var(--line);
+  background:
+    radial-gradient(circle at top right, rgba(100, 215, 196, 0.16), transparent 28%),
+    linear-gradient(180deg, rgba(17, 33, 58, 0.94), rgba(8, 18, 32, 0.82));
+  box-shadow: var(--shadow);
+}
+
+.observatory-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 24px 24px;
+  mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.7), transparent 92%);
+  pointer-events: none;
+}
+
+.observatory-card-copy {
+  position: relative;
+  z-index: 1;
+  padding: 1.5rem 1.5rem 0;
+}
+
+.observatory-card-copy span {
+  color: var(--accent);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-size: 0.82rem;
+}
+
+.observatory-card-copy h3 {
+  margin: 0.55rem 0 0.65rem;
+  font-size: 1.55rem;
+}
+
+.observatory-card-copy p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+.plot-shell {
+  position: relative;
+  z-index: 1;
+  min-height: 360px;
+  padding: 0.5rem 0.8rem 1rem;
+}
+
+.plot-shell svg,
+.plot-shell figure {
+  width: 100%;
+  max-width: 100%;
+}
+
+.plot-shell .domain,
+.plot-shell .tick line {
+  stroke: rgba(255, 255, 255, 0.15);
+}
+
+.plot-shell .tick text,
+.plot-shell text {
+  fill: #dce7f4;
+}
+
+.plot-shell .grid line {
+  stroke: rgba(255, 255, 255, 0.08);
+}
+
 @media (max-width: 960px) {
   .hero,
   .about-grid,
   .education-skills,
+  .observatory-grid,
   .focus-grid,
   .work-grid {
     grid-template-columns: 1fr;
