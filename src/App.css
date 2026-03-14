@@ -242,8 +242,6 @@ a {
 .viewer-card {
   padding: 1rem 1.1rem;
   border-radius: 1.25rem;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  background: rgba(255, 255, 255, 0.03);
 }
 
 .viewer-card strong {
@@ -267,16 +265,75 @@ a {
 .portrait-frame,
 .hero-card,
 .focus-card,
+.viewer-card,
 .project-detail-card,
+.detail-block,
+.asset-panel,
+.gallery-card,
 .timeline-item,
 .concentration-card,
+.concentration-cluster,
+.course-tile,
 .education-card,
 .skills-card,
 .contact-panel,
+.contact-grid div,
 .observatory-card {
+  position: relative;
+  overflow: hidden;
   border: 1px solid var(--line);
-  background: var(--panel);
+  background:
+    radial-gradient(circle at top right, rgba(255, 209, 102, 0.16), transparent 24%),
+    radial-gradient(circle at bottom left, rgba(100, 215, 196, 0.14), transparent 26%),
+    var(--panel);
   box-shadow: var(--shadow);
+}
+
+.portrait-frame::before,
+.hero-card::before,
+.focus-card::before,
+.viewer-card::before,
+.project-detail-card::before,
+.detail-block::before,
+.asset-panel::before,
+.gallery-card::before,
+.timeline-item::before,
+.concentration-card::before,
+.concentration-cluster::before,
+.course-tile::before,
+.education-card::before,
+.skills-card::before,
+.contact-panel::before,
+.contact-grid div::before,
+.observatory-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 28px 28px;
+  mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.75), transparent 95%);
+  pointer-events: none;
+}
+
+.hero-card > *,
+.focus-card > *,
+.viewer-card > *,
+.project-detail-card > *,
+.detail-block > *,
+.asset-panel > *,
+.gallery-card > *,
+.timeline-item > *,
+.concentration-card > *,
+.concentration-cluster > *,
+.course-tile > *,
+.education-card > *,
+.skills-card > *,
+.contact-panel > *,
+.contact-grid div > * {
+  position: relative;
+  z-index: 1;
 }
 
 .portrait-frame {
@@ -384,7 +441,6 @@ a {
 
 .project-detail-card {
   border-radius: 1.7rem;
-  overflow: hidden;
 }
 
 .project-detail-card.expanded {
@@ -435,8 +491,6 @@ a {
 .detail-block {
   padding: 1.1rem;
   border-radius: 1.2rem;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .detail-block span {
@@ -468,8 +522,6 @@ a {
   min-height: 12rem;
   padding: 1rem;
   border-radius: 1.2rem;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  background: rgba(255, 255, 255, 0.03);
 }
 
 .asset-panel-wide {
@@ -537,10 +589,7 @@ a {
 .gallery-card {
   position: relative;
   margin: 0;
-  overflow: hidden;
   border-radius: 1rem;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  background: rgba(255, 255, 255, 0.03);
 }
 
 .gallery-card img {
@@ -757,27 +806,6 @@ a {
   margin-top: 1rem;
 }
 
-.concentration-card {
-  position: relative;
-  overflow: hidden;
-  background:
-    radial-gradient(circle at top right, rgba(255, 209, 102, 0.16), transparent 24%),
-    radial-gradient(circle at bottom left, rgba(100, 215, 196, 0.14), transparent 26%),
-    var(--panel);
-}
-
-.concentration-card::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background:
-    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-  background-size: 28px 28px;
-  mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.75), transparent 95%);
-  pointer-events: none;
-}
-
 .concentration-header,
 .concentration-summary,
 .concentration-grid {
@@ -833,8 +861,6 @@ a {
 .concentration-cluster {
   padding: 1.1rem;
   border-radius: 1.25rem;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  background: rgba(255, 255, 255, 0.03);
 }
 
 .course-stack {
@@ -846,10 +872,6 @@ a {
 .course-tile {
   padding: 1rem;
   border-radius: 1rem;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  background:
-    linear-gradient(135deg, rgba(100, 215, 196, 0.08), rgba(255, 255, 255, 0.02)),
-    rgba(255, 255, 255, 0.03);
 }
 
 .course-tile strong {
@@ -919,8 +941,6 @@ a {
 .contact-grid div {
   padding: 1rem;
   border-radius: 1.2rem;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .contact-grid span {
