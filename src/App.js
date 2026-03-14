@@ -15,6 +15,13 @@ import lapTimeInputs from './Proj-lap-time-mpc/inputs.jpg';
 import lapTimeTrack from './Proj-lap-time-mpc/tracks_20.jpg';
 import lapTimeVelocity from './Proj-lap-time-mpc/velocity_profile.jpg';
 import lapTimeReport from './Proj-lap-time-mpc/Racing_Vehicle_Lap_time_optimization.pdf';
+import turtlebotAngularVelocity from './Proj-turtlebot3-ros/angular_velocity.png';
+import turtlebotHeadingError from './Proj-turtlebot3-ros/heading_error.png';
+import turtlebotLinearVelocity from './Proj-turtlebot3-ros/linear_velocity.png';
+import turtlebotPathError from './Proj-turtlebot3-ros/path_error.png';
+import turtlebotReport from './Proj-turtlebot3-ros/Trajectory_tracking_turtlebot3.pdf';
+import turtlebotTrajectory from './Proj-turtlebot3-ros/trajectory_xy.png';
+import turtlebotDemoVideo from './Proj-turtlebot3-ros/Simulation_demo.mp4';
 
 const capabilities = [
   {
@@ -245,6 +252,43 @@ const projects = [
       { label: 'Simulation Demo', href: '#contact' },
     ],
   },
+  {
+    id: 'turtlebot3-ros',
+    title: 'Trajectory Tracking Control for TurtleBot3 Using ROS',
+    overview:
+      'Developed and evaluated a ROS-based trajectory-tracking workflow for TurtleBot3, analyzing tracking error and control signals across a simulated path-following task.',
+    platform: 'UT Dallas | 2025',
+    problem:
+      'Mobile robots need stable trajectory-tracking performance with bounded path and heading error while maintaining smooth linear and angular velocity commands.',
+    approach:
+      'Built a ROS-based trajectory-tracking simulation for TurtleBot3, generated reference motion, evaluated closed-loop tracking behavior, and analyzed path error, heading error, and control inputs from the simulation results.',
+    architecture: 'Reference trajectory -> Tracking controller -> TurtleBot3 dynamics -> Error and control analysis',
+    technologies: ['ROS', 'Python', 'TurtleBot3', 'Robot Navigation', 'Control Systems'],
+    features: [
+      'ROS-based mobile robot simulation workflow',
+      'Trajectory tracking for differential-drive robot motion',
+      'Heading and path error analysis',
+      'Linear and angular velocity response evaluation',
+    ],
+    results: [
+      'Produced end-to-end simulation results for TurtleBot3 trajectory tracking.',
+      'Documented tracking performance using trajectory, path-error, heading-error, and control-response plots.',
+    ],
+    assets: {
+      reports: [{ label: 'TurtleBot3 Trajectory Tracking Report', href: turtlebotReport }],
+      images: [
+        { src: turtlebotTrajectory, alt: 'TurtleBot3 XY trajectory tracking plot', caption: 'XY trajectory tracking performance' },
+        { src: turtlebotPathError, alt: 'TurtleBot3 path error plot', caption: 'Path error response' },
+        { src: turtlebotHeadingError, alt: 'TurtleBot3 heading error plot', caption: 'Heading error response' },
+        { src: turtlebotLinearVelocity, alt: 'TurtleBot3 linear velocity plot', caption: 'Linear velocity response' },
+        { src: turtlebotAngularVelocity, alt: 'TurtleBot3 angular velocity plot', caption: 'Angular velocity response' },
+      ],
+    },
+    links: [
+      { label: 'Project Report', href: turtlebotReport },
+      { label: 'Simulation Demo Video', href: turtlebotDemoVideo },
+    ],
+  },
 ];
 
 const researchExperience = {
@@ -405,7 +449,11 @@ function App() {
               <a className="button button-secondary" href="#projects">
                 View Projects
               </a>
-              <a className="button button-download" href="/Bimlendra_Ray_Resume.pdf" download>
+              <a
+                className="button button-download"
+                href={`${process.env.PUBLIC_URL}/Bimlendra_Ray_Robotics_Engineer_Resume.pdf`}
+                download="Bimlendra_Ray_Robotics_Engineer_Resume.pdf"
+              >
                 Download Resume
               </a>
             </div>
