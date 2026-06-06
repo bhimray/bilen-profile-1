@@ -32,3 +32,16 @@ test('renders the MuJoCo legged robot project page', () => {
   ).toBeInTheDocument();
   expect(screen.getByText(/stance, flight, touchdown, and liftoff/i)).toBeInTheDocument();
 });
+
+test('renders the two-wheeled robot robust-control project page', () => {
+  window.location.hash = '#/projects/two-wheeled-robust-control';
+  render(<App />);
+
+  expect(
+    screen.getByRole('heading', {
+      name: /robust stability and performance analysis/i,
+    })
+  ).toBeInTheDocument();
+  expect(screen.getByText(/10,000 Monte Carlo samples/i)).toBeInTheDocument();
+  expect(screen.getByText(/approximately 2.64 V/i)).toBeInTheDocument();
+});

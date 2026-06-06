@@ -23,6 +23,7 @@ results, technologies, and available evidence.
 
 ## Featured Projects
 
+- Robust Stability and Performance Analysis of a Two-Wheeled Self-Balancing Robot
 - Hybrid Control of a Legged Robot in MuJoCo
 - End-to-End Autonomous Vehicle Control and Planning System using Quanser QCar
 - Neural Approximation of Constrained MPC through Imitation Learning

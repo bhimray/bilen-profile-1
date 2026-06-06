@@ -22,6 +22,13 @@ import turtlebotPathError from './Proj-turtlebot3-ros/path_error.png';
 import turtlebotReport from './Proj-turtlebot3-ros/Trajectory_tracking_turtlebot3.pdf';
 import turtlebotTrajectory from './Proj-turtlebot3-ros/trajectory_xy.png';
 import turtlebotDemoVideo from './Proj-turtlebot3-ros/Simulation_demo.mp4';
+import twoWheeledReport from './Proj-two-wheeled-mobile-robots/Robust_Stability_Analysis_of_a_Two_Wheeled_Self_Balancing_Robot_with_Parametric_Uncertainty (1).pdf';
+import twoWheeledWeightedChannels from './Proj-two-wheeled-mobile-robots/02_weighted_channels.png';
+import twoWheeledStabilityMargins from './Proj-two-wheeled-mobile-robots/03_robust_stability_margin_comparison.png';
+import twoWheeledPitchResponse from './Proj-two-wheeled-mobile-robots/03_experiment_3_pitch_angle_under_parameter_changes.png';
+import twoWheeledMotorVoltage from './Proj-two-wheeled-mobile-robots/02_experiment_3_motor_voltage_under_parameter_changes.png';
+import twoWheeledWorstCase from './Proj-two-wheeled-mobile-robots/09_robstab_worst_case_simulation.png';
+import twoWheeledMonteCarlo from './Proj-two-wheeled-mobile-robots/monte-carlo.png';
 
 const capabilities = [
   {
@@ -52,6 +59,71 @@ const capabilities = [
 ];
 
 const projects = [
+  {
+    id: 'two-wheeled-robust-control',
+    title: 'Robust Stability and Performance Analysis of a Two-Wheeled Self-Balancing Robot',
+    overview:
+      'Compared LQR and mixed-sensitivity H-infinity control for an open-loop unstable self-balancing robot under disturbances, actuator limits, and structured physical uncertainty.',
+    platform: 'Robust Control Study | May 2026',
+    problem:
+      'A two-wheeled self-balancing robot must regulate an unstable upright equilibrium while payload mass, center-of-mass height, external disturbances, and practical motor-voltage limits change the closed-loop dynamics.',
+    approach:
+      'Derived a common-mode state-space balancing model, designed an LQR baseline and a mixed-sensitivity H-infinity controller, and evaluated both using nominal response, sinusoidal disturbance rejection, uncertain mass and height sweeps, worst-case gain analysis, robust stability margins, and Monte Carlo simulation.',
+    architecture: 'Uncertain robot model -> LQR and H-infinity synthesis -> Disturbance and parameter sweeps -> Robust stability analysis -> Monte Carlo validation',
+    technologies: ['MATLAB', 'Simulink', 'Robust Control', 'LQR', 'H-infinity Control', 'Monte Carlo Analysis'],
+    features: [
+      'Modeled payload mass from 0.20 to 0.30 kg and robot height from 0.14 to 0.20 m as structured uncertainty',
+      'Designed a full-state LQR controller for nominal stabilization and disturbance rejection',
+      'Synthesized a mixed-sensitivity H-infinity controller using sensitivity, control-effort, and complementary-sensitivity weights',
+      'Applied robust stability and worst-case gain analysis to identify destabilizing parameter substitutions',
+      'Compared pitch regulation, wheel motion, and motor-voltage demand against a 24 V actuator constraint',
+      'Validated uncertain closed-loop behavior with 10,000 Monte Carlo samples',
+    ],
+    results: [
+      'Both controllers remained robustly stable across the full modeled mass and height uncertainty set.',
+      'LQR achieved a robust stability lower bound of approximately 4.11, compared with 1.66 for the H-infinity controller.',
+      'LQR limited maximum pitch deviation to approximately 0.1005 rad, while H-infinity reached approximately 0.1789 rad under the evaluated uncertainty cases.',
+      'H-infinity reduced peak per-wheel motor voltage to approximately 2.64 V, compared with approximately 14.07 V for LQR.',
+      'Worst-case destabilizing substitutions occurred outside the modeled operating range, confirming stability within the specified uncertainty set.',
+      'The study quantified the tradeoff between tighter state regulation and actuator-efficient robust behavior.',
+    ],
+    assets: {
+      reports: [{ label: 'Robust Stability Analysis Report', href: twoWheeledReport }],
+      images: [
+        {
+          src: twoWheeledWeightedChannels,
+          alt: 'Frequency responses of weighted sensitivity, control effort, and complementary sensitivity channels',
+          caption: 'Mixed-sensitivity H-infinity weighted channels',
+        },
+        {
+          src: twoWheeledStabilityMargins,
+          alt: 'Bar chart comparing LQR and H-infinity robust stability margins',
+          caption: 'Robust stability margin comparison',
+        },
+        {
+          src: twoWheeledPitchResponse,
+          alt: 'Pitch-angle responses for nominal, mass, height, and combined parameter changes',
+          caption: 'Pitch regulation under structured parameter uncertainty',
+        },
+        {
+          src: twoWheeledMotorVoltage,
+          alt: 'LQR and H-infinity motor-voltage responses under parameter changes and 24 volt limits',
+          caption: 'Actuator demand under uncertain operating conditions',
+        },
+        {
+          src: twoWheeledWorstCase,
+          alt: 'Pitch and motor-voltage responses at robust-stability worst-case substitutions',
+          caption: 'Near-instability worst-case closed-loop behavior',
+        },
+        {
+          src: twoWheeledMonteCarlo,
+          alt: 'LQR and H-infinity pitch-angle envelopes from 10000 Monte Carlo uncertainty samples',
+          caption: '10,000-sample Monte Carlo robustness validation',
+        },
+      ],
+    },
+    links: [],
+  },
   {
     id: 'mujoco-legged-robot',
     title: 'Hybrid Control of a Legged Robot in MuJoCo',
@@ -726,7 +798,7 @@ function App() {
 
             <div className="hero-proof">
               <div>
-                <strong>8</strong>
+                <strong>9</strong>
                 <span>Featured engineering projects</span>
               </div>
               <div>
