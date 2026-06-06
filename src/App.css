@@ -1650,7 +1650,13 @@ a {
 }
 
 .contact-actions .button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: max-content;
   margin: 0;
+  padding-inline: 1.45rem;
+  white-space: nowrap;
 }
 
 .contact-grid {
@@ -1737,6 +1743,13 @@ a {
   .contact-actions {
     flex-direction: column;
     margin-bottom: 2rem;
+  }
+
+  .contact-actions .button {
+    width: 100%;
+    min-width: 0;
+    padding-inline: 1rem;
+    font-size: 0.92rem;
   }
 }
 
