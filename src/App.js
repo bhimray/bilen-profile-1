@@ -53,6 +53,36 @@ const capabilities = [
 
 const projects = [
   {
+    id: 'mujoco-legged-robot',
+    title: 'Hybrid Control of a Legged Robot in MuJoCo',
+    overview:
+      'Built a MuJoCo-based legged robot simulation with contact dynamics, actuator constraints, and phase-based hybrid control.',
+    platform: 'Independent Project | Dec 2025 - Feb 2026',
+    problem:
+      'Legged locomotion requires continuous feedback control to work together with discrete gait transitions while remaining stable through contact changes, actuator limits, and environmental disturbances.',
+    approach:
+      'Modeled the robot and its contact dynamics in MuJoCo, implemented a finite-state machine for gait phases, and designed feedback controllers for body regulation and locomotion tracking. The controller was then evaluated under changes in disturbances, mass, and ground friction.',
+    architecture: 'MuJoCo robot model -> Contact dynamics -> Gait state machine -> Feedback control -> Robustness evaluation',
+    technologies: ['C++', 'MuJoCo', 'Hybrid Systems', 'Feedback Control', 'Robotics Simulation'],
+    features: [
+      'MuJoCo simulation with contact dynamics and actuator constraints',
+      'Finite-state machine for stance, flight, touchdown, and liftoff transitions',
+      'Height regulation and torso stabilization controllers',
+      'Forward velocity tracking controller',
+      'External disturbance and parameter-variation testing',
+    ],
+    results: [
+      'Evaluated controller robustness under external push disturbances.',
+      'Tested locomotion behavior under robot mass variation and changes in ground friction.',
+      'Generated plots for center-of-mass height, velocity tracking, joint motion, torque usage, and gait stability.',
+    ],
+    assets: {
+      reports: [],
+      images: [],
+    },
+    links: [],
+  },
+  {
     id: 'qcar',
     title: 'End-to-End Autonomous Vehicle Control & Planning System (QUANSER QCAR)',
     overview:
@@ -336,8 +366,8 @@ const industryExperiences = [
 ];
 
 const stackGroups = [
-  { label: 'Programming', items: ['Python', 'MATLAB', 'JavaScript', 'SQL', 'PLC'] },
-  { label: 'Robotics', items: ['ROS', 'Gazebo', 'MoveIt', 'Quanser QCar'] },
+  { label: 'Programming', items: ['Python', 'MATLAB', 'C++', 'JavaScript', 'SQL', 'PLC'] },
+  { label: 'Robotics', items: ['ROS', 'Gazebo', 'MuJoCo', 'MoveIt', 'Quanser QCar'] },
   { label: 'Simulation', items: ['Simulink', 'ANSYS', 'Modeling and Simulation'] },
   {
     label: 'Control & Robotics Concepts',
@@ -563,7 +593,7 @@ function ProjectDetailPage({ project }) {
             validation process, and lessons learned.
           </p>
           <div className="project-page-actions">
-            <a className="button button-primary" href="mailto:bimlendra.ray@utdallas.edu">
+            <a className="button button-primary" href="mailto:raybimlendra@gmail.com">
               Contact Me
             </a>
             <a className="button button-secondary" href="#projects">
@@ -640,31 +670,33 @@ function App() {
       <main>
         <section className="hero section" id="hero">
           <div className="hero-copy">
-            <p className="kicker">Controls and Robotics Engineer</p>
+            <div className="hero-intro-line">
+              <p className="kicker">Bimlendra Ray / Controls and Robotics Engineer</p>
+              <span className="availability-badge">
+                <i />
+                Open to opportunities
+              </span>
+            </div>
             <h1>
-              Bimlendra Ray
-              <span> building reliable autonomous systems through control, robotics, and systems engineering.</span>
+              Engineering autonomous systems that are
+              <span> stable, intelligent, and deployable.</span>
             </h1>
-            <p className="hero-subtitle">
-              Autonomous Systems • Model Predictive Control • Robot Navigation • Multi-Agent Systems
-            </p>
-            <p className="hero-text">
-              I am a Mechanical Engineering graduate researcher at The University of Texas at Dallas specializing in
-              dynamic systems and control. My work focuses on building reliable autonomous systems through model-based
-              control, robotics simulation, and system-level engineering.
-            </p>
-            <p className="hero-text">
-              I develop navigation and control algorithms for robotic systems including autonomous vehicles, multi-agent
-              systems, and robotic platforms operating in uncertain environments. My work integrates perception,
-              planning, and control pipelines using modern robotics tools and optimization-based control methods.
+            <p className="hero-lead">
+              I design control and robotics systems that connect mathematical models
+              to reliable machine behavior, from predictive vehicle control and robot
+              navigation to hybrid legged locomotion.
             </p>
 
+            <div className="hero-expertise" aria-label="Core engineering expertise">
+              <span>Model Predictive Control</span>
+              <span>Autonomous Navigation</span>
+              <span>Robotics Simulation</span>
+              <span>Dynamic Systems</span>
+            </div>
+
             <div className="hero-actions">
-              <a className="button button-primary" href="mailto:bimlendra.ray@utdallas.edu">
-                Email
-              </a>
-              <a className="button button-secondary" href="#projects">
-                View Projects
+              <a className="button button-primary" href="#projects">
+                Explore Engineering Work
               </a>
               <a
                 className="button button-download"
@@ -675,24 +707,45 @@ function App() {
               </a>
             </div>
 
-            <div className="hero-meta">
+            <div className="hero-social-links" aria-label="Professional profiles">
+              <a
+                href="https://www.linkedin.com/in/raybimlendra/"
+                target="_blank"
+                rel="noreferrer"
+              >
+                LinkedIn <span aria-hidden="true">↗</span>
+              </a>
+              <a
+                href="https://github.com/bhimray"
+                target="_blank"
+                rel="noreferrer"
+              >
+                GitHub <span aria-hidden="true">↗</span>
+              </a>
+            </div>
+
+            <div className="hero-proof">
               <div>
-                <span className="meta-label">Location</span>
-                <strong>Richardson, Texas</strong>
+                <strong>8</strong>
+                <span>Featured engineering projects</span>
               </div>
               <div>
-                <span className="meta-label">Status</span>
-                <strong>Actively seeking robotics, autonomy, and control engineering roles.</strong>
+                <strong>End-to-end</strong>
+                <span>Modeling, control, simulation, and validation</span>
               </div>
               <div>
-                <span className="meta-label">Expected Graduation</span>
-                <strong>May 2026</strong>
+                <strong>Richardson, TX</strong>
+                <span>Available for robotics and controls roles</span>
               </div>
             </div>
 
           </div>
 
           <div className="hero-visual">
+            <div className="portrait-index" aria-hidden="true">
+              <span>Portfolio</span>
+              <strong>01</strong>
+            </div>
             <div className="portrait-frame">
               <img src={profileImage} alt="Bimlendra Ray" />
               <button
@@ -711,8 +764,11 @@ function App() {
               </button>
             </div>
             <div className="hero-card">
-              <p>Engineering focus</p>
-              <strong>Model predictive control, robotics simulation, autonomous navigation, and deployable autonomy pipelines.</strong>
+              <p>Engineering Profile</p>
+              <strong>Controls-first robotics with a systems view.</strong>
+              <span>
+                Building across dynamics, optimization, simulation, and autonomous deployment.
+              </span>
             </div>
           </div>
         </section>
@@ -918,14 +974,29 @@ function App() {
         <section className="section contact-section" id="contact">
           <div className="contact-panel">
             <p className="section-kicker">Contact</p>
-            <h2>Open to robotics, autonomy, and control engineering opportunities.</h2>
+            <h2>Let&apos;s discuss robotics systems that need rigorous control engineering.</h2>
+            <p className="contact-intro">
+              I am open to robotics, autonomy, controls, and simulation opportunities.
+              For roles, collaborations, or technical conversations, reach me directly.
+            </p>
+
+            <div className="contact-actions">
+              <a className="button button-primary" href="mailto:raybimlendra@gmail.com">
+                Send an Email
+              </a>
+              <a
+                className="button button-secondary"
+                href="https://www.linkedin.com/in/raybimlendra/"
+                target="_blank"
+                rel="noreferrer"
+              >
+                Connect on LinkedIn
+              </a>
+            </div>
+
             <div className="contact-grid">
               <div>
                 <span>Email</span>
-                <a href="mailto:bimlendra.ray@utdallas.edu">bimlendra.ray@utdallas.edu</a>
-              </div>
-              <div>
-                <span>Alternate Email</span>
                 <a href="mailto:raybimlendra@gmail.com">raybimlendra@gmail.com</a>
               </div>
               <div>
@@ -936,6 +1007,12 @@ function App() {
                 <span>LinkedIn</span>
                 <a href="https://www.linkedin.com/in/raybimlendra/" target="_blank" rel="noreferrer">
                   linkedin.com/in/raybimlendra
+                </a>
+              </div>
+              <div>
+                <span>GitHub</span>
+                <a href="https://github.com/bhimray" target="_blank" rel="noreferrer">
+                  github.com/bhimray
                 </a>
               </div>
               <div>
