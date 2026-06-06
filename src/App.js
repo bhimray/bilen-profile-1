@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './App.css';
 import profileImage from './images/profile_2.jpg';
 import utdMonogramLogo from './images/utd_monogram_logo.jpg';
@@ -396,9 +396,226 @@ const philosophyPoints = [
   'Robotics software should be built for repeatability, observability, and safe iteration in uncertain environments.',
 ];
 
-function App() {
-  const [expandedProject, setExpandedProject] = useState(projects[0].id);
+function getProjectIdFromHash() {
+  const match = window.location.hash.match(/^#\/projects\/([^/?]+)/);
+  return match ? decodeURIComponent(match[1]) : '';
+}
+
+function ProjectDetailPage({ project }) {
   const [activeImage, setActiveImage] = useState(null);
+  const architectureSteps = project.architecture
+    ? project.architecture.split(' -> ')
+    : [];
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [project.id]);
+
+  return (
+    <div className="app-shell project-page">
+      <div className="ambient ambient-one" />
+      <div className="ambient ambient-two" />
+
+      <header className="topbar">
+        <a className="brand" href="#hero">
+          <img className="brand-logo" src={utdMonogramLogo} alt="UT Dallas logo" />
+          Bimlendra Ray
+        </a>
+        <nav className="topnav">
+          <a href="#projects">All Projects</a>
+          <a href="#contact">Contact</a>
+        </nav>
+      </header>
+
+      <main>
+        <section className="project-page-hero">
+          <a className="project-back-link" href="#projects">
+            Back to portfolio
+          </a>
+          <p className="project-tag">{project.platform}</p>
+          <h1>{project.title}</h1>
+          <p className="project-page-summary">{project.overview}</p>
+
+          <div className="project-page-actions">
+            {project.links.map((link) => (
+              <a
+                className="button button-secondary"
+                href={link.href}
+                key={`${project.id}-hero-${link.label}`}
+                target={link.href.startsWith('http') ? '_blank' : undefined}
+                rel="noreferrer"
+              >
+                {link.label}
+              </a>
+            ))}
+          </div>
+        </section>
+
+        <section className="project-page-section project-overview-grid">
+          <article className="project-story-card">
+            <span>Engineering Challenge</span>
+            <h2>What needed to be solved</h2>
+            <p>{project.problem}</p>
+          </article>
+          <article className="project-story-card">
+            <span>Solution Strategy</span>
+            <h2>How the system was approached</h2>
+            <p>{project.approach}</p>
+          </article>
+        </section>
+
+        {architectureSteps.length > 0 ? (
+          <section className="project-page-section">
+            <div className="project-page-heading">
+              <p className="section-kicker">System Flow</p>
+              <h2>Architecture from input to deployment</h2>
+            </div>
+            <div className="architecture-flow">
+              {architectureSteps.map((step, index) => (
+                <div className="architecture-step" key={`${project.id}-${step}`}>
+                  <span>{String(index + 1).padStart(2, '0')}</span>
+                  <strong>{step}</strong>
+                </div>
+              ))}
+            </div>
+          </section>
+        ) : null}
+
+        <section className="project-page-section project-delivery-grid">
+          <article className="project-list-panel">
+            <p className="section-kicker">Engineering Work</p>
+            <h2>Key contributions</h2>
+            <ul>
+              {project.features.map((item) => (
+                <li key={item}>{item}</li>
+              ))}
+            </ul>
+          </article>
+          <article className="project-list-panel project-results-panel">
+            <p className="section-kicker">Outcome</p>
+            <h2>Results and impact</h2>
+            <ul>
+              {project.results.map((item) => (
+                <li key={item}>{item}</li>
+              ))}
+            </ul>
+          </article>
+        </section>
+
+        <section className="project-page-section">
+          <div className="project-page-heading">
+            <p className="section-kicker">Technical Stack</p>
+            <h2>Tools and engineering methods</h2>
+          </div>
+          <div className="chip-row project-technology-row">
+            {project.technologies.map((item) => (
+              <span className="chip" key={item}>
+                {item}
+              </span>
+            ))}
+          </div>
+        </section>
+
+        {(project.assets.reports.length > 0 || project.assets.images.length > 0) ? (
+          <section className="project-page-section">
+            <div className="project-page-heading">
+              <p className="section-kicker">Project Evidence</p>
+              <h2>Reports, results, and demonstrations</h2>
+            </div>
+
+            {project.assets.reports.length > 0 ? (
+              <div className="project-report-grid">
+                {project.assets.reports.map((report) => (
+                  <a
+                    className="project-report-card"
+                    href={report.href}
+                    download
+                    key={`${project.id}-${report.label}`}
+                  >
+                    <span>Technical report</span>
+                    <strong>{report.label}</strong>
+                    <small>Download PDF</small>
+                  </a>
+                ))}
+              </div>
+            ) : null}
+
+            {project.assets.images.length > 0 ? (
+              <div className="project-page-gallery">
+                {project.assets.images.map((image) => (
+                  <figure className="project-page-image" key={`${project.id}-${image.caption}`}>
+                    <button type="button" onClick={() => setActiveImage(image)}>
+                      <img src={image.src} alt={image.alt} />
+                    </button>
+                    <figcaption>{image.caption}</figcaption>
+                  </figure>
+                ))}
+              </div>
+            ) : null}
+          </section>
+        ) : null}
+
+        <section className="project-page-section project-page-cta" id="contact">
+          <p className="section-kicker">Discuss This Work</p>
+          <h2>Interested in the engineering behind this project?</h2>
+          <p>
+            I am available to discuss the design decisions, implementation details,
+            validation process, and lessons learned.
+          </p>
+          <div className="project-page-actions">
+            <a className="button button-primary" href="mailto:bimlendra.ray@utdallas.edu">
+              Contact Me
+            </a>
+            <a className="button button-secondary" href="#projects">
+              View All Projects
+            </a>
+          </div>
+        </section>
+      </main>
+
+      {activeImage ? (
+        <div
+          className="image-lightbox"
+          role="dialog"
+          aria-modal="true"
+          aria-label={activeImage.caption || activeImage.alt}
+          onClick={() => setActiveImage(null)}
+        >
+          <div className="image-lightbox-panel" onClick={(event) => event.stopPropagation()}>
+            <button
+              className="image-lightbox-close"
+              type="button"
+              aria-label="Close image preview"
+              onClick={() => setActiveImage(null)}
+            >
+              Close
+            </button>
+            <img src={activeImage.src} alt={activeImage.alt} />
+            {activeImage.caption ? <p>{activeImage.caption}</p> : null}
+          </div>
+        </div>
+      ) : null}
+    </div>
+  );
+}
+
+function App() {
+  const [activeImage, setActiveImage] = useState(null);
+  const [activeProjectId, setActiveProjectId] = useState(getProjectIdFromHash);
+  const activeProject = projects.find((project) => project.id === activeProjectId);
+
+  useEffect(() => {
+    const handleRouteChange = () => {
+      setActiveProjectId(getProjectIdFromHash());
+    };
+
+    window.addEventListener('hashchange', handleRouteChange);
+    return () => window.removeEventListener('hashchange', handleRouteChange);
+  }, []);
+
+  if (activeProject) {
+    return <ProjectDetailPage project={activeProject} />;
+  }
 
   return (
     <div className="app-shell">
@@ -451,8 +668,8 @@ function App() {
               </a>
               <a
                 className="button button-download"
-                href={`${process.env.PUBLIC_URL}/Bimlendra_Ray_Robotics_Engineer_Resume.pdf`}
-                download="Bimlendra_Ray_Robotics_Engineer_Resume.pdf"
+                href={`${process.env.PUBLIC_URL}/Bimlendra_Ray_Resume_RAC.pdf`}
+                download="Bimlendra_Ray_Resume_RAC.pdf"
               >
                 Download Resume
               </a>
@@ -522,131 +739,27 @@ function App() {
           </div>
 
           <div className="project-cards">
-            {projects.map((project) => {
-              const expanded = expandedProject === project.id;
-              return (
-                <article
-                  className={`project-detail-card${expanded ? ' expanded' : ''}`}
-                  key={project.id}
-                >
-                  <button
-                    className="project-toggle"
-                    type="button"
-                    onClick={() => setExpandedProject(expanded ? '' : project.id)}
-                  >
-                    <div>
-                      <span className="project-tag">{project.platform || project.overview}</span>
-                      <h3>{project.title}</h3>
-                      <p>{project.overview}</p>
+            {projects.map((project) => (
+              <article className="project-detail-card project-preview-card" key={project.id}>
+                <a className="project-preview-link" href={`#/projects/${project.id}`}>
+                  <div className="project-preview-copy">
+                    <span className="project-tag">{project.platform || project.overview}</span>
+                    <h3>{project.title}</h3>
+                    <p>{project.overview}</p>
+                  </div>
+                  <div className="project-preview-footer">
+                    <div className="chip-row">
+                      {project.technologies.slice(0, 4).map((item) => (
+                        <span className="chip" key={item}>
+                          {item}
+                        </span>
+                      ))}
                     </div>
-                    <strong>{expanded ? 'Collapse' : 'Expand'}</strong>
-                  </button>
-
-                  {expanded && (
-                    <div className="project-expanded">
-                      <div className="project-expanded-grid">
-                        <div className="detail-block">
-                          <span>Problem</span>
-                          <p>{project.problem}</p>
-                        </div>
-                        <div className="detail-block">
-                          <span>Approach</span>
-                          <p>{project.approach}</p>
-                        </div>
-                        {project.architecture && (
-                          <div className="detail-block">
-                            <span>System Architecture</span>
-                            <p>{project.architecture}</p>
-                          </div>
-                        )}
-                        <div className="detail-block">
-                          <span>Technologies</span>
-                          <div className="chip-row">
-                            {project.technologies.map((item) => (
-                              <span className="chip" key={item}>
-                                {item}
-                              </span>
-                            ))}
-                          </div>
-                        </div>
-                        <div className="detail-block">
-                          <span>Key Features</span>
-                          <ul>
-                            {project.features.map((item) => (
-                              <li key={item}>{item}</li>
-                            ))}
-                          </ul>
-                        </div>
-                        <div className="detail-block">
-                          <span>Results</span>
-                          <ul>
-                            {project.results.map((item) => (
-                              <li key={item}>{item}</li>
-                            ))}
-                          </ul>
-                        </div>
-                      </div>
-
-                      <div className="asset-row">
-                        <div className="asset-panel">
-                          <div className="asset-panel-header">
-                            <span>Reports</span>
-                            <strong>{project.assets.reports.length}</strong>
-                          </div>
-                          {project.assets.reports.length ? (
-                            <div className="asset-list">
-                              {project.assets.reports.map((report) => (
-                                <a className="asset-link" href={report.href} download key={`${project.id}-${report.label}`}>
-                                  <span>{report.label}</span>
-                                  <strong>Download PDF</strong>
-                                </a>
-                              ))}
-                            </div>
-                          ) : (
-                            <div className="asset-empty">No report uploaded yet</div>
-                          )}
-                        </div>
-
-                        <div className="asset-panel asset-panel-wide">
-                          <div className="asset-panel-header">
-                            <span>Images</span>
-                            <strong>{project.assets.images.length}</strong>
-                          </div>
-                          {project.assets.images.length ? (
-                            <div className="project-gallery">
-                              {project.assets.images.map((image) => (
-                                <figure className="gallery-card" key={`${project.id}-${image.caption}`}>
-                                  <img src={image.src} alt={image.alt} />
-                                  <button
-                                    className="image-expand-button"
-                                    type="button"
-                                    aria-label={`Expand ${image.caption}`}
-                                    onClick={() => setActiveImage(image)}
-                                  >
-                                    Expand
-                                  </button>
-                                  <figcaption>{image.caption}</figcaption>
-                                </figure>
-                              ))}
-                            </div>
-                          ) : (
-                            <div className="asset-empty">No project images uploaded yet</div>
-                          )}
-                        </div>
-                      </div>
-
-                      <div className="project-links">
-                        {project.links.map((link) => (
-                          <a href={link.href} key={`${project.id}-${link.label}`} target={link.href.startsWith('http') ? '_blank' : undefined} rel={link.href.startsWith('http') ? 'noreferrer' : undefined}>
-                            {link.label}
-                          </a>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-                </article>
-              );
-            })}
+                    <strong>View project</strong>
+                  </div>
+                </a>
+              </article>
+            ))}
           </div>
         </section>
 
