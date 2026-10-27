@@ -26,39 +26,75 @@ const clamp = (x,lo,hi) => Math.max(lo,Math.min(hi,x));
 const normalized = v => (v || '').toLowerCase();
 const match = (text,tokens) => tokens.some(word => text.includes(word));
 
+
+function insideBrainFront(x,y) {
+  const left = ((x+0.59)/1.01)**2 + ((y+0.01)/0.81)**2 <= 1;
+  const right = ((x-0.59)/1.01)**2 + ((y+0.01)/0.81)**2 <= 1;
+  const crown = (x/1.30)**2 + ((y-0.18)/0.74)**2 <= 1;
+  const temporalLeft = ((x+0.88)/0.46)**2 + ((y+0.35)/0.32)**2 <= 1;
+  const temporalRight = ((x-0.88)/0.46)**2 + ((y+0.35)/0.32)**2 <= 1;
+  if (!(left || right || crown || temporalLeft || temporalRight)) return false;
+  // The interhemispheric fissure must remain visible from the front.
+  if (Math.abs(x)<0.087 && y>-.49) return false;
+  if (y<-.64 && Math.abs(x)>.66) return false;
+  return true;
+}
+function depthThickness(x,y) {
+  const nx=x/1.62, ny=(y+.015)/.96;
+  const radial=Math.max(0,1-.88*nx*nx-1.12*ny*ny);
+  const gyri=.91+.09*Math.cos(5.8*x+2*y)*Math.cos(4.7*y);
+  return .17+.72*Math.sqrt(radial)*gyri;
+}
+function insideCerebellum(x,y,z) {
+  const left=((x+.34)/.35)**2+((y+.72)/.21)**2+(z/.31)**2<=1;
+  const right=((x-.34)/.35)**2+((y+.72)/.21)**2+(z/.31)**2<=1;
+  return left||right;
+}
+function insideBrainstem(x,y,z) {
+  return (x/.145)**2+((y+.87)/.27)**2+(z/.14)**2<=1;
+}
 function buildBrain() {
-  const nodes=[], links=[], grid=new Map(), side=0.19;
+  const nodes=[],links=[],grid=new Map(),cellSize=.17;
   const address=(a,b,c)=>a+','+b+','+c;
-  for(let attempts=0;attempts<62000 && nodes.length<2900;attempts++){
-    const x=(random()*2-1)*1.92, y=(random()*2-1)*0.91, z=(random()*2-1)*0.92;
-    const h=x<0?-1:1, localX=x-h*0.48;
-    const shell=Math.pow(localX/1.07,2)+Math.pow(y/0.84,2)+Math.pow(z/0.86,2);
-    const envelope=Math.pow(x/1.97,2)+Math.pow(y/0.83,2)+Math.pow(z/0.87,2);
-    const cleft=Math.abs(x)<0.08 && y>-.54;
-    const contour=Math.sin(x*17+z*6)*Math.cos(z*14-y*7);
-    const fold=0.045*contour;
-    if(shell>1.04+fold || envelope>1.01+fold || cleft)continue;
-    // Sampling near the outer surface increases the visibility of the brain's folds.
-    if(random()<0.28 && shell<0.62) continue;
-    nodes.push({ x,y:y+0.016*Math.sin(x*13+z*9),z,phase:random(),intensity:random() });
+  const mainTarget=3600,additionalTarget=700;
+  // Front-facing cerebrum, with a real 3D depth field rather than an oval cloud.
+  for(let attempt=0;attempt<135000 && nodes.length<mainTarget;attempt++){
+    const x=(random()*2-1)*1.61,y=(random()*2-1)*.95;
+    if(!insideBrainFront(x,y))continue;
+    const thickness=depthThickness(x,y);
+    const z=(random()*2-1)*thickness;
+    const shell=Math.abs(z)/Math.max(thickness,1e-6);
+    if(shell<.46 && random()<.74)continue;
+    const foldedY=y+.022*Math.sin(x*12+z*7)*Math.cos(z*9-y*6);
+    const foldedZ=z+.018*Math.sin(x*10+y*5);
+    nodes.push({x,y:foldedY,z:foldedZ,phase:random(),intensity:random(),shell,region:'cerebrum'});
+  }
+  for(let attempt=0;attempt<50000 && nodes.length<mainTarget+additionalTarget;attempt++){
+    const x=(random()*2-1)*.77,y=-1.13+random()*.65,z=(random()*2-1)*.37;
+    const stem=insideBrainstem(x,y,z);
+    if(!stem&&!insideCerebellum(x,y,z))continue;
+    nodes.push({x,y,z,phase:random(),intensity:random(),shell:.82,region:stem?'brainstem':'cerebellum'});
   }
   nodes.forEach((p,i)=>{
-    const k=address(Math.floor(p.x/side),Math.floor(p.y/side),Math.floor(p.z/side));
+    const k=address(Math.floor(p.x/cellSize),Math.floor(p.y/cellSize),Math.floor(p.z/cellSize));
     if(!grid.has(k))grid.set(k,[]);
     grid.get(k).push(i);
   });
   nodes.forEach((p,i)=>{
-    const gx=Math.floor(p.x/side), gy=Math.floor(p.y/side),gz=Math.floor(p.z/side),near=[];
-    for(let a=-1;a<=1;a++)for(let b=-1;b<=1;b++)for(let c=-1;c<=1;c++)
+    const gx=Math.floor(p.x/cellSize),gy=Math.floor(p.y/cellSize),gz=Math.floor(p.z/cellSize),neighbors=[];
+    for(let a=-1;a<=1;a++)for(let b=-1;b<=1;b++)for(let c=-1;c<=1;c++){
       for(const j of grid.get(address(gx+a,gy+b,gz+c))||[]){
         if(j<=i)continue;
-        const q=nodes[j],dist=(p.x-q.x)**2+(p.y-q.y)**2+(p.z-q.z)**2;
-        if(dist<0.052)near.push({j,dist});
+        const q=nodes[j],distance=(p.x-q.x)**2+(p.y-q.y)**2+(p.z-q.z)**2;
+        const maxDist=p.region==='brainstem'||q.region==='brainstem'?.041:p.region==='cerebellum'||q.region==='cerebellum'?.047:.05;
+        if(distance<maxDist)neighbors.push([j,distance]);
       }
-    near.sort((a,b)=>a.dist-b.dist);
-    for(const item of near.slice(0,4))links.push([i,item.j]);
+    }
+    neighbors.sort((a,b)=>a[1]-b[1]);
+    const limit=p.region==='brainstem'?3:p.region==='cerebellum'?4:5;
+    neighbors.slice(0,limit).forEach(([j])=>links.push([i,j]));
   });
-  return { nodes,links };
+  return {nodes,links};
 }
 const STRUCTURE=buildBrain();
 const AREAS_3D=AREAS.map((area,i)=>{
@@ -132,7 +168,7 @@ export default function NeuralBrain({ projects=[] }){
       const cy=Math.cos(cam.ry),sy=Math.sin(cam.ry),cx=Math.cos(cam.rx),sx=Math.sin(cam.rx);
       const x=p.x*cy+p.z*sy,z=-p.x*sy+p.z*cy;
       const y=p.y*cx-z*sx,depth=p.y*sx+z*cx;
-      const factor=3.65/(5-depth),scale=Math.min(w*.285,h*.49)*cam.zoom*factor;
+      const factor=3.65/(5-depth),scale=Math.min(w*.33,h*.56)*cam.zoom*factor;
       return {x:w*.5+x*scale,y:h*.53-y*scale,z:depth,scale};
     };
     const semantic=()=>{
@@ -208,10 +244,13 @@ export default function NeuralBrain({ projects=[] }){
         ctx.beginPath();ctx.moveTo(p.x,p.y);ctx.lineTo(q.x,q.y);ctx.stroke();
       }
       for(let i=0;i<projected.length;i++){
-        const p=projected[i],node=STRUCTURE.nodes[i],light=clamp(.22+p.z*.22,.1,.66)*fade;
-        const pulse=(!reduceMotion && i % 31 === 0) ? 0.23 * Math.sin(cam.t * 2 + node.phase * 6) : 0;
-        ctx.fillStyle=`rgba(109,215,248,${clamp(light+pulse,.06,.8)})`;
-        ctx.beginPath();ctx.arc(p.x,p.y,scaleFactor*(p.z>0?1.08:.8),0,Math.PI*2);ctx.fill();
+        const p=projected[i],node=STRUCTURE.nodes[i];
+        const surfaceBoost=node.shell>.72?.19:0;
+        const pulse=(!reduceMotion && i%31===0)?.17*Math.sin(cam.t*2+node.phase*6):0;
+        const alpha=clamp((.20+p.z*.18)*fade+surfaceBoost*fade+pulse*fade,.035,.88);
+        const radius=scaleFactor*(node.shell>.75?1.13:.78)*(p.z>0?1:.85);
+        ctx.fillStyle=`rgba(109,215,248,${alpha})`;
+        ctx.beginPath();ctx.arc(p.x,p.y,radius,0,Math.PI*2);ctx.fill();
       }
       let targets=[];
       if(!expanded){
