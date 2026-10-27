@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import NeuralBrain from './NeuralBrain';
+import GearUniverse from './GearUniverse';
 import './App.css';
 import profileImage from './images/profile_2.jpg';
 import utdMonogramLogo from './images/utd_monogram_logo.jpg';
@@ -703,6 +703,7 @@ function ProjectDetailPage({ project }) {
 }
 
 function App() {
+  const [showPortfolio, setShowPortfolio] = useState(false);
   const [activeImage, setActiveImage] = useState(null);
   const [activeProjectId, setActiveProjectId] = useState(getProjectIdFromHash);
   const activeProject = projects.find((project) => project.id === activeProjectId);
@@ -721,7 +722,11 @@ function App() {
   }
 
   return (
-    <div className="app-shell">
+    <div className="app-shell gear-mode-shell">
+      <GearUniverse projects={projects} onOpenPortfolio={() => setShowPortfolio(true)} />
+      {showPortfolio && (
+      <div className="portfolio-overlay" role="dialog" aria-modal="true" aria-label="Full engineering portfolio">
+        <button type="button" className="portfolio-overlay-close" onClick={() => setShowPortfolio(false)}>✕ &nbsp; Close portfolio</button>
       <div className="ambient ambient-one" />
       <div className="ambient ambient-two" />
 
@@ -741,7 +746,6 @@ function App() {
       </header>
 
       <main>
-        <NeuralBrain projects={projects} />
         <section className="hero section" id="hero">
           <div className="hero-copy">
             <div className="hero-intro-line">
@@ -1120,6 +1124,8 @@ function App() {
           </div>
         </div>
       ) : null}
+      </div>
+      )}
     </div>
   );
 }
