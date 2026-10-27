@@ -108,7 +108,7 @@ export default function NeuralBrain({ projects=[] }){
   const [infoOpen,setInfoOpen]=useState(true);
   const canvasRef=useRef(null);
   const modeRef=useRef(mode),hoverRef=useRef(hover),pausedRef=useRef(paused),pointerRef=useRef({x:-1000,y:-1000});
-  const camera=useRef({rx:.18,ry:-.22,tx:.18,ty:-.22,zoom:1,drag:false,moved:false,lastX:0,lastY:0,t:0});
+  const camera=useRef({rx:.18,ry:-.22,tx:.18,ty:-.22,zoom:1,drag:false,moved:false,lastX:0,lastY:0,t:0,modeSignature:'brain:',blend:1});
   useEffect(()=>{modeRef.current=mode},[mode]);
   useEffect(()=>{hoverRef.current=hover},[hover]);
   useEffect(()=>{pausedRef.current=paused},[paused]);
@@ -185,10 +185,14 @@ export default function NeuralBrain({ projects=[] }){
       cam.ry=d3.interpolateNumber(cam.ry,cam.ty)(.055);
       ctx.fillStyle='#030812';ctx.fillRect(0,0,w,h);
       const current=modeRef.current;
+      const signature=current.type+':'+(current.id||'');
+      if(cam.modeSignature!==signature){cam.modeSignature=signature;cam.blend=0;}
+      cam.blend=d3.interpolateNumber(cam.blend,1)(0.055);
+      const expansion=d3.easeCubicOut(cam.blend);
       const expanded=current.type!=='brain';
       const focusNodes=semantic();
       const projected=STRUCTURE.nodes.map(screen);
-      const fade = expanded ? 0.29 : 1;
+      const fade = expanded ? 1-0.71*expansion : 1;
       const scaleFactor=w<640?.68:1;
       // Sparse, deliberately subtle background stars, derived from stable structural points.
       for(let i=0;i<110;i++){
@@ -215,7 +219,11 @@ export default function NeuralBrain({ projects=[] }){
       } else {
         const base=AREAS_3D.find(a=>a.id===(current.type==='area'?current.id:graph.mapped.find(p=>p.id===current.id)?.primary));
         if(base) targets.push({...base,type:'area',sp:screen(base)});
-        focusNodes.forEach(p=>targets.push({...p,type:'project',sp:screen(p)}));
+        focusNodes.forEach(p=>{
+          const to=screen(p),from=base?screen(base):to;
+          const sp={x:d3.interpolateNumber(from.x,to.x)(expansion),y:d3.interpolateNumber(from.y,to.y)(expansion),z:d3.interpolateNumber(from.z,to.z)(expansion)};
+          targets.push({...p,type:'project',sp});
+        });
       }
       // Draw highlighted semantic structure (real shared algorithms/technologies).
       const map=new Map(targets.filter(p=>p.type==='project').map(p=>[p.id,p]));
@@ -224,6 +232,10 @@ export default function NeuralBrain({ projects=[] }){
         if(!a||!b)continue;
         ctx.strokeStyle='rgba(138,206,245,.23)';ctx.lineWidth=1.2;
         ctx.beginPath();ctx.moveTo(a.sp.x,a.sp.y);ctx.lineTo(b.sp.x,b.sp.y);ctx.stroke();
+        if(!reduceMotion&&!pausedRef.current){
+          const fraction=(cam.t*.28+edge.strength*.13)%1;
+          renderNode(ctx,{x:d3.interpolateNumber(a.sp.x,b.sp.x)(fraction),y:d3.interpolateNumber(a.sp.y,b.sp.y)(fraction)},1.45,'#aeeaff');
+        }
       }
       const center=targets.find(p=>p.type==='area');
       if(expanded&&center)for(const item of targets.filter(p=>p.type==='project')){
