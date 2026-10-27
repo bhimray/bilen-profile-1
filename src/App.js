@@ -531,7 +531,6 @@ function ProjectDetailPage({ project }) {
       </header>
 
       <main>
-        <NeuralBrain />
         <section className="project-page-hero">
           <a className="project-back-link" href="#projects">
             Back to portfolio
@@ -742,6 +741,7 @@ function App() {
       </header>
 
       <main>
+        <NeuralBrain projects={projects} />
         <section className="hero section" id="hero">
           <div className="hero-copy">
             <div className="hero-intro-line">
