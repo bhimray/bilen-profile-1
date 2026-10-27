@@ -1,1 +1,43 @@
-.neural-observatory{position:relative;min-height:690px;width:100%;overflow:hidden;background:#030914;border:1px solid #17364c;border-radius:24px;color:#eaf7ff;margin:28px 0 54px}.neural-canvas{display:block;width:100%;height:690px;cursor:grab;touch-action:none}.neural-canvas:active{cursor:grabbing}.neural-title{position:absolute;top:35px;left:38px;pointer-events:none}.neural-title span,.neural-panel>span{color:#74d8e8;font-size:11px;letter-spacing:.22em}.neural-title h2{margin:9px 0;font-size:clamp(24px,3vw,42px);font-weight:600}.neural-title p{color:#89afc0;font-size:12px}.neural-panel{position:absolute;right:22px;top:50%;transform:translateY(-50%);width:280px;max-width:33%;padding:23px;border:1px solid #2a546c;border-radius:16px;background:#061521e8;backdrop-filter:blur(12px)}.neural-panel h3{font-size:22px;margin:13px 0}.neural-panel p{font-size:13px;color:#aac6d5;line-height:1.65}.neural-projects{display:flex;flex-wrap:wrap;gap:7px;margin:15px 0}.neural-projects button,.neural-actions button{border:1px solid #30627a;border-radius:8px;background:#0e2a3b;color:#d6f6ff;padding:8px 10px;font:inherit;font-size:12px;cursor:pointer}.neural-projects button:hover,.neural-actions button:hover{background:#1a4860}.neural-actions{display:flex;gap:8px;margin-top:16px}@media(max-width:700px){.neural-observatory{min-height:620px}.neural-canvas{height:620px}.neural-title{top:18px;left:18px}.neural-title p{max-width:240px;line-height:1.5}.neural-panel{left:12px;right:12px;top:auto;bottom:12px;transform:none;max-width:none;width:auto;padding:13px}.neural-panel h3{font-size:17px;margin:8px 0}.neural-panel p{margin:6px 0}.neural-projects{margin:8px 0}.neural-actions{margin-top:8px}}
+
+.neural-scene{position:relative;isolation:isolate;width:100%;min-height:760px;margin:24px auto 64px;overflow:hidden;border:1px solid rgba(112,180,214,.17);border-radius:24px;background:#030812;color:#edfaff;font-family:Inter,'Space Grotesk',system-ui,sans-serif;box-shadow:inset 0 0 130px #102d3b31,0 30px 100px #0005}
+.neural-stage{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:none;cursor:grab}
+.neural-vignette{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 35% 60% at 51% 53%,transparent 10%,#03081224 72%,#0308128a 140%),linear-gradient(90deg,#03081233,transparent 25%,transparent 73%,#03081211)}
+.neural-topbar{position:absolute;top:29px;left:35px;right:35px;display:flex;align-items:center;justify-content:space-between;gap:20px;pointer-events:none}
+.neural-brand{font:600 10px/1.5 ui-monospace,SFMono-Regular,Consolas,monospace;letter-spacing:.19em;color:#92b7c8;display:flex;align-items:center;gap:11px}
+.neural-status-dot{width:7px;height:7px;border-radius:50%;background:#70ead0;box-shadow:0 0 14px #64e9ca}.neural-divider{color:#3d667d}
+.neural-icon-button{pointer-events:auto;border:1px solid #32556a80;border-radius:22px;background:#092333a3;color:#b9e8f8;padding:9px 15px;font:500 12px inherit;cursor:pointer}
+.neural-intro{position:absolute;top:125px;left:clamp(22px,4vw,60px);max-width:245px;pointer-events:none}
+.neural-kicker{font:600 10px ui-monospace,monospace;letter-spacing:.16em;color:#6fbdd8}
+.neural-intro h2{font-size:clamp(27px,3.25vw,48px);font-weight:550;line-height:1.07;letter-spacing:-.055em;margin:21px 0}.neural-intro h2 em{font-style:normal;color:#85e1ef}
+.neural-intro p{font-size:13px;line-height:1.8;color:#7897ab;max-width:220px}
+.neural-hint{position:absolute;bottom:82px;left:clamp(22px,4vw,60px);font:10px ui-monospace,monospace;letter-spacing:.07em;color:#54788d;pointer-events:none}
+.neural-hint span{color:#386073;margin:0 7px}
+.neural-inspector{position:absolute;right:24px;top:110px;bottom:86px;display:flex;flex-direction:column;width:min(305px,30%);min-width:260px;padding:20px 20px 15px;border:1px solid #37607757;background:linear-gradient(150deg,#0a1d2adb,#06111deb);border-radius:18px;backdrop-filter:blur(18px);box-shadow:0 20px 65px #0004;overflow:hidden}
+.neural-inspector-head{display:flex;justify-content:space-between;gap:8px;font:600 9px ui-monospace,monospace;letter-spacing:.09em;color:#80c6db}.neural-count{color:#50788d;white-space:nowrap}
+.neural-inspector h3{font-size:clamp(19px,1.85vw,24px);line-height:1.22;letter-spacing:-.035em;font-weight:550;margin:18px 0 9px}
+.neural-inspector>p{font-size:12px;color:#9ab8c6;line-height:1.7;margin:0 0 16px}
+.neural-backline{display:flex;gap:14px;margin-bottom:12px}
+.neural-backline button,.neural-inspector-bottom button{border:none;background:transparent;color:#88cbde;font-size:11px;text-align:left;cursor:pointer;padding:5px 0}
+.neural-discover{min-height:0;display:flex;flex-direction:column;flex:1}
+.neural-discover label{font:600 9px ui-monospace,monospace;letter-spacing:.17em;color:#608ea5;margin-bottom:10px}
+.neural-discover input{width:100%;min-height:36px;background:#081b2a;border:1px solid #2b536680;border-radius:7px;color:#e4f7ff;font:12px inherit;padding:9px 10px;outline:none}
+.neural-discover input:focus{border-color:#77d8e8}.neural-discover input::placeholder{color:#597787}
+.neural-project-list{overflow:auto;min-height:0;flex:1;margin-top:10px;scrollbar-width:thin;scrollbar-color:#315c6b transparent}
+.neural-project-list button{width:100%;display:flex;align-items:center;justify-content:space-between;gap:14px;border:0;border-bottom:1px solid #2d4a5a48;background:transparent;padding:12px 3px;color:#b4d7e6;text-align:left;cursor:pointer;font:12px/1.35 inherit}
+.neural-project-list button:hover{color:white;background:#ffffff07}.neural-project-list button>span:last-child{color:#67cadd}
+.neural-list-title{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.neural-project-info{overflow:auto;min-height:0;flex:1;scrollbar-width:thin}
+.neural-metadata{font-size:11px;color:#6b9cb3;margin-bottom:13px}
+.neural-chip-row{display:flex;gap:6px;flex-wrap:wrap}.neural-chip-row span{font-size:10px;color:#a4d9e9;border:1px solid #37657877;border-radius:20px;padding:5px 8px}
+.neural-result{margin-top:20px;padding:13px;border-left:2px solid #75dceb;background:#0d28335c}
+.neural-result small{font:600 9px ui-monospace,monospace;letter-spacing:.1em;color:#81ccdc}
+.neural-result p{font-size:12px;line-height:1.6;color:#c0dbe5}
+.neural-primary{display:flex;width:100%;align-items:center;justify-content:space-between;margin-top:18px;border:1px solid #76dbe38c;border-radius:9px;background:#154555;color:#eaffff;cursor:pointer;padding:12px 14px;font-size:12px}
+.neural-primary:hover{background:#23677a}
+.neural-inspector-bottom{margin-top:auto;display:flex;justify-content:space-between;gap:12px;border-top:1px solid #38607353;padding-top:9px}
+.neural-areas{position:absolute;bottom:24px;left:50%;transform:translateX(-50%);display:flex;flex-wrap:wrap;justify-content:center;gap:6px;max-width:85%}
+.neural-area-button{display:flex;align-items:center;gap:8px;white-space:nowrap;cursor:pointer;border:1px solid #3653687d;border-radius:40px;background:#091a28c9;padding:9px 12px;color:#8db3c4;font:600 9px ui-monospace,monospace;letter-spacing:.08em}
+.neural-area-button>span{width:6px;height:6px;border-radius:50%;box-shadow:0 0 11px currentColor}.neural-area-button:hover,.neural-area-button.is-active{color:#f1fcff;border-color:#6bbed67d;background:#113343dd}
+@media(max-width:950px){.neural-intro{top:95px;max-width:180px}.neural-intro h2{font-size:30px}.neural-intro p{font-size:11px}.neural-inspector{right:14px;width:255px;min-width:0;padding:16px}.neural-hint{font-size:9px}}
+@media(max-width:650px){.neural-scene{min-height:850px;border-radius:16px}.neural-topbar{top:18px;left:18px;right:18px}.neural-brand{font-size:9px}.neural-intro{top:69px;left:18px;max-width:230px}.neural-intro h2{font-size:30px;margin:12px 0 7px}.neural-intro p{font-size:11px;line-height:1.5}.neural-stage{height:66%}.neural-vignette{height:66%}.neural-hint{top:445px;bottom:auto;left:18px;font-size:8px}.neural-inspector{top:auto;right:12px;left:12px;bottom:82px;width:auto;height:300px;max-height:300px;min-width:0;padding:13px}.neural-inspector h3{font-size:18px;margin:8px 0}.neural-inspector>p{font-size:11px;margin-bottom:8px}.neural-areas{bottom:15px;max-width:100%;width:100%;padding:0 10px}.neural-area-button{font-size:8px;padding:8px 9px}}
+@media(prefers-reduced-motion:reduce){.neural-scene *{transition:none!important}}
