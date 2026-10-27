@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import NeuralBrain from './NeuralBrain';
 import './App.css';
 import profileImage from './images/profile_2.jpg';
 import utdMonogramLogo from './images/utd_monogram_logo.jpg';
@@ -530,6 +531,7 @@ function ProjectDetailPage({ project }) {
       </header>
 
       <main>
+        <NeuralBrain />
         <section className="project-page-hero">
           <a className="project-back-link" href="#projects">
             Back to portfolio
