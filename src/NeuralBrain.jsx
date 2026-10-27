@@ -145,7 +145,7 @@ export default function NeuralBrain({ projects=[] }){
       return involved.map((p,index)=>{
         const a=(index/count)*Math.PI*2-.45;
         // Custom 3D constellation targets; D3 interpolation animates their arrival.
-        const radius=current.type==='project'?.86:1.03;
+        const radius=current.type === 'project' ? 0.86 : 1.03;
         return {...p,x:base.x*.23+Math.cos(a)*radius,y:Math.sin(a)*.74,z:Math.sin(a+1.2)*.62,base,color:base.color};
       });
     };
@@ -188,7 +188,7 @@ export default function NeuralBrain({ projects=[] }){
       const expanded=current.type!=='brain';
       const focusNodes=semantic();
       const projected=STRUCTURE.nodes.map(screen);
-      const fade=expanded?.29:1;
+      const fade = expanded ? 0.29 : 1;
       const scaleFactor=w<640?.68:1;
       // Sparse, deliberately subtle background stars, derived from stable structural points.
       for(let i=0;i<110;i++){
@@ -205,7 +205,7 @@ export default function NeuralBrain({ projects=[] }){
       }
       for(let i=0;i<projected.length;i++){
         const p=projected[i],node=STRUCTURE.nodes[i],light=clamp(.22+p.z*.22,.1,.66)*fade;
-        const pulse=(!reduceMotion && (i%31===0))?.23*Math.sin(cam.t*2+node.phase*6):0;
+        const pulse=(!reduceMotion && i % 31 === 0) ? 0.23 * Math.sin(cam.t * 2 + node.phase * 6) : 0;
         ctx.fillStyle=`rgba(109,215,248,${clamp(light+pulse,.06,.8)})`;
         ctx.beginPath();ctx.arc(p.x,p.y,scaleFactor*(p.z>0?1.08:.8),0,Math.PI*2);ctx.fill();
       }
