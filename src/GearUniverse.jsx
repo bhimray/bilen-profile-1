@@ -13,7 +13,6 @@ const DOMAINS = [
 const MAIN_TEETH = 48;
 const MAIN_PITCH = 120;
 const MODULE = MAIN_PITCH / MAIN_TEETH;
-const outerRing = 183;
 const MINI_SPECS = [
   {parent:0,angle:-.35,teeth:11},
   {parent:1,angle:.25,teeth:10},
@@ -99,7 +98,6 @@ export default function GearUniverse({projects=[],onOpenPortfolio}){
   const [inspect,setInspect]=useState(false);
   const [query,setQuery]=useState('');
   const [showLegend,setShowLegend]=useState(true);
-  const [torque,setTorque]=useState(0);
   const svg=useRef(null),rotors=useRef(new Map()),angle=useRef(0),velocity=useRef(.0032),drag=useRef(null),clicked=useRef(false);
   const [dimensions,setDimensions]=useState({width:1200,height:800});
   const current=DOMAINS.find(d=>d.id===selected);
@@ -115,8 +113,10 @@ export default function GearUniverse({projects=[],onOpenPortfolio}){
   const register=(id,element)=>{if(element)rotors.current.set(id,element);else rotors.current.delete(id)};
   useEffect(()=>{
     const previous=document.body.style.overflow;
+    const priorHtml=document.documentElement.style.overflow;
     document.body.style.overflow='hidden';
-    return ()=>{document.body.style.overflow=previous};
+    document.documentElement.style.overflow='hidden';
+    return ()=>{document.body.style.overflow=previous;document.documentElement.style.overflow=priorHtml};
   },[]);
   useEffect(()=>{
     const onResize=()=>setDimensions({width:window.innerWidth,height:window.innerHeight});
@@ -153,7 +153,7 @@ export default function GearUniverse({projects=[],onOpenPortfolio}){
     const p=pointerPosition(e);
     drag.current={part,startX:p.x,startY:p.y,last:Math.atan2(p.y-part.y,p.x-part.x),moved:false};
     clicked.current=false;
-    svg.current.setPointerCapture(e.pointerId);
+    e.currentTarget.setPointerCapture(e.pointerId);
   };
   const move=e=>{
     if(!drag.current)return;
@@ -173,7 +173,6 @@ export default function GearUniverse({projects=[],onOpenPortfolio}){
     if(part.depth===2){part=PARTS[part.parent];}
     setSelected(part.id);setActiveProject(null);setQuery('');setInspect(true);
     velocity.current=velocity.current>.015?velocity.current:velocity.current+.01;
-    setTorque(v=>v+1);
   };
   const reset=()=>{setSelected('core');setActiveProject(null);setQuery('');setInspect(false);angle.current=0;velocity.current=.0032};
   const openProject=id=>{setActiveProject(id);setInspect(true)};
