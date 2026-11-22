@@ -1,0 +1,25 @@
+---
+import type { CollectionEntry } from "astro:content"
+
+interface Props {
+  project: CollectionEntry<"projects">
+  heading?: "h2" | "h3"
+}
+
+const { project, heading: Heading = "h2" } = Astro.props
+const { title, summary, platform, tags } = project.data
+---
+<li class="project-card rounded-lg border border-black/15 dark:border-white/20" data-project-card>
+  <a class="group block h-full rounded-lg p-5 transition-colors hover:bg-black/5 dark:hover:bg-white/10" href={`/projects/${project.slug}/`}>
+    <p class="text-sm">{platform}</p>
+    <Heading class="mt-2 text-lg font-semibold text-black dark:text-white">
+      {title} <span class="transition-transform group-hover:translate-x-1 inline-block" aria-hidden="true">↗</span>
+    </Heading>
+    <p class="mt-2 text-sm">{summary}</p>
+    <ul class="mt-3 flex flex-wrap gap-1.5 text-xs" aria-label="Technologies">
+      {tags.map((tag) => (
+        <li class="rounded bg-black/5 px-2 py-1 dark:bg-white/10" data-project-tag>{tag}</li>
+      ))}
+    </ul>
+  </a>
+</li>

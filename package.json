@@ -1,42 +1,33 @@
 {
-  "name": "bilen-profile",
-  "version": "0.1.0",
-  "private": true,
-  "dependencies": {
-    "@observablehq/plot": "^0.6.17",
-    "@testing-library/jest-dom": "^5.16.5",
-    "@testing-library/react": "^13.4.0",
-    "@testing-library/user-event": "^13.5.0",
-    "framer-motion": "^7.3.6",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-scripts": "5.0.1",
-    "react-scroll": "^1.8.7",
-    "web-vitals": "^2.1.4",
-    "d3": "^7.9.0"
-  },
+  "name": "astro-sphere",
+  "type": "module",
+  "version": "1.0.0",
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "dev": "astro dev",
+    "dev:network": "astro dev --host",
+    "start": "astro dev",
+    "build": "astro check && astro build",
+    "preview": "astro preview",
+    "preview:network": "astro dev --host",
+    "astro": "astro",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
   },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
+  "dependencies": {
+    "@astrojs/check": "^0.5.6",
+    "@astrojs/mdx": "^2.1.1",
+    "@astrojs/rss": "^4.0.5",
+    "@astrojs/sitemap": "^3.1.1",
+    "@astrojs/solid-js": "^4.0.1",
+    "@astrojs/tailwind": "^5.1.0",
+    "@tailwindcss/typography": "^0.5.10",
+    "astro": "^4.4.13",
+    "clsx": "^2.1.0",
+    "fuse.js": "^7.0.0",
+    "sharp": "^0.33.2",
+    "solid-js": "^1.8.15",
+    "tailwind-merge": "^2.2.1",
+    "tailwindcss": "^3.4.1",
+    "typescript": "^5.3.3"
   }
 }

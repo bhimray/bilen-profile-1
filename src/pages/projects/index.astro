@@ -1,0 +1,61 @@
+---
+import PageLayout from "@layouts/PageLayout.astro"
+import TopLayout from "@layouts/TopLayout.astro"
+import BottomLayout from "@layouts/BottomLayout.astro"
+import ProjectCard from "@components/ProjectCard.astro"
+import { getProjects } from "@lib/projects"
+
+const projects = await getProjects()
+const tags = [...new Set(projects.flatMap((project) => project.data.tags))].sort((a, b) => a.localeCompare(b))
+---
+<PageLayout title="Research and engineering projects" description="Vehicle controls research, dSPACE integration, real-time scheduling, and industrial automation.">
+  <TopLayout>
+    <h1 class="text-3xl font-semibold text-black dark:text-white">Research and engineering projects</h1>
+    <p class="mt-2">dSPACE integration, computation-aware vehicle control, industrial automation, and autonomous racing.</p>
+  </TopLayout>
+  <BottomLayout>
+    <div id="project-filters" class="mb-4 gap-4 sm:grid-cols-2" hidden>
+      <label class="grid gap-1">Search projects
+        <input id="project-search" type="search" placeholder="Title, method, or tool" class="rounded border border-current bg-transparent px-3 py-2" />
+      </label>
+      <label class="grid gap-1">Technology
+        <select id="project-tag" class="rounded border border-current bg-white px-3 py-2 dark:bg-black">
+          <option value="">All technologies</option>
+          {tags.map((tag) => <option value={tag}>{tag}</option>)}
+        </select>
+      </label>
+    </div>
+    <p id="project-count" class="mb-4 text-sm" role="status"></p>
+    <ul class="grid gap-3">{projects.map((project) => <ProjectCard project={project} />)}</ul>
+  </BottomLayout>
+</PageLayout>
+<script>
+  const filters = document.querySelector<HTMLElement>("#project-filters")
+  const query = document.querySelector<HTMLInputElement>("#project-search")
+  const tag = document.querySelector<HTMLSelectElement>("#project-tag")
+  const count = document.querySelector<HTMLElement>("#project-count")
+  const cards = Array.from(document.querySelectorAll<HTMLElement>("[data-project-card]"), (element) => ({
+    element,
+    text: element.textContent?.toLowerCase() ?? "",
+    tags: Array.from(element.querySelectorAll("[data-project-tag]"), (label) => label.textContent?.trim()),
+  }))
+
+  if (filters && query && tag && count) {
+    const update = () => {
+      const keywords = query.value.trim().toLowerCase().split(/\s+/)
+      let visible = 0
+      for (const card of cards) {
+        const matchesText = keywords.every((word) => card.text.includes(word))
+        const matchesTag = !tag.value || card.tags.includes(tag.value)
+        card.element.hidden = !(matchesText && matchesTag)
+        if (!card.element.hidden) visible++
+      }
+      count.textContent = visible ? `${visible} of ${cards.length} projects` : "No matching projects."
+    }
+    filters.hidden = false
+    filters.classList.add("grid")
+    query.addEventListener("input", update)
+    tag.addEventListener("change", update)
+    update()
+  }
+</script>

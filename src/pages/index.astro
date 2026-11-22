@@ -1,0 +1,105 @@
+---
+import PageLayout from "@layouts/PageLayout.astro"
+import Container from "@components/Container.astro"
+import ProjectCard from "@components/ProjectCard.astro"
+import TwinklingStars from "@components/TwinklingStars.astro"
+import MeteorShower from "@components/MeteorShower.astro"
+import { getProjects } from "@lib/projects"
+import { GITHUB_PROFILE_URL, LINKEDIN_PROFILE_URL, PORTFOLIO_REPO_URL, RESUME_URL, SITE } from "@consts"
+
+const projects = await getProjects()
+const researchProjects = projects.filter((project) => project.data.kind === "research")
+const engineeringProjects = projects.filter((project) => project.data.kind === "engineering")
+---
+<PageLayout title={`${SITE.ROLE} · ${SITE.FOCUS}`} description={SITE.DESCRIPTION}>
+  <section id="hero" class="hero relative isolate grid min-h-[min(44rem,90svh)] items-center overflow-hidden pt-28 pb-16 sm:pt-36 sm:pb-24">
+    <div class="hero-background absolute inset-0 -z-10 overflow-hidden pointer-events-none" aria-hidden="true">
+      <div id="galaxy" class="absolute inset-0 hidden dark:block"><TwinklingStars /><MeteorShower /></div>
+      <div class="planet-horizon"></div>
+    </div>
+    <Container size="md">
+      <div class="mx-auto max-w-xl text-center">
+        <img class="mx-auto mb-5 size-20 rounded-full border border-black/15 object-cover dark:border-white/20 sm:size-24" src="/media/profile.jpg" alt="" />
+        <h1 class="text-5xl font-bold tracking-tight text-black dark:text-white sm:text-6xl">{SITE.TITLE}</h1>
+        <p class="mt-3 text-base font-semibold text-black dark:text-white sm:text-lg">{SITE.ROLE} | {SITE.FOCUS}</p>
+        <p class="mt-5 text-base leading-relaxed sm:text-lg">I’m a controls engineer with an M.S. in Mechanical Engineering from UT Dallas. My work connects model-based vehicle control with closed-loop simulation and validation. I integrated an acados-generated C controller with dSPACE ASM in VEOS and analyzed recorded vehicle-response data.</p>
+        <p class="mt-3 leading-relaxed">I’m supporting SCALEXIO deployment through ConfigurationDesk and ControlDesk. My focus is HIL commissioning, controls integration, and virtual validation.</p>
+        <div class="mt-7 flex flex-wrap justify-center gap-3">
+          <a class="rounded bg-black px-4 py-2 font-semibold text-white transition-opacity hover:opacity-75 dark:bg-white dark:text-black" href="#research">View research</a>
+          <a class="rounded border border-black/25 px-4 py-2 dark:border-white/30" href={RESUME_URL} download>Download résumé</a>
+        </div>
+        <nav class="mt-5 flex flex-wrap justify-center gap-x-5 gap-y-2 text-sm" aria-label="Professional profiles">
+          <a class="underline underline-offset-4" href={GITHUB_PROFILE_URL}>GitHub</a>
+          <a class="underline underline-offset-4" href={LINKEDIN_PROFILE_URL}>LinkedIn</a>
+        </nav>
+      </div>
+    </Container>
+  </section>
+  <section id="research" class="scroll-mt-20 py-12">
+    <Container size="md">
+      <h2 class="text-2xl font-semibold text-black dark:text-white">Vehicle controls research</h2>
+      <p class="mb-5 mt-2">Autonomous Robotics and Modeling Systems Laboratory, UT Dallas</p>
+      <ul class="grid gap-3">{researchProjects.map((project) => <ProjectCard project={project} heading="h3" />)}</ul>
+      <a class="mt-5 inline-block underline underline-offset-4" href="/work/#manuscript">Research manuscript</a>
+    </Container>
+  </section>
+  <section id="projects" class="scroll-mt-20 border-t border-black/10 py-12 dark:border-white/20" data-project-slugs={projects.map((project) => project.slug).join(" ")}>
+    <Container size="md">
+      <div class="mb-5 flex flex-wrap items-baseline justify-between gap-2">
+        <h2 class="text-2xl font-semibold text-black dark:text-white">Selected engineering projects</h2>
+        <a class="underline underline-offset-4" href="/projects/">View project index</a>
+      </div>
+      <ul class="grid gap-3">{engineeringProjects.map((project) => <ProjectCard project={project} heading="h3" />)}</ul>
+      <div class="mt-5 flex flex-wrap gap-x-5 gap-y-2 text-sm">
+        <a class="underline underline-offset-4" href="/work/#stack">Technical skills</a>
+        <a class="underline underline-offset-4" href={PORTFOLIO_REPO_URL}>Previous React portfolio on GitHub</a>
+      </div>
+    </Container>
+  </section>
+</PageLayout>
+<style>
+  .hero-background {
+    color: #087567;
+    background:
+      radial-gradient(circle, rgb(35 100 90 / .2) 1px, transparent 1.5px) 0 0 / 28px 28px,
+      radial-gradient(ellipse at 50% 12%, rgb(16 185 129 / .15), transparent 67%);
+    mask-image: linear-gradient(black 72%, transparent);
+  }
+  :global(.dark) .hero-background {
+    color: #72f4b5;
+    background:
+      radial-gradient(circle, rgb(202 242 232 / .23) 1px, transparent 1.5px) 0 0 / 36px 36px,
+      radial-gradient(ellipse at 50% 55%, rgb(7 70 51 / .38), transparent 65%);
+  }
+  .planet-horizon {
+    position: absolute;
+    inset: 31% auto auto 50%;
+    width: max(88rem, 145vw);
+    height: 62rem;
+    transform: translateX(-50%);
+    border-radius: 50%;
+    border-top: 1px solid color-mix(in srgb, currentColor 45%, transparent);
+    background: linear-gradient(white, white 75%);
+    box-shadow: 0 -1rem 4rem color-mix(in srgb, currentColor 14%, transparent);
+  }
+  :global(.dark) .planet-horizon {
+    background: linear-gradient(#071012, black 75%);
+  }
+</style>
+<script is:inline>
+  const legacyProjects = /^#\/projects\/([a-z0-9-]+)\/?(?:\?.*)?$/
+  function redirectLegacyProject() {
+    const project = window.location.hash.match(legacyProjects)?.[1]
+    if (project) {
+      const current = (document.querySelector('[data-project-slugs]')?.dataset.projectSlugs ?? '').split(' ')
+      window.location.replace(current.includes(project) ? '/projects/' + project + '/' : '/projects/')
+      return
+    }
+    const section = window.location.hash
+    if (['#experience', '#stack', '#capabilities'].includes(section)) {
+      window.location.replace('/work/' + (section === '#capabilities' ? '#stack' : section))
+    }
+  }
+  redirectLegacyProject()
+  window.addEventListener('hashchange', redirectLegacyProject)
+</script>

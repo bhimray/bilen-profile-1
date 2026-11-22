@@ -1,0 +1,18 @@
+---
+import Container from "@components/Container.astro"
+import { RESUME_URL, SITE, SOCIALS } from "@consts"
+---
+<footer id="contact" class="relative border-t border-black/10 bg-white py-8 dark:border-white/20 dark:bg-black">
+  <Container size="md">
+    <div class="flex flex-wrap items-center justify-between gap-4">
+      <div>
+        <strong class="text-black dark:text-white">{SITE.TITLE}</strong>
+        <p class="text-sm">{SITE.ROLE} · {SITE.FOCUS}</p>
+      </div>
+      <nav aria-label="Contact and professional links" class="flex flex-wrap gap-4">
+        {SOCIALS.map(({ label, href }) => <a class="underline underline-offset-4" href={href}>{label}</a>)}
+        <a class="underline underline-offset-4" href={RESUME_URL} download>Résumé (DOCX)</a>
+      </nav>
+    </div>
+  </Container>
+</footer>
