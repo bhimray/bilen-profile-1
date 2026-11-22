@@ -1,0 +1,66 @@
+---
+import PageLayout from "@layouts/PageLayout.astro"
+import TopLayout from "@layouts/TopLayout.astro"
+import BottomLayout from "@layouts/BottomLayout.astro"
+import { RESUME_URL } from "@consts"
+import { getProjects } from "@lib/projects"
+import profile from "../../data/resume-profile.json"
+
+const researchProjects = (await getProjects()).filter((project) => project.data.kind === "research")
+const { research, skills, industry, education, manuscript } = profile
+---
+<PageLayout title="Research and experience" description="UT Dallas vehicle controls research, dSPACE integration, industrial experience, and technical skills.">
+  <TopLayout>
+    <h1 class="text-3xl font-semibold text-black dark:text-white">Research and experience</h1>
+    <a class="mt-3 inline-block underline underline-offset-4" href={RESUME_URL} download>Download résumé (DOCX)</a>
+  </TopLayout>
+  <BottomLayout>
+    <article>
+      <h2 id="research" class="scroll-mt-20">Research experience</h2>
+      <h3>{research.role} · {research.institution}</h3>
+      <p>{research.lab} · {research.period}</p>
+      <ul>
+        {researchProjects.map(({ slug, data }) => (
+          <li>
+            <a href={`/projects/${slug}/`}>{data.title}</a>
+            <p>{data.summary}</p>
+          </li>
+        ))}
+      </ul>
+      <h2 id="manuscript" class="scroll-mt-20">Research manuscript</h2>
+      <p>{manuscript.authors}. <cite>{manuscript.title}</cite>. {manuscript.status}</p>
+      <h2 id="experience" class="scroll-mt-20">Industry experience</h2>
+      {industry.map((item) => (
+        <section>
+          <h3>{item.role} · {item.org}</h3>
+          <p>{item.location} · {item.period}</p>
+          <p>{item.summary}</p>
+        </section>
+      ))}
+      <h2 id="stack" class="scroll-mt-20">Technical skills</h2>
+      <div class="not-prose grid gap-3 sm:grid-cols-2">
+        {skills.map((group) => (
+          <section class="rounded-lg border border-black/15 p-4 dark:border-white/20">
+            <h3 class="font-semibold text-black dark:text-white">{group.label}</h3>
+            <p class="mt-2 text-sm">{group.description}</p>
+            <ul class="mt-3 flex flex-wrap gap-1.5" aria-label={group.label}>
+              {group.tools.map((tool) => <li class="rounded bg-black/5 px-2 py-1 text-xs dark:bg-white/10">{tool}</li>)}
+            </ul>
+            {group.project && (
+              <a class="mt-3 inline-block text-sm underline underline-offset-4" href={`/projects/${group.project.slug}/`}>
+                {group.project.label}
+              </a>
+            )}
+          </section>
+        ))}
+      </div>
+      <h2>Education</h2>
+      {education.map((item) => (
+        <section>
+          <h3>{item.institution}</h3>
+          <p>{item.degree} · {item.detail}</p>
+        </section>
+      ))}
+    </article>
+  </BottomLayout>
+</PageLayout>

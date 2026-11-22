@@ -1,0 +1,118 @@
+{
+  "research": {
+    "lab": "Autonomous Robotics and Modeling Systems Laboratory",
+    "institution": "UT Dallas",
+    "role": "Research Assistant",
+    "period": "Jan 2026 – Present"
+  },
+  "skills": [
+    {
+      "label": "dSPACE Integration & HIL",
+      "description": "Integrated vehicle and traffic models in VEOS. Supporting SCALEXIO deployment and ControlDesk connectivity.",
+      "tools": [
+        "ASM",
+        "VEOS",
+        "SCALEXIO",
+        "ConfigurationDesk",
+        "ControlDesk"
+      ],
+      "project": {
+        "slug": "obstacle-avoidance-integration",
+        "label": "See dSPACE integration"
+      }
+    },
+    {
+      "label": "Model-Based Development",
+      "description": "Connected generated C controllers to vehicle plant models for closed-loop simulation.",
+      "tools": [
+        "MATLAB",
+        "Simulink",
+        "SoC Blockset",
+        "S-functions",
+        "Plant modeling"
+      ]
+    },
+    {
+      "label": "Vehicle Dynamics & Control",
+      "description": "Designed constrained predictive controllers and interfaces for steering and per-wheel torque.",
+      "tools": [
+        "acados",
+        "NMPC",
+        "Vehicle dynamics",
+        "Constrained optimization",
+        "Steering and wheel-torque allocation",
+        "LQR",
+        "H-infinity control"
+      ],
+      "project": {
+        "slug": "lap-time-mpc",
+        "label": "See autonomous racing"
+      }
+    },
+    {
+      "label": "Verification & Timing Analysis",
+      "description": "Used recorded signals and scheduler data to evaluate tracking, response times, deadline misses, and solver failures.",
+      "tools": [
+        "Data recording and post-processing",
+        "Tracking-error analysis",
+        "Execution-time profiling",
+        "Response-time analysis",
+        "Root-cause analysis"
+      ],
+      "project": {
+        "slug": "computation-aware-vehicle-control",
+        "label": "See sampling-rate adaptation"
+      }
+    },
+    {
+      "label": "Software, Build & Automation",
+      "description": "Configured C builds, investigated compiler and dependency compatibility, and deployed production-line PLC logic.",
+      "tools": [
+        "C",
+        "C++",
+        "Python",
+        "CMake",
+        "Git",
+        "GitHub",
+        "Allen-Bradley PLCs"
+      ],
+      "project": {
+        "slug": "plc-counting",
+        "label": "See PLC automation"
+      }
+    }
+  ],
+  "industry": [
+    {
+      "role": "Software Developer",
+      "org": "Silicon Soft and IT Consultant Pvt. Ltd.",
+      "location": "Kathmandu, Nepal",
+      "period": "Jan 2022 – Dec 2023",
+      "summary": "Developed mobile and web features using Kotlin, Jetpack Compose, React, JavaScript, SQL, and .NET. Coordinated delivery across two concurrent projects."
+    },
+    {
+      "role": "Maintenance Engineer Trainee",
+      "org": "Gorkha Brewery Pvt. Ltd., Carlsberg Group",
+      "location": "Chitwan, Nepal",
+      "period": "Jul 2021 – Dec 2021",
+      "summary": "Performed Kaizen root-cause analysis of filler-machine stoppages and modified a cap-chute mechanism with an empty-warning sensor. Contributed to an estimated annual production increase of 120,000 bottles and received Kaizen Star of the Month recognition in November 2021."
+    }
+  ],
+  "education": [
+    {
+      "institution": "The University of Texas at Dallas",
+      "degree": "M.S. Mechanical Engineering",
+      "detail": "Dynamic Systems and Control · May 2026"
+    },
+    {
+      "institution": "Uttarakhand Technical University",
+      "degree": "B.Tech. Mechanical Engineering",
+      "detail": "June 2020"
+    }
+  ],
+  "manuscript": {
+    "authors": "B. Ray and Z. Wang",
+    "title": "Nonlinear Model Predictive Control with Online Sampling-Rate Adaptation for Automotive Trajectory Tracking",
+    "status": "Submitted to ACC 2027. Under review."
+  }
+}
