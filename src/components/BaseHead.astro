@@ -10,7 +10,8 @@ const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site) : undefin
 <meta property="og:title" content={title} />
 <meta property="og:description" content={description} />
 {canonical && <link rel="canonical" href={canonical} />}
-<link rel="icon" href="/favicon.ico" sizes="any" />
+<link rel="icon" type="image/jpeg" href="/utd_monogram_logo.jpg" />
+<link rel="shortcut icon" href="/utd_monogram_logo.jpg" />
 <script is:inline src="/js/theme.js"></script>
 <script defer is:inline src="/js/scroll.js"></script>
 <script defer is:inline src="/js/animate.js"></script>

@@ -1,0 +1,4 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="UT Dallas">
+  <rect width="512" height="512" rx="24" fill="#e87500"/>
+  <path fill="#fff" d="M80 128h352v34H284v266h54v36H174v-36h54V162H80zm32 93v154c0 42 20 66 55 66h31v-36c-25 0-36-13-36-39V221c0-19-9-26-34-26H112zm288 0v154c0 42-20 66-55 66h-31v-36c25 0 36-13 36-39V221c0-19 9-26 34-26h16z"/>
+</svg>
