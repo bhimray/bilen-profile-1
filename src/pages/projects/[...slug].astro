@@ -29,6 +29,9 @@ const { Content } = await project.render()
     <ul class="mt-4 flex flex-wrap gap-2" aria-label="Technologies">
       {tags.map((tag) => <li class="rounded bg-black/5 px-2 py-1 text-sm dark:bg-white/10">{tag}</li>)}
     </ul>
+    {project.slug === "obstacle-avoidance-integration" && (
+      <a href="/profiler" class="mt-6 inline-flex items-center rounded bg-black px-4 py-2 text-sm font-semibold text-white transition-opacity hover:opacity-75 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 dark:bg-white dark:text-black">Open profiler dashboard</a>
+    )}
   </TopLayout>
   <BottomLayout>
     <article><Content /></article>

@@ -3,3 +3,7 @@
 @media(min-width:1700px){.workspace{grid-template-columns:245px minmax(0,1fr) 330px}}
 @media(max-width:1250px){main{padding:18px}.workspace{grid-template-columns:190px minmax(0,1fr)}.inspector{position:static;grid-column:1/-1;max-height:none}.readout{flex-direction:column;gap:5px}.chart-grid{grid-template-columns:1fr}.masthead{align-items:start}}
 @media(max-width:760px){main{padding:10px}.workspace{display:flex;flex-direction:column}.sidebar,.charts,.inspector{width:100%}.sidebar{grid-template-columns:1fr}.masthead{flex-direction:column}.load-box{justify-content:start}.load-box span{text-align:left}.transport{position:static}.panel{padding:13px}.section-title{flex-wrap:wrap}.precision input{width:160px}}
+
+/* Waveform panels: independent vertical scroll; shared timestamp axis stays visible. */
+.timeline.waveform-view{max-height:560px;overflow-y:auto;scrollbar-gutter:stable}.timeline.waveform-view svg{position:sticky;bottom:0;background:#101d2e;z-index:1}.waveform-help{font-size:12px;color:#abc4da}
+

@@ -3,6 +3,8 @@ import * as Plot from '@observablehq/plot';
 import { RECORD_BYTES, LAYOUT, typeLabel, decimalToTicks, formatTicks, tickFraction, tickAtFraction } from './core.mjs';
 import coreSource from './core.mjs?raw';
 import workerSource from './decode.worker.mjs?raw';
+import { waveformLanes, waveformGeometry } from './waveform.mjs';
+import { createFrameQueue } from './frame-queue.mjs';
 
 const $ = id => document.getElementById(id);
 const escape = value => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -10,10 +12,11 @@ const colors = {10:'#a78bfa',11:'#d4b9ff',20:'#95a5be',21:'#52c8ff',22:'#55dfb7'
 const color = code => colors[code] || '#e5bf72';
 let worker, requestID = 0, pending = new Map(), meta, fileName = '', rate = 1000000000n;
 let cursor = 0n, contextStart = 0n, contextEnd = 1n, lensWidth = 100000n, pageOffset = 0;
-let selected = null, contextData, lensData, playing = false, playAnchor = null;
-let revision = 0, busy = false, dirty = false, timer, updatingBrush = false, brushAPI, overviewScale;
-let lastPaint = 0;
+let selected = null, contextData, lensData, playing = false, playAnchor = null, animationHandle=null;
+let revision = 0, busy = false, dirty = false, updatingBrush = false, brushAPI, overviewScale;
+const renderQueue=createFrameQueue(()=>{void refresh();});
 let overviewRevision = 0;
+let contextCacheKey=null,rowsSignature=null,activeSignature=null;
 const cursorDrafts = new Set();
 function status(text, error = false) { $('status').textContent = text; $('status').classList.toggle('error', error); }
 function fail(error) { pause(); status(error.message || String(error), true); }
@@ -57,20 +60,22 @@ function setCursor(tick, {follow = true} = {}) {
     [contextStart, contextEnd] = boundedWindow(cursor, contextEnd - contextStart);
   schedule();
 }
-function schedule() { revision++; dirty = true; clearTimeout(timer); timer = setTimeout(refresh, 30); }
+function schedule() { revision++; dirty = true; renderQueue.request(0); }
 async function refresh() {
   if (!meta || busy || !dirty) return;
   dirty = false; busy = true;
   const version = revision;
   const [lensStart, lensEnd] = boundedWindow(cursor, lensWidth);
-  const frame = { cursor, contextStart, contextEnd, lensStart, lensEnd, rate, filters:filters() };
+  const frame = { cursor, contextStart, contextEnd, lensStart, lensEnd, rate, filters:filters(),progressive:$('progressive').checked };
+  const cacheKey=JSON.stringify([String(contextStart),String(contextEnd),String(rate),frame.filters,$('durations').clientWidth]);
+  const contextChanged=contextCacheKey!==cacheKey;
   try {
     const [context, lens] = await Promise.all([
-      rpc('query', {start:String(frame.contextStart),end:String(frame.contextEnd),cursor:String(frame.cursor),filters:frame.filters}),
+      contextChanged ? rpc('query', {start:String(frame.contextStart),end:String(frame.contextEnd),cursor:String(frame.cursor),filters:frame.filters}) : Promise.resolve(contextData),
       rpc('query', {start:String(lensStart),end:String(lensEnd),cursor:String(frame.cursor),filters:frame.filters,offset:pageOffset}),
     ]);
     if (version !== revision) return;
-    contextData = context; lensData = lens;
+    contextData = context; lensData = lens; contextCacheKey=cacheKey;
     // Commit the complete frame together; no view displays an older cursor against newer data.
     if (!cursorDrafts.has('cursor-seconds')) $('cursor-seconds').value = formatTicks(cursor - BigInt(meta.origin), rate, 12);
     if (!cursorDrafts.has('cursor-tick')) $('cursor-tick').value = String(cursor);
@@ -83,16 +88,18 @@ async function refresh() {
     drawTimeline('context', context, frame.contextStart, frame.contextEnd, frame, true);
     $('context-note').textContent = context.density
       ? `DENSITY MODE · ${context.total.toLocaleString()} records. Color intensity is count per bin, normalized separately per lane. These are not task durations or CPU load. Narrow the context to see individual events.`
-      : `${context.total.toLocaleString()} individual raw records. Blue outline = magnified interval; red line = shared cursor. Task intervals / interrupts / other types use separate subtracks in each lane.`;
+      : `${context.total.toLocaleString()} individual raw records. Blue outline = magnified interval; red line = shared cursor. ${$('timeline-style').value==='waveform'?'Each waveform row has one CPU / stream / source / type. Raised sections show raw record intervals; dashed background is unasserted, not idle.':'Task intervals / interrupts / other types use separate subtracks in each lane.'}`;
     drawTimeline('lens', lens, lensStart, lensEnd, frame, false);
-    drawCounts(context); drawDurations(context, frame);
-    drawRows(lens); drawActive(lens);
+    if(contextChanged){drawCounts(context);drawDurations(context,frame);}else updateDurationCursor(frame);
+    const nextRowsSignature=`${rate}/${selected?.row}/${lens.total}/${lens.offset}/${lens.page.map(e=>e.row).join(',')}`;
+    if(rowsSignature!==nextRowsSignature){drawRows(lens);rowsSignature=nextRowsSignature;}
+    const nextActiveSignature=`${lens.activeTotal}/${lens.active.map(e=>e.row).join(',')}`;
+    if(activeSignature!==nextActiveSignature){drawActive(lens);activeSignature=nextActiveSignature;}
     updateBrush();
     $('render-note').textContent = `Lens ${lensStart} … ${lensEnd} ticks | ${formatTicks(lensEnd-lensStart,rate,12)} s | ${lens.total.toLocaleString()} records. ` +
       (lens.density ? 'DENSITY MODE: counts of interval starts, with continuing intervals placed in first bin. Zoom in for individual marks. Raw rows remain complete.' : 'Individual raw intervals and edges. Minimum visible mark is 1 pixel; inspect numeric duration for subpixel events.');
-    lastPaint = performance.now();
   } catch (error) { fail(error); }
-  finally { busy = false; if (dirty) timer = setTimeout(refresh, 0); }
+  finally { busy = false; if (dirty) renderQueue.request(0); }
 }
 function metrics() {
   $('integrity').innerHTML = [
@@ -114,6 +121,8 @@ function buildFilters() {
   $('filters').onchange = () => { pause(); pageOffset = 0; drawOverview().catch(fail); schedule(); };
 }
 async function load(file, synthetic = false) {
+  renderQueue.cancel();
+  contextCacheKey=null;rowsSignature=null;activeSignature=null;
   pause(); meta = null; revision++; selected = null; busy = false; dirty = false; cursorDrafts.clear();
   $('filename').textContent = file.name; fileName = file.name;
   $('details').innerHTML = '<p>Select a mark or raw table row.</p>';
@@ -123,7 +132,7 @@ async function load(file, synthetic = false) {
     cursor = BigInt(meta.origin); contextStart = cursor; contextEnd = BigInt(meta.last);
     if (contextEnd <= contextStart) contextEnd = contextStart + 1n;
     pageOffset = 0; metrics(); buildFilters();
-    for (const id of ['play','previous','next','reset','export']) $(id).disabled = false;
+    for (const id of ['play','replay','previous','next','reset','export']) $(id).disabled = false;
     await drawOverview(); schedule();
     status(`${synthetic?'SYNTHETIC DEMO · ':''}${file.name} · ${meta.records.toLocaleString()} records decoded as ${RECORD_BYTES}-byte little-endian records. Raw data stays in this browser.`);
   } catch (error) { fail(error); }
@@ -164,9 +173,14 @@ function updateBrush() {
 }
 function visibleLanes(frame) { return meta.lanes.filter(lane=>frame.filters.cpus.includes(lane.cpu)&&frame.filters.lanes.includes(lane.key)); }
 function drawTimeline(id,data,start,end,frame,isContext) {
-  const root=$(id); root.replaceChildren();
+  const root=$(id),savedScrollTop=root.scrollTop; root.replaceChildren();
+  const waveform=$('timeline-style').value==='waveform'&&!data.density;
+  root.classList.toggle('waveform-view',waveform);
   const width=Math.max(380,root.clientWidth), labelWidth=Math.min(245,width*.34), right=width-16;
-  const lanes=visibleLanes(frame), rowHeight=54, top=12, height=Math.max(84,lanes.length*rowHeight+top);
+  const sources=visibleLanes(frame);
+  const lanes=waveform?waveformLanes(sources,frame.filters.types):sources;
+  const eventKey=e=>waveform?`${e.lane}/${e.type}`:e.lane;
+  const rowHeight=waveform?66:54, top=12, height=Math.max(84,lanes.length*rowHeight+top);
   const canvas=document.createElement('canvas'); canvas.width=width*devicePixelRatio;canvas.height=height*devicePixelRatio;
   canvas.style.height=`${height}px`;root.append(canvas);
   const ctx=canvas.getContext('2d');ctx.scale(devicePixelRatio,devicePixelRatio);
@@ -179,9 +193,16 @@ function drawTimeline(id,data,start,end,frame,isContext) {
     ctx.fillStyle=lane.cpu===4?'#76ccff':'#68e3bd';ctx.fillText(`CPU ${lane.cpu} / source ${lane.source}`,8,y+17);
     ctx.fillStyle='#a0b4ca';ctx.font='10px system-ui';
     ctx.fillText(`${lane.label.includes('controller')?'Controller':lane.label.includes('plant')?'Plant':'Unmapped'} · stream ${lane.stream}`,8,y+34);ctx.font='11px monospace';
+    if(waveform){ctx.fillStyle=color(lane.type);ctx.fillText(`${lane.type} ${lane.typeLabel}`,8,y+51);}
   });
   ctx.save();ctx.beginPath();ctx.rect(labelWidth,0,right-labelWidth,height);ctx.clip();
   for(let i=0;i<=8;i++){ctx.strokeStyle='#314358';ctx.globalAlpha=.5;ctx.beginPath();ctx.moveTo(labelWidth+(right-labelWidth)*i/8,0);ctx.lineTo(labelWidth+(right-labelWidth)*i/8,height);ctx.stroke();}ctx.globalAlpha=1;
+  if(waveform){
+    for(let i=0;i<lanes.length;i++){
+      ctx.strokeStyle='#63758a';ctx.globalAlpha=.5;ctx.setLineDash([3,5]);ctx.beginPath();
+      ctx.moveTo(labelWidth,top+i*rowHeight+45);ctx.lineTo(frame.progressive?Math.max(labelWidth,Math.min(right,x(frame.cursor))):right,top+i*rowHeight+45);ctx.stroke();
+    }ctx.setLineDash([]);ctx.globalAlpha=1;
+  }
   if(data.density){
     for(const lane of data.density.lanes){
       const li=laneIndex.get(lane.key);if(li===undefined)continue;
@@ -190,7 +211,31 @@ function drawTimeline(id,data,start,end,frame,isContext) {
     }
   }else{
     for(const event of data.events){
-      const li=laneIndex.get(event.lane);if(li===undefined)continue;
+      const li=laneIndex.get(eventKey(event));if(li===undefined)continue;
+      if(waveform){
+        const geometry=waveformGeometry(event,start,end,frame.progressive?frame.cursor:null);if(!geometry)continue;
+        const px=labelWidth+geometry.left*(right-labelWidth),pxEnd=labelWidth+geometry.right*(right-labelWidth);
+        const y=top+li*rowHeight,high=y+16,low=y+45;
+        const active=geometry.rawStart===geometry.rawEnd ? frame.cursor===geometry.rawStart
+          : geometry.rawStart<=frame.cursor&&frame.cursor<geometry.rawEnd;
+        ctx.strokeStyle=selected?.row===event.row?'#fff':color(event.type);ctx.lineWidth=active?2.5:1.5;
+        ctx.fillStyle=color(event.type);ctx.globalAlpha=active ? .3 : .12;
+        ctx.fillRect(px,high,Math.max(1,pxEnd-px),low-high);ctx.globalAlpha=1;
+        ctx.beginPath();
+        if(geometry.hasStart){ctx.moveTo(px,low);ctx.lineTo(px,high);}else ctx.moveTo(px,high);
+        ctx.lineTo(pxEnd,high);if(geometry.hasEnd)ctx.lineTo(pxEnd,low);ctx.stroke();
+        if(geometry.growing){ctx.save();ctx.shadowColor=color(event.type);ctx.shadowBlur=8;ctx.beginPath();ctx.arc(pxEnd,high,2.5,0,Math.PI*2);ctx.fill();ctx.restore();}
+        // Raw start/end edge markers. Subpixel widths do not change the raw duration.
+        if(geometry.hasStart){ctx.beginPath();ctx.moveTo(px,high-5);ctx.lineTo(px-3,high-10);ctx.lineTo(px+3,high-10);ctx.closePath();ctx.fill();}
+        if(geometry.hasEnd){ctx.beginPath();ctx.moveTo(pxEnd,low+5);ctx.lineTo(pxEnd-3,low+10);ctx.lineTo(pxEnd+3,low+10);ctx.closePath();ctx.fill();}
+        if(pxEnd-px>80){
+          const text=`row ${event.row} · ${event.type} · p=${event.payload}`;
+          ctx.save();ctx.beginPath();ctx.rect(px+4,high,Math.max(0,pxEnd-px-8),low-high);ctx.clip();
+          ctx.fillStyle='#e4effb';ctx.font='11px monospace';ctx.fillText(text,px+6,high+19);ctx.restore();
+        }
+        if(geometry.invalid){ctx.fillStyle='#ff7b6b';ctx.fillText('×',px,high-2);}
+        continue;
+      }
       const a=BigInt(event.startTick),b=BigInt(event.endTick),px=x(a<start?start:a),pxEnd=x(b>end?end:b);
       // Event subtracks separate task intervals, interrupts, and other event types.
       const sub=event.type===21||event.type===22?0:event.type===10||event.type===11?1:2;
@@ -212,17 +257,20 @@ function drawTimeline(id,data,start,end,frame,isContext) {
   const svg=d3.select(root).append('svg').attr('viewBox',`0 0 ${width} 34`);
   svg.append('g').call(d3.axisBottom(scale).ticks(5).tickFormat(t=>`${d3.format('.8~g')(t)} ${unit.name}`));
   svg.append('text').attr('x',8).attr('y',19).attr('fill','#8eabc6').attr('font-size',10).text(`from tick ${start}`);
+  root.scrollTop=savedScrollTop;
   canvas.onclick=event=>{
     pause();const rect=canvas.getBoundingClientRect(),px=(event.clientX-rect.left)*width/rect.width,py=(event.clientY-rect.top)*height/rect.height;
     if(px<labelWidth)return;
     const tick=tickAtFraction((px-labelWidth)/(right-labelWidth),start,end),li=Math.floor((py-top)/rowHeight);
-    const candidates=data.events.filter(e=>laneIndex.get(e.lane)===li && x(BigInt(e.startTick))<=px+5&&x(BigInt(e.endTick))>=px-5);
+    const candidates=data.events.filter(e=>laneIndex.get(eventKey(e))===li && x(BigInt(e.startTick))<=px+5&&x(BigInt(e.endTick))>=px-5);
     if(candidates.length){
       candidates.sort((a,b)=>Math.min(Math.abs(x(BigInt(a.startTick))-px),Math.abs(x(BigInt(a.endTick))-px))-Math.min(Math.abs(x(BigInt(b.startTick))-px),Math.abs(x(BigInt(b.endTick))-px))||a.row-b.row);
-      inspect(candidates[0].row,{seek:true}).catch(fail);
+      inspect(candidates[0].row,{seek:false}).catch(fail);
+      setCursor(tick);
     }else setCursor(tick);
   };
   canvas.onwheel=event=>{
+    if(waveform&&!event.ctrlKey&&!event.metaKey)return;
     event.preventDefault();pause();const factor=event.deltaY>0?2:0.5;
     let widthTicks=BigInt(Math.max(1,Math.round(Number(end-start)*factor)));
     if(isContext){[contextStart,contextEnd]=boundedWindow(frame.cursor,widthTicks);$('context-width').value='full';}
@@ -251,6 +299,12 @@ function drawDurations(data,frame){
   target.append(plot);
   plot.onclick=event=>{pause();const rect=plot.getBoundingClientRect();const fraction=(event.clientX-rect.left-55)/(rect.width-75);setCursor(tickAtFraction(fraction,frame.contextStart,frame.contextEnd));};
 }
+function updateDurationCursor(frame){
+  const plot=$('durations').querySelector('svg'),line=plot?.querySelector('g[aria-label="rule"] line');if(!line)return;
+  const width=Number(plot.getAttribute('width')),fraction=tickFraction(frame.cursor,frame.contextStart,frame.contextEnd);
+  line.style.display=fraction<0||fraction>1?'none':'';
+  const x=55+fraction*(width-75);line.setAttribute('x1',String(x));line.setAttribute('x2',String(x));
+}
 function elapsed(event){return event.durationTicks===null?'Invalid':formatTicks(BigInt(event.durationTicks)*1000000n,rate,6);}
 function drawRows(data){
   $('raw-rows').innerHTML=data.page.map(e=>`<tr data-row="${e.row}" class="${selected?.row===e.row?'selected':''}" tabindex="0"><td>${e.row}</td><td>${e.cpu} / ${e.stream} / ${e.source}</td><td>${e.type} ${escape(e.typeLabel)}</td><td>${e.startTick}</td><td>${e.endTick}</td><td>${elapsed(e)}</td><td>${escape(e.pairing.reason)}</td></tr>`).join('');
@@ -277,15 +331,16 @@ async function inspect(row,{seek=false}={}){
   if(event.pairing.counterpart)$('goto-pair').onclick=()=>inspect(event.pairing.counterpart).catch(fail);
   if(seek)setCursor(BigInt(event.startTick));else schedule();
 }
-function pause(){playing=false;playAnchor=null;$('play').textContent='Play';}
+function pause(){playing=false;playAnchor=null;if(animationHandle!==null)cancelAnimationFrame(animationHandle);animationHandle=null;$('play').textContent='Play';}
 function animate(now){
+  animationHandle=null;
   if(!playing)return;
   if(!playAnchor)playAnchor={now,tick:cursor};
   // Playback scheduling uses the wall clock only to move the raw-tick cursor; it never changes event times.
   const elapsedMilliseconds=now-playAnchor.now,speed=Number($('speed').value);
   const delta=BigInt(Math.round(elapsedMilliseconds*Number(rate)*speed/1000));
-  if(!busy&&now-lastPaint>=80){setCursor(playAnchor.tick+delta);if(cursor>=BigInt(meta.last)){pause();return;}}
-  requestAnimationFrame(animate);
+  if(!busy&&!dirty&&!renderQueue.pending){setCursor(playAnchor.tick+delta);if(cursor>=BigInt(meta.last)){pause();return;}}
+  animationHandle=requestAnimationFrame(animate);
 }
 function bind(id,event,handler){$(id).addEventListener(event,async e=>{try{await handler(e);}catch(error){fail(error);}});}
 for (const [id,button] of [['cursor-seconds','seek-seconds'],['cursor-tick','seek-tick']]) {
@@ -294,7 +349,8 @@ for (const [id,button] of [['cursor-seconds','seek-seconds'],['cursor-tick','see
   bind(id,'keydown',event=>{if(event.key==='Enter')$(button).click();});
 }
 bind('capture','change',e=>{const file=e.target.files?.[0];if(file)return load(file);});
-bind('play','click',()=>{if(!meta)return;if(playing)pause();else{if(cursor>=BigInt(meta.last))cursor=BigInt(meta.origin);playing=true;playAnchor=null;$('play').textContent='Pause';requestAnimationFrame(animate);}});
+bind('play','click',()=>{if(!meta)return;if(playing)pause();else{if(cursor>=BigInt(meta.last))cursor=BigInt(meta.origin);playing=true;playAnchor=null;$('play').textContent='Pause';animationHandle=requestAnimationFrame(animate);}});
+bind('replay','click',()=>{if(!meta)return;pause();[contextStart,contextEnd]=boundedWindow(BigInt(meta.origin),contextEnd-contextStart);setCursor(BigInt(meta.origin));playing=true;playAnchor=null;$('play').textContent='Pause';animationHandle=requestAnimationFrame(animate);});
 bind('speed','change',()=>{playAnchor=null;});
 for(const [id,direction]of[['previous',-1],['next',1]])bind(id,'click',async()=>{if(!meta)return;pause();setCursor(BigInt(await rpc('step',{cursor:String(cursor),direction,filters:filters()})));});
 bind('seek-seconds','click',()=>{if(!meta)return;pause();setCursor(BigInt(meta.origin)+decimalToTicks($('cursor-seconds').value,rate));});
@@ -302,6 +358,8 @@ bind('seek-tick','click',()=>{if(!meta)return;pause();if(!/^\d+$/.test($('cursor
 for(const [id,direction]of[['minus-tick',-1n],['plus-tick',1n]])bind(id,'click',()=>{if(!meta)return;pause();const step=BigInt($('step-ticks').value);if(step<1n)throw new Error('Step must be at least 1 tick.');setCursor(cursor+direction*step);});
 bind('context-width','change',()=>{if(!meta)return;pause();[contextStart,contextEnd]=$('context-width').value==='full'?[BigInt(meta.origin),BigInt(meta.last)]:boundedWindow(cursor,decimalToTicks($('context-width').value,rate));schedule();});
 bind('lens-width','change',()=>{if(!meta)return;pause();lensWidth=decimalToTicks($('lens-width').value,rate);pageOffset=0;schedule();});
+bind('timeline-style','change',()=>{pause();if(meta)schedule();});
+bind('progressive','change',()=>{pause();if(meta)schedule();});
 bind('reset','click',()=>{pause();contextStart=BigInt(meta.origin);contextEnd=BigInt(meta.last);$('context-width').value='full';schedule();});
 bind('apply-rate','click',()=>{pause();const value=BigInt($('tick-rate').value);if(value<=0n||value>1000000000000n)throw new Error('Tick rate must be 1 … 10^12 ticks per second.');rate=value;if(meta){awaitOverview();schedule();if(selected)inspect(selected.row).catch(fail);}});
 function awaitOverview(){drawOverview().catch(fail);}
