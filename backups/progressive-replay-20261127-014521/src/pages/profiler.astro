@@ -1,0 +1,55 @@
+---
+import '../styles/profiler.css';
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>SCALEXIO | Profiler laboratory</title>
+    <meta name="description" content="Local, synchronized CPU 4 and CPU 5 profiler trace inspection with exact raw ticks." />
+    <meta name="robots" content="noindex" />
+  </head>
+  <body>
+    <main id="profiler-app">
+      <header class="masthead">
+        <div><a class="back" href="/">Portfolio</a><div class="eyebrow">SCALEXIO / TRACE LABORATORY</div><h1>Every event. One clock.</h1><p>CPU 4 controller & CPU 5 plant · raw record inspection</p></div>
+        <div class="load-box"><label class="file-button">Open profiler capture<input id="capture" type="file" /></label><button id="demo">Explore synthetic demo</button><span id="filename">Select your extensionless Profile file. Processed locally.</span></div>
+      </header>
+      <div id="status" role="status">Ready. No capture loaded.</div>
+      <section class="panel transport" aria-label="Playback and precision controls">
+        <div class="control-row">
+          <button id="play" class="primary" disabled>Play</button><button id="previous" disabled>Previous edge</button><button id="next" disabled>Next edge</button>
+          <label>Playback speed<select id="speed"><option value="0.000001">0.000001×</option><option value="0.00001">0.00001×</option><option value="0.001">0.001×</option><option value="0.1">0.1×</option><option value="1" selected>1×</option><option value="5">5×</option></select></label>
+          <label class="check"><input id="follow" type="checkbox" checked />Follow cursor</label>
+          <label>Timeline style<select id="timeline-style"><option value="waveform" selected>Waveforms</option><option value="interval">Compact intervals</option></select></label>
+          <button id="reset" disabled>Full capture</button><button id="export" disabled>Export lens CSV + metadata</button>
+        </div>
+        <div class="control-row precision">
+          <label>Cursor · relative seconds<input id="cursor-seconds" type="text" value="0.000000000" inputmode="decimal" /></label><button id="seek-seconds">Go</button>
+          <label>Cursor · raw tick<input id="cursor-tick" type="text" value="0" inputmode="numeric" /></label><button id="seek-tick">Go</button>
+          <label>Step · raw ticks<input id="step-ticks" type="text" value="1000" inputmode="numeric" /></label><button id="minus-tick">− step</button><button id="plus-tick">+ step</button>
+        </div>
+        <div class="readout"><span id="clock">No timestamp</span><span id="selection-info">No selected event</span></div>
+      </section>
+      <div class="workspace">
+        <aside class="sidebar">
+          <section class="panel"><div class="section-title"><h2>Trace selection</h2><button id="clear-filters">All</button></div><div id="filters"><p>Load a capture to see CPUs, sources and types.</p></div></section>
+          <section class="panel"><h2>Capture integrity</h2><div id="integrity">No data</div></section>
+          <section class="panel"><h2>Time calibration</h2><label>Ticks per second<input id="tick-rate" type="text" value="1000000000" /></label><button id="apply-rate">Apply rate</button><p>Default: inferred 1 ns/tick. Timestamp resolution does not establish clock accuracy. No MAT offset is applied.</p></section>
+        </aside>
+        <div class="charts">
+          <section class="panel"><div class="section-title"><div><h2>Capture overview</h2><p>Counts of record starts in 1,000 bins per CPU, height normalized separately per CPU. Drag the blue rectangle to set the context window.</p></div><span class="badge">D3 brush</span></div><div id="overview"></div></section>
+          <section class="panel"><div class="section-title"><div><h2>CPU timelines</h2><p>Separate lanes for every CPU / stream / source. Click to seek or inspect. Waveforms: scroll rows; Ctrl+wheel zooms time.</p></div><label>Context window<select id="context-width"><option value="full">Full capture</option><option value="1">1 s</option><option value="0.05">50 ms</option><option value="0.001">1 ms</option><option value="0.0001">100 µs</option><option value="0.000001">1 µs</option></select></label></div><div id="context" class="timeline"></div><p id="context-note"></p><div class="legend" id="type-legend"></div></section>
+          <section class="panel lens-panel"><div class="section-title"><div><div class="eyebrow">MAGNIFIED AT THE SHARED CURSOR</div><h2>Microsecond inspection</h2></div><label>Lens width<select id="lens-width"><option value="0.05">50 ms</option><option value="0.001">1 ms</option><option value="0.0001" selected>100 µs</option><option value="0.00001">10 µs</option><option value="0.000001">1 µs</option><option value="0.0000001">100 ns</option></select></label></div><p class="waveform-help">Waveform height marks a raw record interval, not CPU running/idle state. Upper triangles mark recorded starts; lower triangles mark ends. Missing edges at window boundaries continue outside the view. No clock is synthesized.</p><div id="lens" class="timeline"></div><p id="render-note"></p></section>
+          <div class="chart-grid"><section class="panel"><h2>Event counts in context</h2><p>Exact count of records overlapping the selected context; grouped by CPU and type.</p><div id="counts"></div></section><section class="panel"><h2>TaskEntry elapsed intervals</h2><p>Raw end − start, in µs. Includes elapsed/preemption time; does not establish CPU execution time.</p><div id="durations"></div></section></div>
+          <section class="panel"><h2>At the cursor</h2><p>Records containing this tick, using [start, end). Zero-duration records require exact equality.</p><div id="active"></div></section>
+          <section class="panel"><div class="section-title"><div><h2>Raw records in the magnifier</h2><p>All overlapping records, paged without sampling. Sorted by start tick, with original file row retained.</p></div><div><button id="page-back">Previous 100</button><button id="page-next">Next 100</button></div></div><div id="page-info"></div><div class="table-wrap"><table><thead><tr><th>Raw row</th><th>CPU / stream / source</th><th>Type</th><th>Start tick</th><th>End tick</th><th>Elapsed µs</th><th>Pairing</th></tr></thead><tbody id="raw-rows"></tbody></table></div></section>
+        </div>
+        <aside class="inspector panel"><h2>Raw event details</h2><form id="row-form"><label>Jump to file row<input id="row-number" type="text" inputmode="numeric" placeholder="1-based row" /></label><button>Inspect</button></form><div id="details"><p>Select any timeline mark or table row. Inspect simultaneous events individually using the table.</p></div></aside>
+      </div>
+      <section class="panel methods"><details><summary>Decoder, timestamp math and analysis limits</summary><div id="methods"></div><p>Full source and validation instructions: <code>docs/profiler-dashboard.md</code> in this project. No smoothing, resampling, MAT alignment or inferred idle intervals are applied.</p></details></section>
+    </main>
+    <script>import '../lib/profiler/dashboard.mjs';</script>
+  </body>
+</html>

@@ -9,8 +9,8 @@ interface Props {
 const { project, heading: Heading = "h2" } = Astro.props
 const { title, summary, platform, tags } = project.data
 ---
-<li class="project-card rounded-lg border border-black/15 dark:border-white/20" data-project-card>
-  <a class="group block h-full rounded-lg p-5 transition-colors hover:bg-black/5 dark:hover:bg-white/10" href={`/projects/${project.slug}/`}>
+<li class="project-card flex flex-col rounded-lg border border-black/15 dark:border-white/20" data-project-card>
+  <a class="group block flex-1 rounded-lg p-5 transition-colors hover:bg-black/5 dark:hover:bg-white/10" href={`/projects/${project.slug}/`}>
     <p class="text-sm">{platform}</p>
     <Heading class="mt-2 text-lg font-semibold text-black dark:text-white">
       {title} <span class="transition-transform group-hover:translate-x-1 inline-block" aria-hidden="true">↗</span>
@@ -22,4 +22,9 @@ const { title, summary, platform, tags } = project.data
       ))}
     </ul>
   </a>
+  {project.slug === "obstacle-avoidance-integration" && (
+    <div class="px-5 pb-5">
+      <a href="/profiler" class="inline-flex items-center rounded bg-black px-4 py-2 text-sm font-semibold text-white transition-opacity hover:opacity-75 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 dark:bg-white dark:text-black">Open profiler dashboard</a>
+    </div>
+  )}
 </li>
