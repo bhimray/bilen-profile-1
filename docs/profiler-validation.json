@@ -1,0 +1,289 @@
+{
+  "file": "C:\\Users\\rayyu\\OneDrive\\Desktop\\UTD\\dSPACE\\Project\\ECU_RealTime_Control_Performance\\results\\SCALEXIO\\Profile_2026_11_24_23_25_03",
+  "sha256": "3bd0ad242091887f025a23f72318132340a61d94f53a2c6ad791d52f98a3c6b6",
+  "decoder": "observed44byte-littleendian",
+  "meta": {
+    "records": 6027863,
+    "selectedRecords": 206010,
+    "bytes": 265225972,
+    "origin": "28059873933",
+    "last": "48415316507",
+    "cpuCounts": {
+      "0": 5821853,
+      "4": 4198,
+      "5": 201812
+    },
+    "typeCounts": {
+      "10": 2972732,
+      "11": 2972725,
+      "20": 20475,
+      "21": 20473,
+      "22": 20579,
+      "23": 44,
+      "100": 125,
+      "106": 20709,
+      "203": 1
+    },
+    "headers": [
+      1042676
+    ],
+    "reversals": 192,
+    "invalid": 0,
+    "lanes": [
+      {
+        "key": "4/13293701/1",
+        "cpu": 4,
+        "stream": 13293701,
+        "source": 1,
+        "label": "Source 1 · unmapped",
+        "count": 1073,
+        "types": {
+          "10": 334,
+          "11": 334,
+          "106": 405
+        }
+      },
+      {
+        "key": "4/13293701/4",
+        "cpu": 4,
+        "stream": 13293701,
+        "source": 4,
+        "label": "Source 4 · unmapped",
+        "count": 2008,
+        "types": {
+          "10": 1004,
+          "11": 1004
+        }
+      },
+      {
+        "key": "4/13293701/17",
+        "cpu": 4,
+        "stream": 13293701,
+        "source": 17,
+        "label": "Source 17 · unmapped",
+        "count": 88,
+        "types": {
+          "21": 44,
+          "22": 44
+        }
+      },
+      {
+        "key": "4/13293701/24",
+        "cpu": 4,
+        "stream": 13293701,
+        "source": 24,
+        "label": "Periodic Task 2 · controller",
+        "count": 1029,
+        "types": {
+          "20": 334,
+          "21": 290,
+          "22": 361,
+          "23": 44
+        }
+      },
+      {
+        "key": "5/13293700/1",
+        "cpu": 5,
+        "stream": 13293700,
+        "source": 1,
+        "label": "Source 1 · unmapped",
+        "count": 60584,
+        "types": {
+          "10": 20141,
+          "11": 20139,
+          "106": 20304
+        }
+      },
+      {
+        "key": "5/13293700/4",
+        "cpu": 5,
+        "stream": 13293700,
+        "source": 4,
+        "label": "Source 4 · unmapped",
+        "count": 80774,
+        "types": {
+          "10": 40388,
+          "11": 40386
+        }
+      },
+      {
+        "key": "5/13293700/24",
+        "cpu": 5,
+        "stream": 13293700,
+        "source": 24,
+        "label": "Periodic Task 1 · plant",
+        "count": 60454,
+        "types": {
+          "20": 20141,
+          "21": 20139,
+          "22": 20174
+        }
+      }
+    ],
+    "pairSummary": {
+      "5/13293700/24": {
+        "entries": 20139,
+        "exits": 20174,
+        "pairs": 20133,
+        "noExactExit": 35,
+        "duplicateExit": 6
+      },
+      "4/13293701/24": {
+        "entries": 290,
+        "exits": 361,
+        "pairs": 290,
+        "noExactExit": 71,
+        "duplicateExit": 0
+      },
+      "4/13293701/17": {
+        "entries": 44,
+        "exits": 44,
+        "pairs": 44,
+        "noExactExit": 0,
+        "duplicateExit": 0
+      }
+    }
+  },
+  "decodeMilliseconds": 1385.3346000000001,
+  "samples": [
+    {
+      "row": 1,
+      "byteOffset": 0,
+      "startTick": "0",
+      "endTick": "391",
+      "payload": "19282",
+      "sequence": 0,
+      "headerWord": 1042676,
+      "stream": 2,
+      "source": 4,
+      "user": 0,
+      "cpu": 0,
+      "type": 10,
+      "lane": "0/2/4",
+      "typeLabel": "InterruptEntry",
+      "sourceLabel": "Source 4 · unmapped",
+      "durationTicks": "391",
+      "pairing": {
+        "reason": "Not evaluated for this event type",
+        "counterpart": null
+      },
+      "rawHex": "00 00 00 00 00 00 00 00 87 01 00 00 00 00 00 00 52 4b 00 00 00 00 00 00 00 00 00 00 f4 e8 0f 00 02 00 00 00 04 00 00 00 00 00 0a 00"
+    },
+    {
+      "row": 361150,
+      "byteOffset": 15890556,
+      "startTick": "28166607762",
+      "endTick": "28166607763",
+      "payload": "0",
+      "sequence": 361149,
+      "headerWord": 1042676,
+      "stream": 13293701,
+      "source": 24,
+      "user": 0,
+      "cpu": 4,
+      "type": 22,
+      "lane": "4/13293701/24",
+      "typeLabel": "TaskExit",
+      "sourceLabel": "Periodic Task 2 · controller",
+      "durationTicks": "1",
+      "pairing": {
+        "reason": "No exact counterpart endpoint",
+        "counterpart": null
+      },
+      "rawHex": "92 53 dc 8e 06 00 00 00 93 53 dc 8e 06 00 00 00 00 00 00 00 00 00 00 00 bd 82 05 00 f4 e8 0f 00 85 d8 ca 00 18 00 00 00 04 00 16 00"
+    },
+    {
+      "row": 361630,
+      "byteOffset": 15911676,
+      "startTick": "28213226854",
+      "endTick": "28216622017",
+      "payload": "0",
+      "sequence": 361629,
+      "headerWord": 1042676,
+      "stream": 13293701,
+      "source": 24,
+      "user": 0,
+      "cpu": 4,
+      "type": 21,
+      "lane": "4/13293701/24",
+      "typeLabel": "TaskEntry",
+      "sourceLabel": "Periodic Task 2 · controller",
+      "durationTicks": "3395163",
+      "pairing": {
+        "reason": "Unique exact endpoint",
+        "counterpart": 389740
+      },
+      "rawHex": "66 ad a3 91 06 00 00 00 c1 7b d7 91 06 00 00 00 00 00 00 00 00 00 00 00 9d 84 05 00 f4 e8 0f 00 85 d8 ca 00 18 00 00 00 04 00 15 00"
+    },
+    {
+      "row": 389740,
+      "byteOffset": 17148516,
+      "startTick": "28216622017",
+      "endTick": "28216622018",
+      "payload": "0",
+      "sequence": 389739,
+      "headerWord": 1042676,
+      "stream": 13293701,
+      "source": 24,
+      "user": 0,
+      "cpu": 4,
+      "type": 22,
+      "lane": "4/13293701/24",
+      "typeLabel": "TaskExit",
+      "sourceLabel": "Periodic Task 2 · controller",
+      "durationTicks": "1",
+      "pairing": {
+        "reason": "Unique exact endpoint",
+        "counterpart": 361630
+      },
+      "rawHex": "c1 7b d7 91 06 00 00 00 c2 7b d7 91 06 00 00 00 00 00 00 00 00 00 00 00 6b f2 05 00 f4 e8 0f 00 85 d8 ca 00 18 00 00 00 04 00 16 00"
+    },
+    {
+      "row": 2428123,
+      "byteOffset": 106837368,
+      "startTick": "35500228820",
+      "endTick": "35500299727",
+      "payload": "0",
+      "sequence": 2428122,
+      "headerWord": 1042676,
+      "stream": 13293700,
+      "source": 24,
+      "user": 0,
+      "cpu": 5,
+      "type": 21,
+      "lane": "5/13293700/24",
+      "typeLabel": "TaskEntry",
+      "sourceLabel": "Periodic Task 1 · plant",
+      "durationTicks": "70907",
+      "pairing": {
+        "reason": "Duplicate endpoint: ambiguous",
+        "counterpart": null
+      },
+      "rawHex": "d4 80 fa 43 08 00 00 00 cf 95 fb 43 08 00 00 00 00 00 00 00 00 00 00 00 da 0c 25 00 f4 e8 0f 00 84 d8 ca 00 18 00 00 00 05 00 15 00"
+    },
+    {
+      "row": 6027863,
+      "byteOffset": 265225928,
+      "startTick": "48415316506",
+      "endTick": "48415316507",
+      "payload": "19241",
+      "sequence": 6027862,
+      "headerWord": 1042676,
+      "stream": 13293700,
+      "source": 4,
+      "user": 0,
+      "cpu": 5,
+      "type": 10,
+      "lane": "5/13293700/4",
+      "typeLabel": "InterruptEntry",
+      "sourceLabel": "Source 4 · unmapped",
+      "durationTicks": "1",
+      "pairing": {
+        "reason": "Not evaluated for this event type",
+        "counterpart": null
+      },
+      "rawHex": "1a 1a c7 45 0b 00 00 00 1b 1a c7 45 0b 00 00 00 29 4b 00 00 00 00 00 00 56 fa 5b 00 f4 e8 0f 00 84 d8 ca 00 04 00 00 00 05 00 0a 00"
+    }
+  ],
+  "captureAssertions": "Passed known capture counts, endpoints, microsecond window inclusion and exact duration."
+}
